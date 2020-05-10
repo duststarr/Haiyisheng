@@ -16,13 +16,16 @@ function initChart(canvas, width, height, dpr) {
       name: '业务指标',
       type: 'gauge',
       detail: {
-        formatter: '{value}%'
+        formatter: '已服务{value}天',
+        fontSize: 15,
+        color: "#0000ff",
+        offsetCenter: [0, '80%']
       },
       axisLine: {
         show: true,
         lineStyle: {
-          width: 30,
-          shadowBlur: 0,
+          width: 10,
+          shadowBlur: 2,
           color: [
             [0.3, '#67e0e3'],
             [0.7, '#37a2da'],
@@ -30,9 +33,15 @@ function initChart(canvas, width, height, dpr) {
           ]
         }
       },
+      splitLine: {
+        length: 10
+      },
+      min: 0,
+      max: 365,
+      splitNumber: 2,
       data: [{
-        value: 40,
-        name: '完成率',
+        value: 80,
+        name: '',
       }]
 
     }]
@@ -47,9 +56,9 @@ Component({
   options: {
     addGlobalClass: true,
   },
-  attached:function() {
+  attached: function () {
     let that = this;
-    setTimeout(function() {
+    setTimeout(function () {
       that.setData({
         loading: true
       })
@@ -60,6 +69,33 @@ Component({
     ColorList: app.globalData.ColorList,
     ec: {
       onInit: initChart
-    }
+    },
+    filters: [
+      {
+        pos: '1',
+        name: 'PP膜',
+        lifespan: 80
+      },
+      {
+        pos: '2',
+        name: '活性炭',
+        lifespan: 40
+      },
+      {
+        pos: '3',
+        name: '超滤膜',
+        lifespan: 70
+      },
+      {
+        pos: '4',
+        name: 'RO膜',
+        lifespan: 90
+      },
+      {
+        pos: '5',
+        name: '活性炭',
+        lifespan: 60
+      }
+    ]
   }
 })
