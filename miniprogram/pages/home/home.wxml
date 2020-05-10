@@ -4,8 +4,8 @@
 
 
 <product wx:if="{{PageCur=='product'}}"></product>
-<device wx:if="{{PageCur=='product'}}"></device>
-<member wx:if="{{PageCur=='product'}}"></member>
+<device wx:if="{{PageCur=='device'}}"></device>
+<member wx:if="{{PageCur=='member'}}"></member>
 <income wx:if="{{PageCur=='income'}}"></income>
 
 <view class="cu-bar tabbar bg-white shadow foot">

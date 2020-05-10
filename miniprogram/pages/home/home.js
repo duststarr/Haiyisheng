@@ -1,6 +1,6 @@
 Page({
   data: {
-    PageCur: 'product'
+    PageCur: 'device'
   },
   NavChange(e) {
     this.setData({
