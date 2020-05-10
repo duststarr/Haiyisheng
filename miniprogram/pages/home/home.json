@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "product": "/pages/product/list",
+    "device": "/pages/device/device",
+    "member": "/pages/member/member",
+    "income": "/pages/income/income"
+  }
+}

@@ -1,0 +1,36 @@
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">海益生净水</view>
+</cu-custom>
+
+
+<product wx:if="{{PageCur=='product'}}"></product>
+<device wx:if="{{PageCur=='product'}}"></device>
+<member wx:if="{{PageCur=='product'}}"></member>
+<income wx:if="{{PageCur=='income'}}"></income>
+
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="product">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/product{{PageCur=='product'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='product'?'text-green':'text-gray'}}">产品首页</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="device">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/device{{PageCur=='device'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='device'?'text-green':'text-gray'}}">我的设备</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="member">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/member{{PageCur=='member'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='member'?'text-green':'text-gray'}}">会员权益</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="income">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/tabbar/income{{PageCur=='income'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='income'?'text-green':'text-gray'}}">客服收益</view>
+  </view>
+</view>
