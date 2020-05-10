@@ -12,6 +12,10 @@
     </block>
   </view>
 </view>
+<view class="margin-xl padding-xl bg-white radius shadow shadow-lg">
+    <button  bindtap="onGetOpenid" class='cu-btn round bg-green shadow'> call the cloud </button>
+
+</view>
 <view class="text-center margin-top">
   <text class="text-grey text-xl">{{motto}}</text>
 </view>
