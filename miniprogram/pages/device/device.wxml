@@ -1,2 +1,58 @@
-<!--miniprogram/pages/device/device.wxml-->
-<text>miniprogram/pages/device/device.wxml</text>
+<view class='flex'>
+  <view class="container">
+    <text class="margin-left flex-sub">矿物水</text>
+    <ec-canvas class='flex-twice' id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+    <text class="margin-left flex-sub">纯净水</text>
+  </view>
+</view>
+<view class="cu-bar bg-white solid-bottom margin-top">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>
+    滤芯使用情况
+  </view>
+</view>
+<view class="padding bg-white ">
+  <view class="flex">
+    <text class="margin-left">PP棉</text>
+    <view class="cu-progress round">
+      <view class="bg-green" style="width:{{loading?'80%':''}};"></view>
+    </view>
+    <text class="margin-left">80%</text>
+  </view>
+  <view class="flex">
+    <text class="margin-left">活性炭</text>
+    <view class="cu-progress round">
+      <view class="bg-green" style="width:{{loading?'80%':''}};"></view>
+    </view>
+    <text class="margin-left">80%</text>
+  </view>
+  <view class="flex">
+    <text class="margin-left">超滤膜</text>
+    <view class="cu-progress round">
+      <view class="bg-green" style="width:{{loading?'80%':''}};"></view>
+    </view>
+    <text class="margin-left">8%</text>
+  </view>
+  <view class="flex">
+    <text class="margin-left">RO膜</text>
+    <view class="cu-progress round">
+      <view class="bg-green" style="width:{{loading?'80%':''}};"></view>
+    </view>
+    <text class="margin-left">8%</text>
+  </view>
+  <view class="flex">
+    <text class="margin-left">活性炭</text>
+    <view class="cu-progress round">
+      <view class="bg-green" style="width:{{loading?'80%':''}};"></view>
+    </view>
+    <text class="margin-left">80%</text>
+  </view>
+</view>
+<view class='flex'>
+  <button class="btn" type="primary" loading="{{loading}}" disabled="{{disabled}}" bindtap="onTap">
+    设备充值
+  </button>
+  <button class="btn" type="primary" loading="{{loading}}" disabled="{{disabled}}" bindtap="onTap">
+    售后服务
+  </button>
+</view>

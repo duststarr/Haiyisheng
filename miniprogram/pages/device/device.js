@@ -1,66 +1,65 @@
-// miniprogram/pages/device/device.js
-Page({
+import * as echarts from '../../ec-canvas/echarts';
 
-  /**
-   * 页面的初始数据
-   */
+let chart = null;
+function initChart(canvas, width, height, dpr) {
+  const chart = echarts.init(canvas, null, {
+    width: width,
+    height: height,
+    devicePixelRatio: dpr // 像素
+  });
+  canvas.setChart(chart);
+
+  var option = {
+    backgroundColor: "#ffffff",
+    color: ["#37A2DA", "#32C5E9", "#67E0E3"],
+    series: [{
+      name: '业务指标',
+      type: 'gauge',
+      detail: {
+        formatter: '{value}%'
+      },
+      axisLine: {
+        show: true,
+        lineStyle: {
+          width: 30,
+          shadowBlur: 0,
+          color: [
+            [0.3, '#67e0e3'],
+            [0.7, '#37a2da'],
+            [1, '#fd666d']
+          ]
+        }
+      },
+      data: [{
+        value: 40,
+        name: '完成率',
+      }]
+
+    }]
+  };
+  chart.setOption(option);
+  return chart;
+}
+
+const app = getApp();
+
+Component({
+  options: {
+    addGlobalClass: true,
+  },
+  attached:function() {
+    let that = this;
+    setTimeout(function() {
+      that.setData({
+        loading: true
+      })
+    }, 500)
+  },
   data: {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    cardCur: 0,
+    ColorList: app.globalData.ColorList,
+    ec: {
+      onInit: initChart
+    }
   }
 })
