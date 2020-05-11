@@ -1,6 +1,45 @@
-//app.js
+
+!function(){
+  var PageTmp = Page;
+ 
+  Page =function (pageConfig) {
+     
+    // 设置全局默认分享
+    pageConfig = Object.assign({
+      onShareAppMessage:function () {
+        const app = getApp();
+        return {
+          title:'海益生净水器',
+          path:'/pages/home/home?openid='+app.globalData.openid,
+          imageUrl:'默认分享图片',
+        };
+      }
+    },pageConfig);
+ 
+    PageTmp(pageConfig);
+  };
+}();
+function onGetOpenid() {
+  console.log('onGetOpenid')
+
+  // 调用云函数
+  wx.cloud.callFunction({
+    name: 'login',
+    data: {},
+    success: res => {
+      const app = getApp()
+      console.log('[云函数] [login] user openid: ', res.result.openid)
+      app.globalData.openid = res.result.openid
+    },
+    fail: err => {
+      console.error('[云函数] [login] 调用失败', err)
+    }
+  })
+}
+
 App({
-  onLaunch: function () {
+  onLaunch: function (e) {
+
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -23,6 +62,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log('onLaunch login',res)
       }
     })
     // 获取用户信息
@@ -58,6 +98,14 @@ App({
         }
       }
     })
+
+    onGetOpenid()
+  },
+  onShow: function(e){
+    console.log('onShow event',e)
+    if( e.query && e.query.openid ){
+      wx.showToast("share user openid:"+e.query.openid)
+    }
   },
   globalData: {
     userInfo: null,
