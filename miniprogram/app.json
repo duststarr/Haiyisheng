@@ -6,7 +6,8 @@
     "pages/product/list",
     "pages/device/device",
     "pages/income/income",
-    "pages/member/member"
+    "pages/member/member",
+    "pages/product/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -21,5 +21,13 @@ Component({
         swiperList: res.data
       })
     })
+  },
+  methods: {
+    showIntro: function(e){
+      const id = e.currentTarget.dataset.id
+      wx.navigateTo({
+        url: '/pages/product/detail?id='+id
+      })
+    }
   }
 })
