@@ -1,3 +1,5 @@
+const SWIPER_MAX = 5;
+
 Component({
   options: {
     addGlobalClass: true,
@@ -6,20 +8,18 @@ Component({
     cardCur: 0,
     swiperList: [
       {
-        id: 0,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-      },
-      {
-        id: 0,
-        type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg'
-      },
-      {
-        id: 0,
+        id: 2,
         type: 'image',
         url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
       }
     ]
+  },
+  attached: function(){
+    const db = wx.cloud.database();
+    db.collection('swiper').get().then( res => {
+      this.setData({
+        swiperList: res.data
+      })
+    })
   }
 })
