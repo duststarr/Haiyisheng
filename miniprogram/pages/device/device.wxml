@@ -2,10 +2,14 @@
   <ec-canvas class='flex-twice' id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
 </view>
 <view class="cu-bar bg-white solid-bottom margin-top">
-  <view class="action">
-    <text class="cuIcon-title text-blue"></text>
-    滤芯使用情况
-  </view>
+  <scroll-view scroll-x class="bg-white nav" scroll-with-animation>
+    <view class="cu-item {{0==TabCur?'text-green cur':''}}" bindtap="tabSelect" data-id="0">
+      滤芯使用情况
+    </view>
+    <view class="cu-item {{1==TabCur?'text-green cur':''}}" bindtap="tabSelect" data-id="1">
+      滤芯功能介绍
+    </view>
+  </scroll-view>
 </view>
 <view class="padding bg-white">
   <view class='prog align-center' wx:for="{{filters}}" wx:key>
@@ -14,14 +18,18 @@
         <text>{{item.pos}}</text>
       </button>
       <view class="basis-df"></view>
-
       <text>{{item.name}}</text>
     </view>
     <view class='prog-bar margin-left'>
-      <view class="cu-progress round">
-        <view class="bg-pink" style="width:{{item.lifespan}}%;"></view>
+      <view wx:if='{{0==TabCur}}'>
+        <view class="cu-progress round">
+          <view class="bg-pink" style="width:{{item.lifespan}}%;"></view>
+        </view>
+        <text class="margin-left">已使用：{{item.lifespan}}%；剩余：{{100-item.lifespan}}%。</text>
       </view>
-      <text class="margin-left">已使用：{{item.lifespan}}%；剩余：{{100-item.lifespan}}%。</text>
+      <view wx:if='{{1==TabCur}}'>
+        <text>{{item.intro}}</text>
+      </view>
     </view>
   </view>
 </view>

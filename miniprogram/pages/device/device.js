@@ -66,6 +66,7 @@ Component({
   },
   data: {
     cardCur: 0,
+    TabCur: 0,
     ColorList: app.globalData.ColorList,
     ec: {
       onInit: initChart
@@ -74,28 +75,40 @@ Component({
       {
         pos: '1',
         name: 'PP膜',
-        lifespan: 80
+        lifespan: 80,
+        intro: "PP膜PP膜PP膜PP膜PP膜"
       },
       {
         pos: '2',
         name: '活性炭',
-        lifespan: 40
+        lifespan: 40,
+        intro: "活性炭活性炭活性炭"
       },
       {
         pos: '3',
         name: '超滤膜',
-        lifespan: 70
+        lifespan: 70,
+        intro: "超滤膜超滤膜超滤膜超滤膜超滤膜"
       },
       {
         pos: '4',
         name: 'RO膜',
-        lifespan: 90
+        lifespan: 90,
+        intro: "RO膜"
       },
       {
         pos: '5',
         name: '活性炭',
-        lifespan: 60
+        lifespan: 60,
+        intro: "活性炭活性炭活性炭活性炭活性炭活性炭活性炭活性炭活性炭活性炭"
       }
     ]
+  },
+  methods: {
+    tabSelect(e) {
+      this.setData({
+        TabCur: e.currentTarget.dataset.id
+      })
+    }
   }
 })
