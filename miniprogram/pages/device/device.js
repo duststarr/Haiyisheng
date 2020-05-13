@@ -109,6 +109,11 @@ Component({
       this.setData({
         TabCur: e.currentTarget.dataset.id
       })
+    },
+    aftersale(e) {
+      wx.navigateTo({
+        url: '../aftersale/aftersale',
+      })
     }
   }
 })

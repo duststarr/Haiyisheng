@@ -35,5 +35,5 @@
 </view>
 <view class='flex'>
   <button class="cu-btn flex-sub round bg-blue">设备充值</button>
-  <button class="cu-btn flex-sub margin-left round bg-green">售后服务</button>
+  <button class="cu-btn flex-sub margin-left round bg-green" bindtap='aftersale'>售后服务</button>
 </view>

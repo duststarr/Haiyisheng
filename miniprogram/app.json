@@ -7,7 +7,8 @@
     "pages/device/device",
     "pages/income/income",
     "pages/member/member",
-    "pages/product/detail"
+    "pages/product/detail",
+    "pages/aftersale/aftersale"
   ],
   "window": {
     "backgroundTextStyle": "light",

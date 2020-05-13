@@ -1,0 +1,38 @@
+<!-- miniprogram/pages/aftersale/aftersale.wxml -->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">申请售后</view>
+</cu-custom>
+<view class="cu-bar bg-white solid-bottom margin-top action">
+    <view class="cu-item">客户信息</view>
+</view>
+<form catchsubmit="formSubmit">
+    <view class="cu-form-group">
+        <view class="title">联系人</view>
+        <input placeholder="稍后客服会与您联系" name='phone'></input>
+        <text class='cu-blue'>{{sex?'先生':"女士"}}</text>
+		<switch class="switch-sex" checked="{{sex}}" bindchange="onSexChange" ></switch>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">手机号码</view>
+        <input placeholder="稍后客服会与您联系" name='phone'></input>
+        <view class="cu-capsule radius">
+            <view class="cu-tag bg-blue">+86</view>
+        </view>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">所在区域</view>
+        <input placeholder="稍后客服会与您联系" name='phone'></input>
+    </view>
+    <view class="cu-form-group">
+        <view class="title">详细地址</view>
+		<textarea maxlength="-1"  bindinput="textareaBInput" placeholder="多行文本输入框"></textarea>
+    </view>
+    <button class="btn" type="primary" formType="submit">修改信息</button>
+</form>
+<text class='message'>{{message}}</text>
+<view class='margin-top'>
+    <button>拆机移机</button>
+    <button>更换滤芯</button>
+    <button>故障报修</button>
+</view>
