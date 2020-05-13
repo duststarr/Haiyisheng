@@ -1,21 +1,21 @@
 
-!function(){
+!function () {
   var PageTmp = Page;
- 
-  Page =function (pageConfig) {
-     
+
+  Page = function (pageConfig) {
+
     // 设置全局默认分享
     pageConfig = Object.assign({
-      onShareAppMessage:function () {
+      onShareAppMessage: function () {
         const app = getApp();
         return {
-          title:'海益生净水器',
-          path:'/pages/home/home?openid='+app.globalData.openid,
-          imageUrl:'默认分享图片',
+          title: '海益生净水器',
+          path: '/pages/home/home?openid=' + app.globalData.openid,
+          imageUrl: '默认分享图片',
         };
       }
-    },pageConfig);
- 
+    }, pageConfig);
+
     PageTmp(pageConfig);
   };
 }();
@@ -62,7 +62,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log('onLaunch login',res)
+        console.log('onLaunch login', res)
       }
     })
     // 获取用户信息
@@ -101,10 +101,13 @@ App({
 
     onGetOpenid()
   },
-  onShow: function(e){
-    console.log('onShow event',e)
-    if( e.query && e.query.openid ){
-      wx.showToast("share user openid:"+e.query.openid)
+  onShow: function (e) {
+    console.log('onShow event', e)
+    if (e.query && e.query.openid) {
+      wx.showModal({
+        title: "share user",
+        content: "openid:" + e.query.openid
+      })
     }
   },
   globalData: {
