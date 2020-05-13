@@ -1,1 +1,5 @@
 /* miniprogram/pages/product/detail.wxss */
+.message{
+    font: 1.2em sans-serif;
+    color: #9c26b0
+}

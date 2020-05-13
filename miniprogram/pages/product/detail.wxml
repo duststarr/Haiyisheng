@@ -1,6 +1,23 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">轮播图</view>
+  <view slot="content">产品介绍</view>
 </cu-custom>
-
 {{id}}
+<view wx:for="{{5}}">
+  <text wx:if="{{0==id}}">矿物水</text>
+  <text wx:if="{{1==id}}">纯净水</text>
+</view>
+<view class="cu-card padding margin-top">
+  <form catchsubmit="formSubmit">
+    <view class="cu-form-group">
+      <view class="title">手机号码</view>
+      <input placeholder="稍后客服会与您联系" name='phone'></input>
+      <view class="cu-capsule radius">
+        <view class="cu-tag bg-blue">+86</view>
+      </view>
+    </view>
+    <button class="btn" type="primary" formType="submit">预约安装</button>
+  </form>
+    <text class='message'>{{message}}</text>
+
+</view>

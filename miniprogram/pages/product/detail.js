@@ -5,9 +5,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: 0
+    id: 0,
+    message: '请输入手机号，稍后客服会与您取得联系。'
   },
-
+  formSubmit(e) {
+    var msg = "预约成功";
+    var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+    console.log(e.detail.value)
+    var phone = e.detail.value.phone
+    if (!myreg.test(phone)) {
+      msg = "请输入正确的手机号码"
+    }else{
+      msg = "预约成功,稍后客服会与"+phone+"取得联系，请注意接听电话。祝您生活愉快。"
+    }
+    this.setData({
+      message : msg
+    })
+    wx.showToast({
+      title: msg,
+      icon: 'none',
+      duration: 2000
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
