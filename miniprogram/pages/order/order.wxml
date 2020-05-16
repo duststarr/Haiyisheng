@@ -5,15 +5,15 @@
 <view class="cu-bar bg-white solid-bottom">
     <view class="action">
         <text class="cuIcon-title text-orange"></text>
-        演示演示演示
+        预约安装工作流
     </view>
     <view class="action">
-        <button class="cu-btn bg-green shadow" bindtap="nextStep">演示下一步</button>
+        <button class="cu-btn bg-pink shadow" bindtap="nextStep">演示下一步</button>
     </view>
 </view>
 <view class="bg-white padding">
     <view class="cu-steps">
-        <view class="cu-item {{index>currstep?'':'text-blue'}}" wx:for="{{steps}}" wx:key>
+        <view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key>
             <text class="cuIcon-{{item.icon}}"></text>
             {{item.name}}
         </view>
@@ -23,22 +23,22 @@
     <view class="btn-area" wx:if="{{null==addressInfo}}">
         <button type="primary" bindtap="chooseAddress">填写安装地址</button>
     </view>
-    <view wx:else>
-        <view>{{addressInfo.userName}}---
-    {{addressInfo.telNumber}}</view>
+    <view class='content' wx:else>
+        <view>
+            <text class="text-bold">{{addressInfo.userName}}</text>,{{addressInfo.telNumber}}
+        </view>
         <view>{{addressInfo.detailInfo}}</view>
-        <view>感谢您选择我们的产品，正在安排任务。</view>
     </view>
 </view>
+<view class='bg-cyan content margin padding' wx:if="{{null!=addressInfo}}">
+    <view>感谢您选择我们的产品，正在安排任务。</view>
+</view>
 <view class='bg-cyan content margin padding' wx:if="{{currstep>=1}}">
-（这步是后台任务派遣完变更的）
+    （这步是后台任务派遣完变更的）
     客服9527已接单，电话13611112222，稍后客服将与您联系。
 </view>
 <view class='bg-cyan content margin padding' wx:if="{{currstep>=2}}">
-    工人安装完成后请点击
-    <button>充值开始净水</button>
-
+    工人安装完成后，充值开启服务吧。
+    <button class='cu-btn block bg-green lg'>充值开始净水</button>
 </view>
-<view class='bg-cyan content margin padding' wx:if="{{currstep>=3}}">
-    2020-06-06开启净水生活
-</view>
+<view class='bg-cyan content margin padding' wx:if="{{currstep>=3}}">2020-06-06开启净水生活</view>
