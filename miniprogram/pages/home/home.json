@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "product": "/pages/product/list",
+    "product": "/pages/product/product",
     "device": "/pages/device/device",
     "member": "/pages/member/member",
     "worker": "/pages/worker/worker",
