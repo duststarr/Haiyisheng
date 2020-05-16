@@ -22,21 +22,26 @@
     </view>
   </view>
 </view>
-<view class="cu-card bg-white margin-top">
-  <view class="cu-bar bg-red solid-bottom align-center">
-    <view class="action ">自用省钱，推广赚钱！</view>
-  </view>
-  <view class='flex'>
-    <button>分享小程序</button>
-    <button>分享二维码</button>
-  </view>
-  每人的分享都是独一无二的，详见会员须知
+<view class="cu-bar bg-red solid-bottom margin-top flex">
+  <view class="action">自用省钱，推广赚钱！</view>
 </view>
-<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+<view class="cu-list menu card-menu margin-top-sm margin-bottom-xl shadow-lg radius">
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/about/about" hover-class="none">
       <text class="cuIcon-text text-green"></text>
       <text class="text-grey">会员须知</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/about/about" hover-class="none">
+      <text class="cuIcon-text text-green"></text>
+      <text class="text-grey">链接推广</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/about/about" hover-class="none">
+      <text class="cuIcon-text text-green"></text>
+      <text class="text-grey">二维码推广</text>
     </navigator>
   </view>
   <view class="cu-item arrow">
@@ -50,12 +55,6 @@
       <text class="cuIcon-settings text-green"></text>
       <text class="text-grey">收益详情</text>
     </navigator>
-  </view>
-  <view class="cu-item arrow">
-    <button class="cu-btn content" open-type="feedback">
-      <text class="cuIcon-writefill text-cyan"></text>
-      <text class="text-grey">我的推广二维码</text>
-    </button>
   </view>
 </view>
 <view class="cu-tabbar-height"></view>
