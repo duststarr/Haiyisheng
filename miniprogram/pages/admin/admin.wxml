@@ -1,2 +1,18 @@
-<!--miniprogram/pages/admin/admin.wxml-->
-<text>miniprogram/pages/admin/admin.wxml</text>
+<view class="cu-bar margin-top bg-white solid-bottom">
+    <view class='action'>
+        <text class='cuIcon-titles text-orange '></text>
+        会员管理
+    </view>
+</view>
+<view class="cu-bar margin-top bg-white solid-bottom">
+    <view class='action'>
+        <text class='cuIcon-titles text-orange '></text>
+        客服管理
+    </view>
+</view>
+<view class="cu-bar margin-top bg-white solid-bottom">
+    <view class='action'>
+        <text class='cuIcon-titles text-orange '></text>
+        订单管理
+    </view>
+</view>
