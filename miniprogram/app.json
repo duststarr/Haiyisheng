@@ -1,15 +1,9 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/index/index",
     "pages/about/about",
-    "pages/product/list",
-    "pages/device/device",
-    "pages/worker/worker",
-    "pages/member/member",
     "pages/product/detail",
-    "pages/aftersale/aftersale",
-    "pages/admin/admin"
+    "pages/aftersale/aftersale"
   ],
   "window": {
     "backgroundTextStyle": "light",
