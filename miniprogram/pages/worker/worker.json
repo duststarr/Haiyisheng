@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "usertop": "/components/usertop/usertop"
+  }
 }

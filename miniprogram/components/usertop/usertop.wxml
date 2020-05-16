@@ -1,0 +1,22 @@
+<!-- 头部 -->
+<view class="UCenter-bg">
+  <!-- user info -->
+  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='cu-btn round bg-white shadow'>
+    授权登录
+  </button>
+  <block wx:else>
+    <view>
+      <view>
+        <view class="cu-avatar xl round solids">
+          <image src="{{userInfo.avatarUrl}}" class="png" mode="widthFix"></image>
+        </view>
+        <view class="text-xl">{{userInfo.nickName}}</view>
+        <view class="text-xl">
+          <text class="text-df">手机</text>
+          13612344321
+        </view>
+      </view>
+    </view>
+  </block>
+  <image src="/images/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+</view>

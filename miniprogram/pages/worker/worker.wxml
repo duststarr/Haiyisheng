@@ -1,21 +1,34 @@
-<cu-custom bgColor="bg-gradual-blue">
-  <view slot="content">ColorUI 空白模板</view>
-</cu-custom>
-<view class="margin-xl padding-xl bg-white radius shadow shadow-lg">
-  <view class="flex justify-center">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='cu-btn round bg-green shadow'> 获取头像昵称 </button>
-    <block wx:else>
-      <view class='text-center'>
-        <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
-        <view class="padding">{{userInfo.nickName}}</view>
+<scroll-view>
+  <!-- 头部 -->
+  <usertop></usertop>
+  <!-- money earn -->
+  <view class="padding-sm flex text-center text-grey bg-white shadow-warp">
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange">9999</view>
+      <view>
+        <text class="cuIcon-recharge"></text>
+        我的收益
       </view>
-    </block>
+    </view>
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-blue">888</view>
+      <view>
+        <text class="cuIcon-refund"></text>
+        可提现金额
+      </view>
+    </view>
   </view>
-</view>
-<view class="margin-xl padding-xl bg-white radius shadow shadow-lg">
-    <button  bindtap="onGetOpenid" class='cu-btn round bg-green shadow'> call the cloud </button>
-
-</view>
-<view class="text-center margin-top">
-  <text class="text-grey text-xl">{{motto}}</text>
-</view>
+  <view class="cu-bar bg-white margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-green"></text>
+      <text>我的安装定单</text>
+    </view>
+  </view>
+  <view class="cu-bar bg-white margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-green"></text>
+      <text>我的售后订单</text>
+    </view>
+  </view>
+  <button>客服须知</button>
+</scroll-view>

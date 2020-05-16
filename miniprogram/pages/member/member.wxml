@@ -1,2 +1,17 @@
-<!--miniprogram/pages/member/member.wxml-->
-<text>miniprogram/pages/member/member.wxml</text>
+<usertop></usertop>
+  <view class="padding-sm flex text-center text-grey bg-white shadow-warp">
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange">9999</view>
+      <view>
+        <text class="cuIcon-recharge"></text>
+        代金券
+      </view>
+    </view>
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-blue">888</view>
+      <view>
+        <text class="cuIcon-refund"></text>
+        推广奖励
+      </view>
+    </view>
+  </view>
