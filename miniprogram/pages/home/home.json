@@ -3,6 +3,7 @@
     "product": "/pages/product/list",
     "device": "/pages/device/device",
     "member": "/pages/member/member",
-    "income": "/pages/income/income"
+    "worker": "/pages/worker/worker",
+    "admin": "/pages/admin/admin"
   }
 }

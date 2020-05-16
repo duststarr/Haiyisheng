@@ -1,36 +1,43 @@
 <cu-custom bgColor="bg-gradual-blue">
-  <view slot="content">海益生净水</view>
+	<view slot="content">海益生净水</view>
 </cu-custom>
 
 
 <product wx:if="{{PageCur=='product'}}"></product>
 <device wx:if="{{PageCur=='device'}}"></device>
 <member wx:if="{{PageCur=='member'}}"></member>
-<income wx:if="{{PageCur=='income'}}"></income>
+<worker wx:if="{{PageCur=='worker'}}"></worker>
+<admin wx:if="{{PageCur=='admin'}}"></admin>
 
 <view class="cu-bar tabbar bg-white shadow foot">
-  <view class="action" bindtap="NavChange" data-cur="product">
-    <view class='cuIcon-cu-image'>
-      <image src="/images/tabbar/product{{PageCur=='product'?'_cur':''}}.png"></image>
-    </view>
-    <view class="{{PageCur=='product'?'text-green':'text-gray'}}">产品首页</view>
-  </view>
-  <view class="action" bindtap="NavChange" data-cur="device">
-    <view class='cuIcon-cu-image'>
-      <image src="/images/tabbar/device{{PageCur=='device'?'_cur':''}}.png"></image>
-    </view>
-    <view class="{{PageCur=='device'?'text-green':'text-gray'}}">我的设备</view>
-  </view>
-  <view class="action" bindtap="NavChange" data-cur="member">
-    <view class='cuIcon-cu-image'>
-      <image src="/images/tabbar/member{{PageCur=='member'?'_cur':''}}.png"></image>
-    </view>
-    <view class="{{PageCur=='member'?'text-green':'text-gray'}}">会员权益</view>
-  </view>
-  <view class="action" bindtap="NavChange" data-cur="income">
-    <view class='cuIcon-cu-image'>
-      <image src="/images/tabbar/income{{PageCur=='income'?'_cur':''}}.png"></image>
-    </view>
-    <view class="{{PageCur=='income'?'text-green':'text-gray'}}">客服收益</view>
-  </view>
+	<view class="action" bindtap="NavChange" data-cur="product">
+		<view class='cuIcon-cu-image'>
+			<image src="/images/tabbar/product{{PageCur=='product'?'_cur':''}}.png"></image>
+		</view>
+		<view class="{{PageCur=='product'?'text-green':'text-gray'}}">产品介绍</view>
+	</view>
+	<view class="action" bindtap="NavChange" data-cur="device">
+		<view class='cuIcon-cu-image'>
+			<image src="/images/tabbar/device{{PageCur=='device'?'_cur':''}}.png"></image>
+		</view>
+		<view class="{{PageCur=='device'?'text-green':'text-gray'}}">我的设备</view>
+	</view>
+	<view class="action" bindtap="NavChange" data-cur="member">
+		<view class='cuIcon-cu-image'>
+			<image src="/images/tabbar/member{{PageCur=='member'?'_cur':''}}.png"></image>
+		</view>
+		<view class="{{PageCur=='member'?'text-green':'text-gray'}}">会员权益</view>
+	</view>
+	<view class="action" bindtap="NavChange" data-cur="worker">
+		<view class='cuIcon-cu-image'>
+			<image src="/images/tabbar/worker{{PageCur=='worker'?'_cur':''}}.png"></image>
+		</view>
+		<view class="{{PageCur=='worker'?'text-green':'text-gray'}}">客服收益</view>
+	</view>
+		<view class="action" bindtap="NavChange" data-cur="admin">
+		<view class='cuIcon-cu-image'>
+			<image src="/images/tabbar/admin{{PageCur=='admin'?'_cur':''}}.png"></image>
+		</view>
+		<view class="{{PageCur=='admin'?'text-green':'text-gray'}}">后台管理</view>
+	</view>
 </view>

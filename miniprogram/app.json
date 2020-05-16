@@ -5,10 +5,11 @@
     "pages/about/about",
     "pages/product/list",
     "pages/device/device",
-    "pages/income/income",
+    "pages/worker/worker",
     "pages/member/member",
     "pages/product/detail",
-    "pages/aftersale/aftersale"
+    "pages/aftersale/aftersale",
+    "pages/admin/admin"
   ],
   "window": {
     "backgroundTextStyle": "light",
