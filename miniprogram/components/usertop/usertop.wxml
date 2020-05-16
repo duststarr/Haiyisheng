@@ -5,18 +5,10 @@
     授权登录
   </button>
   <block wx:else>
-    <view>
-      <view>
-        <view class="cu-avatar xl round solids">
-          <image src="{{userInfo.avatarUrl}}" class="png" mode="widthFix"></image>
-        </view>
-        <view class="text-xl">{{userInfo.nickName}}</view>
-        <view class="text-xl">
-          <text class="text-df">手机</text>
-          13612344321
-        </view>
-      </view>
+    <view class="cu-avatar xl round solids">
+      <image src="{{userInfo.avatarUrl}}" class="png" mode="widthFix"></image>
     </view>
+    <view class="text-xl">{{userInfo.nickName}}</view>
   </block>
   <image src="/images/wave.gif" mode="scaleToFill" class="gif-wave"></image>
 </view>

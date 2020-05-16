@@ -1,17 +1,61 @@
 <usertop></usertop>
-  <view class="padding-sm flex text-center text-grey bg-white shadow-warp">
-    <view class="flex flex-sub flex-direction solid-right">
-      <view class="text-xxl text-orange">9999</view>
-      <view>
-        <text class="cuIcon-recharge"></text>
-        代金券
-      </view>
-    </view>
-    <view class="flex flex-sub flex-direction solid-right">
-      <view class="text-xxl text-blue">888</view>
-      <view>
-        <text class="cuIcon-refund"></text>
-        推广奖励
-      </view>
+<view class="padding-sm flex text-center text-grey bg-white shadow-warp">
+  <view class="flex flex-sub flex-direction solid-right">
+    <view class="text-xxl text-orange">9999</view>
+    <view>
+      <text class="cuIcon-recharge"></text>
+      代金券
     </view>
   </view>
+  <view class="flex flex-sub flex-direction solid-right">
+    <view class="text-xxl text-blue">888</view>
+    <view>
+      <text class="cuIcon-refund"></text>
+      推广奖励
+    </view>
+  </view>
+  <view class="flex flex-sub flex-direction solid-right">
+    <view class="text-xxl text-blue">66</view>
+    <view>
+      <text class="cuIcon-refund"></text>
+      粉丝数
+    </view>
+  </view>
+</view>
+<view class="cu-card bg-white margin-top">
+  <view class="cu-bar bg-red solid-bottom align-center">
+    <view class="action ">自用省钱，推广赚钱！</view>
+  </view>
+  <view class='flex'>
+    <button>分享小程序</button>
+    <button>分享二维码</button>
+  </view>
+  每人的分享都是独一无二的，详见会员须知
+</view>
+<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/about/about" hover-class="none">
+      <text class="cuIcon-text text-green"></text>
+      <text class="text-grey">会员须知</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/about/about" hover-class="none">
+      <text class="cuIcon-deliver text-green"></text>
+      <text class="text-grey">我的推广成果</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <navigator class="content" url="/pages/about/about" hover-class="none">
+      <text class="cuIcon-settings text-green"></text>
+      <text class="text-grey">收益详情</text>
+    </navigator>
+  </view>
+  <view class="cu-item arrow">
+    <button class="cu-btn content" open-type="feedback">
+      <text class="cuIcon-writefill text-cyan"></text>
+      <text class="text-grey">我的推广二维码</text>
+    </button>
+  </view>
+</view>
+<view class="cu-tabbar-height"></view>
