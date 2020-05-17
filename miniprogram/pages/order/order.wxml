@@ -2,43 +2,50 @@
     <view slot="backText">返回</view>
     <view slot="content">预约安装</view>
 </cu-custom>
-<view class="cu-bar bg-white solid-bottom">
-    <view class="action">
-        <text class="cuIcon-title text-orange"></text>
-        预约安装工作流
-    </view>
-    <view class="action">
-        <button class="cu-btn bg-pink shadow" bindtap="nextStep">演示下一步</button>
-    </view>
-</view>
-<view class="bg-white padding">
-    <view class="cu-steps">
-        <view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key>
-            <text class="cuIcon-{{item.icon}}"></text>
-            {{item.name}}
+<scroll-view>
+    <view class="bg-white padding">
+        <view class="cu-steps">
+            <view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key>
+                <text class="cuIcon-{{item.icon}}"></text>
+                {{item.name}}
+            </view>
         </view>
     </view>
-</view>
-<view class='bg-cyan content margin padding' wx:if="{{currstep>=0}}">
-    <view class="btn-area" wx:if="{{null==addressInfo}}">
-        <button type="primary" bindtap="chooseAddress">填写安装地址</button>
-    </view>
-    <view class='content' wx:else>
-        <view>
-            <text class="text-bold">{{addressInfo.userName}}</text>,{{addressInfo.telNumber}}
+    <view class='margin-top'>
+        <view class="btn-area" wx:if="{{null==addressInfo}}">
+            <button type="primary" bindtap="chooseAddress">选择地址安装吧</button>
         </view>
-        <view>{{addressInfo.detailInfo}}</view>
+        <view class='cu-card' wx:else>
+            <view class="cu-bar bg-white solid-bottom">
+                <view class="action">
+                    <text class="cuIcon-title text-orange"></text>
+                    预约安装地址
+                </view>
+                <view class="action" wx:if="{{currstep<2}}">
+                    <button class="cu-btn bg-pink shadow" bindtap="chooseAddress">更换</button>
+                </view>
+            </view>
+            <view class='content bg-white padding text-cyan'>
+                <view>
+                    <text class="text-bold">{{addressInfo.userName}}</text>
+                    ,{{addressInfo.telNumber}}
+                </view>
+                <view class='content'>
+                    {{addressInfo.provinceName}} {{addressInfo.cityName}} {{addressInfo.countyName}} {{addressInfo.detailInfo}}
+                </view>
+            </view>
+        </view>
     </view>
+    <view class='btn-area margin-top' wx:if="{{currstep==3}}">
+        <button type="primary" bindtap="pay">充值开始净水</button>
+    </view>
+    <view class="cu-timeline margin-top-sm">
+        <view class="cu-item" wx:for="{{logs}}" wx:if="{{currstep>index}}">
+            <view class='text-black'>{{item.content}}</view>
+        </view>
+    </view>
+    <view class="cu-tabbar-height"></view>
+</scroll-view>
+<view class="flex cu-bar foot">
+    <button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
 </view>
-<view class='bg-cyan content margin padding' wx:if="{{null!=addressInfo}}">
-    <view>感谢您选择我们的产品，正在安排任务。</view>
-</view>
-<view class='bg-cyan content margin padding' wx:if="{{currstep>=1}}">
-    （这步是后台任务派遣完变更的）
-    客服9527已接单，电话13611112222，稍后客服将与您联系。
-</view>
-<view class='bg-cyan content margin padding' wx:if="{{currstep>=2}}">
-    工人安装完成后，充值开启服务吧。
-    <button class='cu-btn block bg-green lg'>充值开始净水</button>
-</view>
-<view class='bg-cyan content margin padding' wx:if="{{currstep>=3}}">2020-06-06开启净水生活</view>

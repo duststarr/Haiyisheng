@@ -19,24 +19,35 @@ Page({
       name: '开始服务'
     }, ],
     currstep: 0,
-    addressInfo: null
+    addressInfo: null,
+    logs: [
+      {content: '已预约，稍后客服将与您约定上门安装时间。感谢您选择我们的产品。'},
+      {content: '客服9527已接单，电话13611112222'},
+      {content: '工人安装完成后，充值开启服务吧。'},
+      {content: '2020-06-06开启净水生活'},
+    ]
   },
   nextStep() {
     this.setData({
-      currstep: this.data.currstep == this.data.steps.length - 1 ? 0 : this.data.currstep + 1
+      currstep: this.data.currstep == this.data.steps.length ? 0 : this.data.currstep + 1
     })
   },
   chooseAddress() {
     wx.chooseAddress({
       success: (res) => {
+        var curr = this.data.currstep==0?1:this.data.currstep;
         this.setData({
-          addressInfo: res
+          addressInfo: res,
+          currstep: curr
         })
       },
       fail: function(err) {
         console.log(err)
       }
     })
+  },
+  pay() {
+
   },
   /**
    * 生命周期函数--监听页面加载
