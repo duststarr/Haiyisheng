@@ -75,32 +75,32 @@ Component({
       {
         pos: '1',
         name: 'PP膜',
-        lifespan: 80,
-        intro: "PP膜PP膜PP膜PP膜PP膜"
+        lifespan: 25,
+        intro: "可以过滤水中泥沙、铁锈、悬浮物、胶体、虫 卵等固态杂质"
       },
       {
         pos: '2',
         name: '活性炭',
-        lifespan: 40,
-        intro: "活性炭活性炭活性炭"
+        lifespan: 9,
+        intro: "深层次吸附水中余氯、卤代物以及对人体有害 的有机物，改善口感"
       },
       {
         pos: '3',
         name: '超滤膜',
         lifespan: 70,
-        intro: "超滤膜超滤膜超滤膜超滤膜超滤膜"
+        intro: "去除微生物、重金属离子、细菌、病毒等物质， 保留人体所需矿物质和微量元素"
       },
       {
         pos: '4',
         name: 'RO膜',
-        lifespan: 90,
-        intro: "RO膜"
+        lifespan: 70,
+        intro: "进一步有效去除溶解盐类、微生物、重金属离 子、细菌、病毒等物质"
       },
       {
         pos: '5',
         name: '活性炭',
-        lifespan: 60,
-        intro: "活性炭活性炭活性炭活性炭活性炭活性炭活性炭活性炭活性炭活性炭"
+        lifespan: 70,
+        intro: "进一步吸附水中异味、异色，改善口感，使出 水更加甘甜可口"
       }
     ]
   },

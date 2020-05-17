@@ -23,11 +23,13 @@
     <view class='prog-bar margin-left'>
       <view wx:if='{{0==TabCur}}'>
         <view class="cu-progress round">
-          <view class="bg-pink" style="width:{{item.lifespan}}%;"></view>
+          <view wx:if="{{item.lifespan<11}}" class="bg-red" style="width:{{item.lifespan}}%;"></view>
+          <view wx:elif="{{item.lifespan<31}}" class="bg-yellow" style="width:{{item.lifespan}}%;"></view>
+          <view wx:else class="bg-blue" style="width:{{item.lifespan}}%;"></view>
         </view>
-        <text class="margin-left">已使用：{{item.lifespan}}%；剩余：{{100-item.lifespan}}%。</text>
+        <text class="margin-left">已使用：{{100-item.lifespan}}%；剩余：{{item.lifespan}}%。</text>
       </view>
-      <view wx:if='{{1==TabCur}}'>
+      <view class='solids-bottom bg-white padding-tb-xs' wx:if='{{1==TabCur}}'>
         <text>{{item.intro}}</text>
       </view>
     </view>

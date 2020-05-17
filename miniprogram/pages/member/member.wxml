@@ -22,8 +22,8 @@
     </view>
   </view>
 </view>
-<view class="cu-bar bg-red solid-bottom margin-top flex">
-  <view class="action">自用省钱，推广赚钱！</view>
+<view class="margin-top padding bg-red">
+  <view class="action text-center text-xl">自用省钱，推广赚钱！</view>
 </view>
 <view class="cu-list menu card-menu margin-top-sm margin-bottom-xl shadow-lg radius">
   <view class="cu-item arrow">
