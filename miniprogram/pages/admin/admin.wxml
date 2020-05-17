@@ -1,18 +1,48 @@
+
+<!-- 会员管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
-    <view class='action'>
+    <view class='action text-gray'>
         <text class='cuIcon-titles text-orange '></text>
-        会员管理
+        会员管理(低优先级)
     </view>
 </view>
+<!-- 客服管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
-    <view class='action'>
+    <view class='action text-gray'>
         <text class='cuIcon-titles text-orange '></text>
-        客服管理
+        客服管理(低优先级)
     </view>
 </view>
+<!-- 订单管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
     <view class='action'>
         <text class='cuIcon-titles text-orange '></text>
         订单管理
     </view>
 </view>
+<view class="padding-sm flex text-center text-grey bg-white shadow-warp">
+  <view class="flex flex-sub flex-direction solid-right">
+    <view class="text-xxl text-orange">3</view>
+    <view>
+      <text class="cuIcon-recharge"></text>
+      未处理
+    </view>
+  </view>
+  <view class="flex flex-sub flex-direction solid-right">
+    <view class="text-xxl text-blue">6</view>
+    <view>
+      <text class="cuIcon-refund"></text>
+      进行中
+    </view>
+  </view>
+  <view class="flex flex-sub flex-direction solid-right">
+    <view class="text-xxl text-blue">88</view>
+    <view>
+      <text class="cuIcon-refund"></text>
+      已完成
+    </view>
+  </view>
+</view>
+
+<!-- 修正底部TABBAR -->
+<view class="cu-tabbar-height"></view>
