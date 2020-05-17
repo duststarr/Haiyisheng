@@ -24,4 +24,5 @@
     <button class="btn margin" type="primary" bindtap="showIntro" data-id='1'>开启净水生活</button>
   </view>
 </view>
+<view class='text-xl margin padding text-center'>先缕清功能及关系，定型之后再美化</view>
 <view class="cu-tabbar-height"></view>
