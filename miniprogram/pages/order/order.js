@@ -110,7 +110,6 @@ Page({
    */
   onShow: function () {
     this.updateState();
-
   }
 
 })

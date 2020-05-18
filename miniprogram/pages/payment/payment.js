@@ -19,7 +19,10 @@ Page({
     wx.showToast({
       title: this.data.policies[policy].content,
       icon: 'none',
-      duration: 2000
+      duration: 2000,
+      success: ()=>{
+        setTimeout(wx.navigateBack,2000)
+      }
     })
   },
   /**
