@@ -22,7 +22,7 @@
                     预约安装地址
                 </view>
                 <view class="action" wx:if="{{currstep<2}}">
-                    <button class="cu-btn bg-pink shadow" bindtap="chooseAddress">更换</button>
+                    <button class="cu-btn bg-pink shadow" bindtap="changeAddress">更换</button>
                 </view>
             </view>
             <view class='content bg-white padding text-cyan'>

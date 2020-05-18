@@ -1,4 +1,6 @@
 // miniprogram/pages/order/order.js
+const app = getApp()
+
 Page({
 
   /**
@@ -17,14 +19,14 @@ Page({
     }, {
       icon: 'wefill',
       name: '开始服务'
-    }, ],
+    },],
     currstep: 0,
     addressInfo: null,
     logs: [
-      {content: '已预约，稍后客服将与您约定上门安装时间。感谢您选择我们的产品。'},
-      {content: '客服9527已接单，电话13611112222'},
-      {content: '工人安装完成后，充值开启服务吧。'},
-      {content: '2020-06-06开启净水生活'},
+      { content: '已预约，稍后客服将与您约定上门安装时间。感谢您选择我们的产品。' },
+      { content: '客服9527已接单，电话13611112222' },
+      { content: '工人安装完成后，充值开启服务吧。' },
+      { content: '2020-06-06开启净水生活' },
     ]
   },
   nextStep() {
@@ -33,22 +35,55 @@ Page({
     })
   },
   chooseAddress() {
+    var that = this;
     wx.chooseAddress({
       success: (res) => {
-        var curr = this.data.currstep==0?1:this.data.currstep;
-        this.setData({
-          addressInfo: res,
-          currstep: curr
+        wx.cloud.callFunction({
+          name: 'haiyisheng',
+          data: {
+            action: 'setupOrder',
+            address: res
+          },
+          success: res => {
+            that.updateState();
+          }
         })
       },
-      fail: function(err) {
+      fail: function (err) {
         console.log(err)
       }
     })
   },
+  changeAddress() {
+    wx.showToast({
+      title: '暂时不可更改',
+      icon: 'none',
+      duration: 3000
+    })
+  },
   pay() {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/payment/payment'
+    })
+  },
+  updateState() {
+    console.log('call updateSate')
+    var that = this;
+    wx.cloud.callFunction({
+      name: 'haiyisheng',
+      data: { action: 'userGetOrderInfo' },
+      success: res => {
+        console.log('cloud userGetOrderInfo', res)
+        if (res.result.length == 0)
+          return;
+        const result = res.result[0];
+        var state = result.state;
+        that.setData({
+          addressInfo: result.addr1,
+          state: state,
+          logs: result.logs
+        }) 
+      }
     })
   },
   /**
@@ -69,41 +104,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+    this.updateState();
 
   }
+
 })

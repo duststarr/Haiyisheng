@@ -1,0 +1,6 @@
+class wxcloud{
+    constructor(parms) {
+
+    }
+    
+}
