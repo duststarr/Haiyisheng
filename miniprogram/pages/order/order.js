@@ -46,6 +46,7 @@ Page({
     })
   },
   updateState() {
+    var that = this
     wxcloud('userGetOrderInfo').then(res => {
       that.setData({
         order: res.result[0] || null
