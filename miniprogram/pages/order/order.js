@@ -20,6 +20,7 @@ Page({
       icon: 'wefill',
       name: '开始服务'
     },],
+    loadModal: false,
     currstep: 0,
     addressInfo: null,
     logs: [
@@ -67,13 +68,14 @@ Page({
     })
   },
   updateState() {
-    console.log('call updateSate')
     var that = this;
+    that.setData({
+      loadModal: true
+    })
     wx.cloud.callFunction({
       name: 'haiyisheng',
       data: { action: 'userGetOrderInfo' },
       success: res => {
-        console.log('cloud userGetOrderInfo', res)
         if (res.result.length == 0)
           return;
         const result = res.result[0];
@@ -83,6 +85,9 @@ Page({
           state: state,
           logs: result.logs
         }) 
+        that.setData({
+          loadModal: false
+        })
       }
     })
   },
