@@ -20,15 +20,9 @@ Page({
       icon: 'wefill',
       name: '开始服务'
     },],
-    loadModal: false,
     currstep: 0,
-    addressInfo: null,
-    logs: [
-      { content: '已预约，稍后客服将与您约定上门安装时间。感谢您选择我们的产品。' },
-      { content: '客服9527已接单，电话13611112222' },
-      { content: '工人安装完成后，充值开启服务吧。' },
-      { content: '2020-06-06开启净水生活' },
-    ]
+    loadModal: false,
+    order: null
   },
   nextStep() {
     this.setData({
@@ -55,11 +49,22 @@ Page({
       }
     })
   },
-  changeAddress() {
-    wx.showToast({
-      title: '暂时不可更改',
-      icon: 'none',
-      duration: 3000
+  cancelOrder() {
+    var that = this;
+    this.setData({ loadModal: true })
+
+    wx.cloud.callFunction({
+      name: 'haiyisheng',
+      data: { action: 'cancelOrder' },
+      success: res => {
+        this.setData({ loadModal: false })
+        this.setData({ order: null })
+
+        that.updateState()
+      },
+      fail: res => {
+        this.setData({ loadModal: false })
+      }
     })
   },
   pay() {
@@ -69,25 +74,19 @@ Page({
   },
   updateState() {
     var that = this;
-    that.setData({
-      loadModal: true
-    })
+    this.setData({ loadModal: true })
     wx.cloud.callFunction({
       name: 'haiyisheng',
       data: { action: 'userGetOrderInfo' },
       success: res => {
-        if (res.result.length == 0)
-          return;
-        const result = res.result[0];
-        var state = result.state;
+        that.setData({ loadModal: false })
         that.setData({
-          addressInfo: result.addr1,
-          state: state,
-          logs: result.logs
-        }) 
-        that.setData({
-          loadModal: false
+          order: res.result[0]
         })
+      },
+      fail: () => {
+        console.log('cloud function error')
+        that.setData({ loadModal: false })
       }
     })
   },
