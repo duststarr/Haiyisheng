@@ -49,8 +49,3 @@
 <view class="flex cu-bar foot">
     <button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
 </view>
-<view class='cu-load load-modal' wx:if="{{loadModal}}">
-    <view class='cuIcon-emojifill text-orange'></view>
-    <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
-    <view class='gray-text'>加载中...</view>
-</view>
