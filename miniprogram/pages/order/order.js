@@ -1,5 +1,4 @@
 // miniprogram/pages/order/order.js
-import wxcloud from '../../utils/wxcloud.js'
 const app = getApp()
 
 Page({
@@ -47,7 +46,7 @@ Page({
   },
   updateState() {
     var that = this
-    wxcloud('userGetOrderInfo').then(res => {
+    app.wxcloud('userGetOrderInfo').then(res => {
       that.setData({
         order: res.result[0] || null
       })

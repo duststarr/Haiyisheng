@@ -1,3 +1,6 @@
+import wxcloud from '/utils/wxcloud.js'
+
+
 
 !function () {
   var PageTmp = Page;
@@ -39,7 +42,6 @@
 
 App({
   onLaunch: function (e) {
-
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -100,6 +102,8 @@ App({
     })
   },
   onShow: function (e) {
+    this.wxcloud = wxcloud;
+
     if (e.query && e.query.openid) {
       wx.showModal({
         title: "推荐人：",
