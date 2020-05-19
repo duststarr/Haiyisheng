@@ -22,7 +22,7 @@
     <scroll-view wx:if="{{orders && orders.length>0 }}">
         <view class="cu-card case " wx:for="{{orders}}">
             <view class="cu-item shadow">
-                <view class='justify-between flex solids-bottom padding-lr padding-tb-sm text-xl'>
+                <view class='justify-between flex solids-bottom padding-lr padding-tb-sm'>
                     <view>{{item.type}}订单</view>
                     <view>{{item.state}}</view>
                 </view>
@@ -35,8 +35,11 @@
                         {{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
                     </view>
                 </view>
-                <view class='justify-between'>
-                    <button>分配</button>
+                <view class='justify-between flex solids-top'>
+                    <button class='cu-btn' wx:if="{{item.state === ('新订单') || item.state === ('待接单')}}">分配客服</button>
+                    <view class='padding-sm' wx:else>接单客服</view>
+                    <view class='padding-sm'><text class="text-bold">{{item.address.userName}}</text>
+                        ,{{item.address.telNumber}}</view>
                 </view>
             </view>
         </view>
