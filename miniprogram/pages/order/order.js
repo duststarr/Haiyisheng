@@ -32,12 +32,12 @@ Page({
     var that = this;
     wx.chooseAddress({
       success: res => {
-        app.wxcloud('setupOrder', { address: res }).then(that.updateState)
+        app.wxcloud('orderCreate', { address: res }).then(that.updateState)
       }
     })
   },
   cancelOrder() {
-    app.wxcloud('cancelOrder').then(this.updateState)
+    app.wxcloud('orderCancel').then(this.updateState)
   },
   pay() {
     wx.navigateTo({
@@ -46,7 +46,7 @@ Page({
   },
   updateState() {
     var that = this
-    app.wxcloud('userGetOrderInfo').then(res => {
+    app.wxcloud('orderGetCreating').then(res => {
       that.setData({
         order: res.result[0] || null
       })

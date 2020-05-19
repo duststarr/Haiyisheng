@@ -5,24 +5,48 @@ const db = cloud.database()
 const wxContext = cloud.getWXContext()
 const _ = db.command
 
-const actions = {};
-
+const actions = {
+  // ,
+  // ,
+  // ,
+  // orderDispatch,
+  // orderAccept,
+  // orderSuccess,
+  // orderRecharge,
+  // orderDone,
+}
 // 云函数入口函数
 exports.main = async (event, context) => {
   if (event.action && actions.hasOwnProperty(event.action)) {
     return actions[event.action](event, context);
   }
-  return { error: 'action do not find.' }
+  return { error: 'action not find:'+event.action }
 }
-actions.setupOrder = async (event, context) => {
+
+/**=============
+ * order
+ * 
+ * type: install,move,recycle,replace,repair
+ * type: 新装，移机，拆机，换芯，报修
+ * state: created,dispatched,accepted,completed,done
+ * state: 新订单，待接单，待执行，待确认，已完成
+ * done: true,false //完成标志
+ */
+
+
+/**
+ * 建立订单，用户填写联系方式即【预约安装】
+ * @param address 用户联系方式
+ */
+actions.orderCreate = async (event, context) => {
   const order = db.collection('order');
   const res = await order.add({
     data: {
       userID: wxContext.OPENID,
-      type: 'NEW_ORDER',
+      type: '新装',
       address: event.address,
       createTime: new Date(),
-      state: 'user created',
+      state: '新订单',
       done: false,
       logs: [
         {
@@ -33,27 +57,39 @@ actions.setupOrder = async (event, context) => {
   })
   return res;
 }
-actions.userGetOrderInfo = async (event, context) => {
+/**
+ * 用户获取本人【预约安装】订单的信息
+ * @return 数据库get的结果
+ */
+actions.orderGetCreating = async (event, context) => {
   const order = db.collection('order');
   const res = await order.where({
     userID: wxContext.OPENID,
-    type: 'NEW_ORDER',
-    done: false
+    type: '新装'
   }).get()
-  console.log('userGetOrderInfo', res)
+  console.log('orderGetCreating', res)
   return res.data;
 }
-actions.cancelOrder = async (event, context) => {
+/**
+ * 用户本人取消订单
+ */
+actions.orderCancel = async (event, context) => {
   const order = db.collection('order');
   const res = await order.where({
     userID: wxContext.OPENID,
-    type: 'NEW_ORDER'
-  }).update({
-    data: {
-      done: true,
-      logs: _.push([{ content: '用户撤销申请' }])
-    }
-  })
+    type: '新装'
+  }).remove()
 
+  return res;
+}
+
+actions.orderGet = async (event, context) => {
+  const order = db.collection('order');
+  const condition = {}
+  if( event.type )
+    condition.type = event.type
+  if( event.state )
+    condition.state = event.state
+  const res = await order.where(condition).get()
   return res;
 }
