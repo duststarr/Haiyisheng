@@ -1,0 +1,8 @@
+/* miniprogram/pages/admin/orderMgr/orderMgr.wxss */
+
+.filter{
+    position: fixed;
+    overflow-x: hidden;
+    background-color: #f4f4f4;
+    z-index: 999;
+}
