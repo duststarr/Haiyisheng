@@ -32,12 +32,12 @@ Page({
     var that = this;
     wx.chooseAddress({
       success: res => {
-        wxcloud('setupOrder', { address: res }).then(that.updateState)
+        app.wxcloud('setupOrder', { address: res }).then(that.updateState)
       }
     })
   },
   cancelOrder() {
-    wxcloud('cancelOrder').then(this.updateState)
+    app.wxcloud('cancelOrder').then(this.updateState)
   },
   pay() {
     wx.navigateTo({
