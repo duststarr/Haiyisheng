@@ -96,22 +96,12 @@ actions.orderCancel = async (event, context) => {
  */
 actions.orderGet = async (event, context) => {
   const order = db.collection('order');
-  const condition = {}
+  const param = {}
   if (event.type)
-    condition.type = event.type
-  if (event.state)
-    condition.state = event.state
-  switch (event.state) {
-    case '待处理': {
-      condition.state = '新订单'
-    }
-    case '进行中': {
-      condition.state = _.in(['待接单', '待执行', '待确认'])
-    }
-    case '已完成': {
-      condition.state = _.in(['已完成', '已取消'])
-    }
-  }
-  const res = await order.where(condition).get()
+    param.type = event.type
+  if (event.states)
+    param.state = _.in(event.states)
+  console.log('param',event.states)
+  const res = await order.where(param).get()
   return res.data;
 }
