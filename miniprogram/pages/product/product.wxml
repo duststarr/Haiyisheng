@@ -3,7 +3,7 @@
 </cu-custom>
 
 <swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-  <swiper-item wx:for="{{swiperList}}" wx:key>
+  <swiper-item wx:for="{{swiperList}}" wx:key='id'>
     <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
   </swiper-item>
 </swiper>

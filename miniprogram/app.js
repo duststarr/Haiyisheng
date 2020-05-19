@@ -19,23 +19,23 @@
     PageTmp(pageConfig);
   };
 }();
-function onGetOpenid() {
-  console.log('onGetOpenid')
+// function onGetOpenid() {
+//   console.log('onGetOpenid')
 
-  // 调用云函数
-  wx.cloud.callFunction({
-    name: 'login',
-    data: {},
-    success: res => {
-      const app = getApp()
-      console.log('[云函数] [login] user openid: ', res.result.openid)
-      app.globalData.openid = res.result.openid
-    },
-    fail: err => {
-      console.error('[云函数] [login] 调用失败', err)
-    }
-  })
-}
+//   // 调用云函数
+//   wx.cloud.callFunction({
+//     name: 'login',
+//     data: {},
+//     success: res => {
+//       const app = getApp()
+//       console.log('[云函数] [login] user openid: ', res.result.openid)
+//       app.globalData.openid = res.result.openid
+//     },
+//     fail: err => {
+//       console.error('[云函数] [login] 调用失败', err)
+//     }
+//   })
+// }
 
 App({
   onLaunch: function (e) {
@@ -54,17 +54,17 @@ App({
     }
 
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // var logs = wx.getStorageSync('logs') || []
+    // logs.unshift(Date.now())
+    // wx.setStorageSync('logs', logs)
 
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log('onLaunch login', res)
-      }
-    })
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //     console.log('onLaunch login', res)
+    //   }
+    // })
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -98,14 +98,11 @@ App({
         }
       }
     })
-
-    onGetOpenid()
   },
   onShow: function (e) {
-    console.log('onShow event', e)
     if (e.query && e.query.openid) {
       wx.showModal({
-        title: "share user",
+        title: "推荐人：",
         content: "openid:" + e.query.openid
       })
     }
