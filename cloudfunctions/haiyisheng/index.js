@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
   if (event.action && actions.hasOwnProperty(event.action)) {
     return actions[event.action](event, context);
   }
-  return { error: 'action not find:'+event.action }
+  return { error: 'action not find:' + event.action }
 }
 
 /**=============
@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
  * type: install,move,recycle,replace,repair
  * type: 新装，移机，拆机，换芯，报修
  * state: created,dispatched,accepted,completed,done
- * state: 新订单，待接单，待执行，待确认，已完成
+ * state: 新订单，待接单，待执行，待确认，已完成，已取消
  * done: true,false //完成标志
  */
 
@@ -65,7 +65,8 @@ actions.orderGetCreating = async (event, context) => {
   const order = db.collection('order');
   const res = await order.where({
     userID: wxContext.OPENID,
-    type: '新装'
+    type: '新装',
+    done: false
   }).get()
   console.log('orderGetCreating', res)
   return res.data;
@@ -78,18 +79,39 @@ actions.orderCancel = async (event, context) => {
   const res = await order.where({
     userID: wxContext.OPENID,
     type: '新装'
-  }).remove()
+  }).update({
+    data: {
+      done: true,
+      state: '已取消'
+    }
+  })
 
   return res;
 }
 
+/**
+ * 查询订单
+ * @param type
+ * @param state
+ */
 actions.orderGet = async (event, context) => {
   const order = db.collection('order');
   const condition = {}
-  if( event.type )
+  if (event.type)
     condition.type = event.type
-  if( event.state )
+  if (event.state)
     condition.state = event.state
+  switch (event.state) {
+    case '待处理': {
+      condition.state = '新订单'
+    }
+    case '进行中': {
+      condition.state = _.in(['待接单', '待执行', '待确认'])
+    }
+    case '已完成': {
+      condition.state = _.in(['已完成', '已取消'])
+    }
+  }
   const res = await order.where(condition).get()
-  return res;
+  return res.data;
 }

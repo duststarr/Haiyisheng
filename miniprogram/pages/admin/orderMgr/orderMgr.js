@@ -4,28 +4,37 @@ Page({
   data: {
     CustomBar: app.globalData.CustomBar,
 
-    order: null,
+    orders: null,
     stateCurr: 0,
-    orderCurr: 0,
-    orderTypes: ['全部', '新装', '拆机', '移机', '换芯', '报修'],
+    typeCurr: 0,
+    types: ['全部', '新装', '拆机', '移机', '换芯', '报修'],//新装，移机，拆机，换芯，报修
     states: ['全部状态', '待处理','进行中','已完成']
   },
   StateChange(e) {
     this.setData({
       stateCurr: e.currentTarget.dataset.id
     })
+    this.updateState()
   },
   TypeChange(e) {
     this.setData({
-      orderCurr: e.currentTarget.dataset.id
+      typeCurr: e.currentTarget.dataset.id
     })
+    this.updateState()
   },
   updateState() {
     var that = this
-    app.wxcloud('userGetOrderInfo').then(res => {
+    var param = {}
+    if(0 != this.data.stateCurr)
+      param.state = this.data.states[this.data.stateCurr]
+    if(0 != this.data.typeCurr)
+      param.type = this.data.types[this.data.typeCurr]
+    app.wxcloud('orderGet', param).then(res => {
+      console.log(res.result)
       that.setData({
-        order: res.result[0] || null
+        orders: res.result || null
       })
+      console.log(this.data.orders.length)
     })
   },
   onShow: function () {

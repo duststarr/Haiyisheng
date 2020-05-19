@@ -5,8 +5,8 @@
 <view class='filter' style="position:fixed;width:100%;top:{{CustomBar}}px">
     <scroll-view scroll-x class="bg-white nav">
         <view class="flex text-center">
-            <view class="cu-item flex-sub {{index==orderCurr?'text-orange cur':''}}" wx:for="{{orderTypes}}" wx:key bindtap="TypeChange" data-id="{{index}}">
-                {{orderTypes[index]}}
+            <view class="cu-item flex-sub {{index==typeCurr?'text-orange cur':''}}" wx:for="{{types}}" wx:key bindtap="TypeChange" data-id="{{index}}">
+                {{types[index]}}
             </view>
         </view>
     </scroll-view>
@@ -18,25 +18,28 @@
         </view>
     </scroll-view>
 </view>
-<scroll-view style='position:absolute;top:300rpx'>
-    <view class="cu-card case " wx:if="{{order}}" wx:for="{{5}}">
-        <view class="cu-item shadow">
-            <view class='justify-between flex solids-bottom padding-lr padding-tb-sm text-xl'>
-                <view>{{orderTypes[orderCurr]}}订单</view>
-                <view>{{states[stateCurr]}}</view>
-            </view>
-            <view class='content bg-white padding text-cyan'>
-                <view>
-                    <text class="text-bold">{{order.address.userName}}</text>
-                    ,{{order.address.telNumber}}
+<view style='position:absolute;top:300rpx;width:100%'>
+    <scroll-view wx:if="{{orders && orders.length>0 }}">
+        <view class="cu-card case " wx:for="{{orders}}">
+            <view class="cu-item shadow">
+                <view class='justify-between flex solids-bottom padding-lr padding-tb-sm text-xl'>
+                    <view>{{item.type}}订单</view>
+                    <view>{{item.state}}</view>
                 </view>
-                <view class='content'>
-                    {{order.address.provinceName}} {{order.address.cityName}} {{order.address.countyName}} {{order.address.detailInfo}}
+                <view class='content bg-white padding text-cyan'>
+                    <view>
+                        <text class="text-bold">{{item.address.userName}}</text>
+                        ,{{item.address.telNumber}}
+                    </view>
+                    <view class='content'>
+                        {{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
+                    </view>
                 </view>
-            </view>
-            <view class='justify-between'>
-                <button>分配</button>
+                <view class='justify-between'>
+                    <button>分配</button>
+                </view>
             </view>
         </view>
-    </view>
-</scroll-view>
+    </scroll-view>
+    <view class='padding margin text-gray text-xl text-center' wx:else>没有符合条件的订单</view>
+</view>
