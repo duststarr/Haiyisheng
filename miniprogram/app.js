@@ -14,7 +14,7 @@ import wxcloud from '/utils/wxcloud.js'
         console.log('global share with openid:' + app.globalData.openid)
         return {
           title: '海益生净水器',
-          path: '/pages/home/home?openid=' + app.globalData.openid,
+          path: '/pages/home/home?action=marketing&openid=' + app.globalData.openid,
           imageUrl: '/images/logo.jpg',
         };
       }
@@ -40,8 +40,6 @@ App({
       })
       // global functions
       this.wxcloud = wxcloud;
-      // 获取openid
-      this.onGetOpenid();
       // 鉴权
       this.authentication(e);
     }
@@ -69,7 +67,6 @@ App({
               console.log("userinfo", res.userInfo)
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
-              console.log('userInfoReadyCallback', this.userInfoReadyCallback)
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
@@ -92,42 +89,50 @@ App({
       }
     })
   },
-  onGetOpenid: function () {
-    // 调用云函数
+  authentication: function (e) {
+    const param = {}
+    const that = this;
+    if (e.query && e.query.action) {
+      param.action = e.query.action
+      param.fromWho = e.query.openid
+    }
     wx.cloud.callFunction({
       name: 'login',
+      data: param,
       success: res => {
         console.log('[云函数] [login] openid:', res.result.openid)
-        this.globalData.openid = res.result.openid
+        that.globalData.openid = res.result.openid
+        if (res.result.userDetail) {
+          that.globalData.userDetail = res.result.userDetail
+          if (that.userDetailReadyCallback) {
+            that.userDetailReadyCallback(res.result.userDetail)
+          }
+        }
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
       }
     })
-  },
-  authentication: function (e) {
-    if (e.query && e.query.action) {
-      const action = e.query.action
-      const who = e.query.openid
-      switch (action) {
-        case 'recruit': { // 招募工人或邀请合作商
+    // switch (action) {
+    //   case 'recruit': { // 招募工人或邀请合作商
 
-        } break;
-        case 'marketing': { // 会员推广
-          wx.showModal({
-            title: "推荐人：",
-            content: "openid:" + who
-          })
-        } break;
-      }
-    }
+    //   } break;
+    //   case 'marketing': { // 会员推广
+    //     wx.showModal({
+    //       title: "推荐人：",
+    //       content: "openid:" + fromWho
+    //     })
+    //   } break;
+    // }
   },
   onShow: function (e) {
 
 
   },
   globalData: {
-    userInfo: null,
+    userInfo: null, // 微信userinfo
+    openid: '',
+    userDetail: null, // 项目本身的user表
     ColorList: [{
       title: '嫣红',
       name: 'red',

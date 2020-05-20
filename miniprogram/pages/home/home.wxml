@@ -11,7 +11,7 @@
 		</view>
 		<view class="{{PageCur=='product'?'text-green':'text-gray'}}">产品介绍</view>
 	</view>
-	<view class="action" bindtap="NavChange" data-cur="device">
+	<view class="action" bindtap="NavChange" data-cur="device" wx:if="{{isClient}}">
 		<view class='cuIcon-cu-image'>
 			<image src="/images/tabbar/device{{PageCur=='device'?'_cur':''}}.png"></image>
 		</view>
@@ -23,13 +23,13 @@
 		</view>
 		<view class="{{PageCur=='member'?'text-green':'text-gray'}}">会员权益</view>
 	</view>
-	<view class="action" bindtap="NavChange" data-cur="worker">
+	<view class="action" bindtap="NavChange" data-cur="worker" wx:if="{{isWorker}}">
 		<view class='cuIcon-cu-image'>
 			<image src="/images/tabbar/worker{{PageCur=='worker'?'_cur':''}}.png"></image>
 		</view>
 		<view class="{{PageCur=='worker'?'text-green':'text-gray'}}">客服收益</view>
 	</view>
-		<view class="action" bindtap="NavChange" data-cur="admin">
+		<view class="action" bindtap="NavChange" data-cur="admin" wx:if="{{isAdmin}}">
 		<view class='cuIcon-cu-image'>
 			<image src="/images/tabbar/admin{{PageCur=='admin'?'_cur':''}}.png"></image>
 		</view>
