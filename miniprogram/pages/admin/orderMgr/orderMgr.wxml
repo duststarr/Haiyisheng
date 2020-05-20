@@ -18,7 +18,7 @@
         </view>
     </scroll-view>
 </view>
-<view style='position:absolute;top:300rpx;width:100%'>
+<view style='position:absolute;top:{{CustomBar+250}}rpx;width:100%'>
     <scroll-view wx:if="{{orders && orders.length>0 }}">
         <view class="cu-card case " wx:for="{{orders}}">
             <view class="cu-item shadow">
