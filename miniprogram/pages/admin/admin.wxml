@@ -6,16 +6,19 @@
 <view class="cu-bar margin-top bg-white solid-bottom">
     <view class='action text-gray'>
         <text class='cuIcon-titles text-orange '></text>
-        会员管理(低优先级)
+        会员管理
     </view>
 </view>
+
 <!-- 客服管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
-    <view class='action text-gray'>
+    <view class='action'>
         <text class='cuIcon-titles text-orange '></text>
-        客服管理(低优先级)
+        客服管理
     </view>
 </view>
+<navigator url='/pages/admin/workerMgr/workerMgr'><button>进入客服管理页面</button></navigator>
+
 <!-- 订单管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
     <view class='action'>
