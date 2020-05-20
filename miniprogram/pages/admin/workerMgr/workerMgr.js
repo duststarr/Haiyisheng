@@ -9,13 +9,7 @@ Page({
   data: {
     workers: []
   },
-  onInviteWorker() {
-    wx.showToast({
-      title: '制作中...',
-      icon:'none'
-    })
-  },
-  MockData(){
+  MockData() {
     var w = []
     w.push(app.globalData.userInfo)
     w.push(app.globalData.userInfo)
@@ -26,7 +20,7 @@ Page({
     console.log(w)
   },
 
-  
+
   // ListTouch触摸开始
   ListTouchStart(e) {
     this.setData({
@@ -43,7 +37,7 @@ Page({
 
   // ListTouch计算滚动
   ListTouchEnd(e) {
-    if (this.data.ListTouchDirection =='left'){
+    if (this.data.ListTouchDirection == 'left') {
       this.setData({
         modalName: e.currentTarget.dataset.target
       })
@@ -57,7 +51,7 @@ Page({
     })
   },
 
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -66,7 +60,7 @@ Page({
     console.log('on load')
     if (app.globalData.userInfo) {
       this.MockData()
-    }else{
+    } else {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -122,6 +116,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    console.log('workerMgr share')
+    return {
+      title: '加入海益生',
+      path: '/pages/home/home?action=recruit&openid=' + app.globalData.openid,
+      imageUrl: '/images/logo.jpg',
+    }
   }
 })
