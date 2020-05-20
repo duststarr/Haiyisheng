@@ -11,10 +11,11 @@ import wxcloud from '/utils/wxcloud.js'
     pageConfig = Object.assign({
       onShareAppMessage: function () {
         const app = getApp();
+        console.log('global share with openid:' + app.globalData.openid)
         return {
           title: '海益生净水器',
           path: '/pages/home/home?openid=' + app.globalData.openid,
-          imageUrl: '默认分享图片',
+          imageUrl: '/images/logo.jpg',
         };
       }
     }, pageConfig);
@@ -22,26 +23,10 @@ import wxcloud from '/utils/wxcloud.js'
     PageTmp(pageConfig);
   };
 }();
-// function onGetOpenid() {
-//   console.log('onGetOpenid')
-
-//   // 调用云函数
-//   wx.cloud.callFunction({
-//     name: 'login',
-//     data: {},
-//     success: res => {
-//       const app = getApp()
-//       console.log('[云函数] [login] user openid: ', res.result.openid)
-//       app.globalData.openid = res.result.openid
-//     },
-//     fail: err => {
-//       console.error('[云函数] [login] 调用失败', err)
-//     }
-//   })
-// }
 
 App({
   onLaunch: function (e) {
+
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -53,8 +38,13 @@ App({
         // env: 'my-env-id',
         traceUser: true,
       })
+      // global functions
+      this.wxcloud = wxcloud;
+      // 获取openid
+      this.onGetOpenid();
+      // 鉴权
+      this.authentication(e);
     }
-
     // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
@@ -79,7 +69,7 @@ App({
               console.log("userinfo", res.userInfo)
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
-              console.log('userInfoReadyCallback',this.userInfoReadyCallback)
+              console.log('userInfoReadyCallback', this.userInfoReadyCallback)
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
@@ -102,15 +92,39 @@ App({
       }
     })
   },
-  onShow: function (e) {
-    this.wxcloud = wxcloud;
+  onGetOpenid: function () {
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      success: res => {
+        console.log('[云函数] [login] openid:', res.result.openid)
+        this.globalData.openid = res.result.openid
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+  },
+  authentication: function (e) {
+    if (e.query && e.query.action) {
+      const action = e.query.action
+      const who = e.query.openid
+      switch (action) {
+        case 'recruit': { // 招募工人或邀请合作商
 
-    if (e.query && e.query.openid) {
-      wx.showModal({
-        title: "推荐人：",
-        content: "openid:" + e.query.openid
-      })
+        } break;
+        case 'marketing': { // 会员推广
+          wx.showModal({
+            title: "推荐人：",
+            content: "openid:" + who
+          })
+        } break;
+      }
     }
+  },
+  onShow: function (e) {
+
+
   },
   globalData: {
     userInfo: null,
