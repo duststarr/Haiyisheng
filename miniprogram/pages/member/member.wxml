@@ -33,10 +33,10 @@
     </navigator>
   </view>
   <view class="cu-item arrow">
-    <navigator class="content" url="/pages/about/about" hover-class="none">
+    <button class="content aligin-left text-left" open-type="share" hover-class="none">
       <text class="cuIcon-text text-green"></text>
-      <text class="text-grey">链接推广</text>
-    </navigator>
+      <text class="text-grey" >分享推广</text>
+    </button>
   </view>
   <view class="cu-item arrow">
     <navigator class="content" url="/pages/about/about" hover-class="none">
