@@ -1,0 +1,16 @@
+<cover-image class='_float_menu' style="left:{{posX}}px;top:{{poxY}}px;height:{{height}}px;width:{{width}}px" src='/images/home.png' bindtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd" catchtouchcancel='onTouchCancel' catchtap="onTap"></cover-image>
+
+
+<view class="cu-modal {{showConsole?'show':''}}" bindtap='onModalClick'>
+	<view class="cu-dialog" catchtap='onDialogClick'>
+		<view class="cu-bar bg-white justify-end">
+			<view class="content">调试面板</view>
+			<view class="action" bindtap="hideModal">
+				<text class="cuIcon-close text-red"></text>
+			</view>
+		</view>
+		<view class="padding-xl">
+            <slot name="content"></slot>
+		</view>
+	</view>
+</view>

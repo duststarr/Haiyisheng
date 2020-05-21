@@ -1,0 +1,9 @@
+/* components/floatMenu/floatMenu.wxss */
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+
+._float_menu{
+    position: fixed;
+    z-index: 999;
+}

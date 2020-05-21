@@ -29,10 +29,22 @@
 		</view>
 		<view class="{{PageCur=='worker'?'text-green':'text-gray'}}">客服收益</view>
 	</view>
-		<view class="action" bindtap="NavChange" data-cur="admin" wx:if="{{isAdmin}}">
+	<view class="action" bindtap="NavChange" data-cur="admin" wx:if="{{isAdmin}}">
 		<view class='cuIcon-cu-image'>
 			<image src="/images/tabbar/admin{{PageCur=='admin'?'_cur':''}}.png"></image>
 		</view>
 		<view class="{{PageCur=='admin'?'text-green':'text-gray'}}">后台管理</view>
 	</view>
 </view>
+<floatMenu>
+	<view slot="content">
+		<checkbox-group  bindchange="checkboxChange">
+			<label class="checkbox">
+				<checkbox value="isAdmin" checked='{{isAdmin}}'/>是管理员</label>
+			<label class="checkbox">
+				<checkbox value="isWorker" checked='{{isWorker}}'/>是客服</label>
+			<label class="checkbox">
+				<checkbox value="isClient" checked='{{isClient}}'/>是会员</label>
+		</checkbox-group>
+	</view>
+</floatMenu>

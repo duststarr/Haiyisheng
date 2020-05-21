@@ -48,5 +48,30 @@ Page({
         that.userDetailUpdated();
       }
     }
+  },
+
+  checkboxChange: function (e) {
+    const val = e.detail.value;
+    this.setData({
+      isAdmin: val.includes('isAdmin'),
+      isClient: val.includes('isClient'),
+      isWorker: val.includes('isWorker')
+    })
+    app.globalData.userDetail.isAdmin = val.includes('isAdmin')
+    app.globalData.userDetail.isClient = val.includes('isClient')
+    app.globalData.userDetail.isWorker = val.includes('isWorker')
+    if (app.globalData.userDetail._id) {
+      const db = wx.cloud.database();
+      const user = db.collection('user')
+      user.doc(app.globalData.userDetail._id).update({
+        data: {
+          isAdmin: val.includes('isAdmin'),
+          isClient: val.includes('isClient'),
+          isWorker: val.includes('isWorker')
+        }
+      }).then(res=>{
+        console.log('debug')
+      })
+    }
   }
 })
