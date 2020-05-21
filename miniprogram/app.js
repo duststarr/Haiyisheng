@@ -6,15 +6,19 @@ import wxcloud from '/utils/wxcloud.js'
   var PageTmp = Page;
 
   Page = function (pageConfig) {
-
     // 设置全局默认分享
     pageConfig = Object.assign({
       onShareAppMessage: function () {
         const app = getApp();
-        console.log('global share with openid:' + app.globalData.openid)
+        var path = '/pages/home/home';
+        // 如果分享者是客户会员
+        if (app.globalData.userDetail && app.globalData.userDetail.isClient) {
+          path = path + '?action=marketing&openid=' + app.globalData.userDetail._openid
+          console.log('global share with openid:' + app.globalData.userDetail._openid)
+        }
         return {
           title: '海益生净水器',
-          path: '/pages/home/home?action=marketing&openid=' + app.globalData.openid,
+          path: path,
           imageUrl: '/images/logo.jpg',
         };
       }
@@ -89,30 +93,80 @@ App({
       }
     })
   },
-  authentication: function (e) {
-    const param = {func:'login'}// 云函数参数不能全为空
-    const that = this;
-    if (e.query && e.query.action) {
-      param.action = e.query.action
-      param.fromWho = e.query.openid
-    }
-    wx.cloud.callFunction({
-      name: 'login',
-      data: param,
-      success: res => {
-        console.log('[云函数] [login] openid:', res.result.openid)
-        that.globalData.openid = res.result.openid
-        if (res.result.userDetail) {
-          that.globalData.userDetail = res.result.userDetail
-          if (that.userDetailReadyCallback) {
-            that.userDetailReadyCallback(res.result.userDetail)
-          }
+  authentication: async function (e) {
+    try {
+      const db = wx.cloud.database();
+      const user = db.collection('user'); // 仅创建者可读写
+
+      // 数据库中是否有此用户
+      const res = await user.get();
+      console.log('db.user.get=', res)
+      if (res.data.length > 0) {
+        this.globalData.userDetail = res.data[0]
+        if (this.userDetailReadyCallback) {
+          this.userDetailReadyCallback(this.globalData.userDetail)
         }
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
+      } else { // 新人
+        await user.add({
+          data: {
+            timeBeUser: new Date(),
+            referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
+            isAdmin: false,
+            isWorker: false,
+            isClient: false
+          }
+        })
       }
-    })
+    } catch (e) {
+      console.error('cloud database add error:', e)
+    }
+
+    // 新人首次打开,在数据库中插入
+    // if (0 == res.data.length) { // 新人
+    //   userDetail = {
+    //     _openid: '{openid}',
+    //     timeBeUser: new Date(),
+    //     referrer: 'marketing' == action ? fromWho : null, // 推荐人的openid
+    //     isAdmin: false,
+    //     isWorker: false,
+    //     isClient: false
+    //   }
+    //   await user.add({
+    //     data:userDetail
+    //   })
+    // }else { // 已存用户
+    //   userDetail = res.data[0]
+    // }
+
+    // // 如果有推荐人,且当前用户不是客户,更新推荐人
+    // if ('marketing' == action && !userDetail.isClient) { 
+    //   await user.where({
+    //     _openid: wxContext.OPENID
+    //   }).update({
+    //     data: {
+    //       referer: fromWho
+    //     }
+    //   })
+    // } 
+
+    // wx.cloud.callFunction({
+    //   name: 'login',
+    //   data: param,
+    //   success: res => {
+    //     console.log('[云函数] [login] openid:', res.result.openid)
+    //     that.globalData.openid = res.result.openid
+    //     // if (res.result.userDetail) {
+    //     //   that.globalData.userDetail = res.result.userDetail
+    //     //   if (that.userDetailReadyCallback) {
+    //     //     that.userDetailReadyCallback(res.result.userDetail)
+    //     //   }
+    //     // }
+    //   },
+    //   fail: err => {
+    //     console.error('[云函数] [login] 调用失败', err)
+    //   }
+    // })
+
     // switch (action) {
     //   case 'recruit': { // 招募工人或邀请合作商
 
