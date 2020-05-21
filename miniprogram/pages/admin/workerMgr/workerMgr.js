@@ -119,7 +119,7 @@ Page({
     console.log('workerMgr share')
     return {
       title: '加入海益生',
-      path: '/pages/home/home?action=recruit&openid=' + app.globalData.openid,
+      path: '/pages/home/home?action=recruit&openid=' + app.globalData.userDetail._openid,
       imageUrl: '/images/logo.jpg',
     }
   }

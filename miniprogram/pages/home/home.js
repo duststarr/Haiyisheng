@@ -21,7 +21,7 @@ Page({
 
     // 是否有客服邀请
     const param = wx.getLaunchOptionsSync();
-    if (!detail.isWorker && param.query && param.query.action == 'recruit') {
+    if (!detail.isWorker && param.query && param.query.action == 'recruit' && !app.globalData.roger) {
       wx.navigateTo({
         url: '/pages/worker/invitation/invitation',
       })

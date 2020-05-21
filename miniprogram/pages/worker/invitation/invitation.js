@@ -49,7 +49,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    app.globalData.roger = true // 邀请已收到,避免重复处理
   },
 
   /**
