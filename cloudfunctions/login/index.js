@@ -12,6 +12,7 @@ const _ = db.command
  * @param fromWho 来源人的openid 跟随action 
  */
 exports.main = async (event, context) => {
+  console.log(event)
   var userDetail = {}
   const action = event.action;
   const fromWho = event.fromWho;

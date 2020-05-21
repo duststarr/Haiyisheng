@@ -12,9 +12,9 @@ Page({
       PageCur: e.currentTarget.dataset.cur
     })
   },
-  userDetailUpdated: function(){
+  userDetailUpdated: function () {
     const detail = app.globalData.userDetail
-    console.log('userDetailUpdated',detail)
+    console.log('userDetailUpdated', detail)
     this.setData({
       isAdmin: detail.isAdmin,
       isWorker: detail.isWorker,
@@ -22,6 +22,16 @@ Page({
     })
   },
   onLoad: function (options) {
+    // 是否有客服邀请
+    const param = wx.getLaunchOptionsSync();
+    if (param.query && param.query.action == 'recruit') {
+      wx.redirectTo({
+        url: '/pages/worker/invitation',
+      })
+    }
+  },
+  onShow: function (options) {
+    // 获取用户信息
     var that = this
     if (app.globalData.userDetail) {
       that.userDetailUpdated()

@@ -6,7 +6,8 @@
     "pages/order/order",
     "pages/payment/payment",
     "pages/about/about",
-    "pages/aftersale/aftersale"
+    "pages/aftersale/aftersale",
+    "pages/worker/invitation/invitation"
   ],
   "window": {
     "backgroundTextStyle": "light",
