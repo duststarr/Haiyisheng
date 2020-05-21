@@ -1,9 +1,24 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">加入海益生</view>
+	<view slot="backText">返回</view>
+	<view slot="content">加入海益生</view>
 </cu-custom>
 <view class='cu-card'>
-    <view class='text-xxl text-bold text-center padding solid-bottom color-blue'>您收到管理员的邀请</view>
-    <view class='padding text-xl color-cyan'>是否加入海益生,成为一名客服</view>
+	<view class='text-xxl text-bold text-center padding solid-bottom color-blue'>您收到管理员的邀请</view>
+	<view class='padding text-xl color-cyan'>是否加入海益生,成为一名客服</view>
+	<form bindsubmit="onSure">
+		<view class="cu-form-group">
+			<view class="title">姓名</view>
+			<input placeholder="真实姓名" name='name'></input>
+		</view>		
+        <view class="cu-form-group">
+			<view class="title">手机号</view>
+			<input placeholder="工作手机" name='phone'></input>
+		</view>
+        <view class="cu-form-group" wx:if='{{errormsg}}'>
+        <view class='text-red'>*{{errormsg}}</view>
+        </view>
+		<view class="cu-form-group">
+			<button type='primary' form-type='submit'>确认加入</button>
+		</view>
+	</form>
 </view>
-<button type='primary' bindtap='onSure'>确认加入</button>

@@ -7,16 +7,33 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    errormsg: null
   },
-  onSure: function () {
+  onSure: function (e) {
+    var data = e.detail.value
+    if("" == data.name){
+      this.setData({
+        errormsg: '请输入姓名'
+      })
+      return
+    }else if("" == data.phone){
+      this.setData({
+        errormsg: '请输入手机号'
+      })
+      return
+    }
     const db = wx.cloud.database();
     const user = db.collection('user')
     const detail = app.globalData.userDetail
     if (detail && !detail.isWorker) {
+      const param = wx.getLaunchOptionsSync()
+      const fromWho = param.openid // 邀请加入的管理员的openid
       user.doc(app.globalData.userDetail._id).update({
         data: {
           isWorker: true,
+          workerFromWho: fromWho,
+          name: data.name,
+          phone: data.phone,
           timeBeWorker: new Date()
         },
         success: function (res) {
@@ -24,6 +41,8 @@ Page({
           wx.navigateBack()
         }
       })
+    }else{
+      wx.navigateBack()
     }
   },
   /**

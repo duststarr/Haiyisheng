@@ -114,6 +114,11 @@ App({
         await user.add({
           data: this.globalData.userDetail
         })
+        // 如果是邀请客服,需要再申请一次userDetail
+        if (e.query.action == 'recruit') {
+          const res = await user.get();
+          this.globalData.userDetail = res.data[0]
+        }
       }
       // userDetail更新的回调函数
       if (this.userDetailReadyCallback) {
