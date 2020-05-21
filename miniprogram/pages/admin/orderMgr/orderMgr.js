@@ -50,6 +50,10 @@ Page({
       console.log(this.data.orders.length)
     })
   },
+  onDispatch: function(e) {
+    const pos = e.currentTarget.dataset.pos;
+
+  },
   onShow: function () {
     this.updateState();
   }
