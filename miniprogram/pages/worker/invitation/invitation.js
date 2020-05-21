@@ -1,4 +1,6 @@
 // miniprogram/pages/worker/invitation/invitation.js
+const app = getApp()
+
 Page({
 
   /**
@@ -7,7 +9,23 @@ Page({
   data: {
 
   },
-
+  onSure: function () {
+    const db = wx.cloud.database();
+    const user = db.collection('user')
+    const detail = app.globalData.userDetail
+    if (detail && !detail.isWorker) {
+      user.doc(app.globalData.userDetail._id).update({
+        data: {
+          isWorker: true,
+          timeBeWorker: new Date()
+        },
+        success: function (res) {
+          app.globalData.userDetail.isWorker = true;
+          wx.navigateBack()
+        }
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */

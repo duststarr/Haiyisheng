@@ -12,23 +12,29 @@ Page({
       PageCur: e.currentTarget.dataset.cur
     })
   },
+  /**
+   * 
+   * 必须在云端user库中有数据后才执行
+   */
   userDetailUpdated: function () {
     const detail = app.globalData.userDetail
-    console.log('userDetailUpdated', detail)
-    this.setData({
-      isAdmin: detail.isAdmin,
-      isWorker: detail.isWorker,
-      isClient: detail.isClient
-    })
-  },
-  onLoad: function (options) {
+
     // 是否有客服邀请
     const param = wx.getLaunchOptionsSync();
-    if (param.query && param.query.action == 'recruit') {
-      wx.redirectTo({
-        url: '/pages/worker/invitation',
+    if (!detail.isWorker && param.query && param.query.action == 'recruit') {
+      wx.navigateTo({
+        url: '/pages/worker/invitation/invitation',
+      })
+    } else {
+      this.setData({
+        isAdmin: detail.isAdmin,
+        isWorker: detail.isWorker,
+        isClient: detail.isClient
       })
     }
+  },
+  onLoad: function (options) {
+
   },
   onShow: function (options) {
     // 获取用户信息

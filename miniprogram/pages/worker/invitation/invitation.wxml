@@ -1,2 +1,9 @@
-<!--miniprogram/pages/worker/invitation/invitation.wxml-->
-<text>miniprogram/pages/worker/invitation/invitation.wxml</text>
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">加入海益生</view>
+</cu-custom>
+<view class='cu-card'>
+    <view class='text-xxl text-bold text-center padding solid-bottom color-blue'>您收到管理员的邀请</view>
+    <view class='padding text-xl color-cyan'>是否加入海益生,成为一名客服</view>
+</view>
+<button type='primary' bindtap='onSure'>确认加入</button>

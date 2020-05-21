@@ -103,19 +103,21 @@ App({
       console.log('db.user.get=', res)
       if (res.data.length > 0) {
         this.globalData.userDetail = res.data[0]
-        if (this.userDetailReadyCallback) {
-          this.userDetailReadyCallback(this.globalData.userDetail)
-        }
       } else { // 新人
+        this.globalData.userDetail = {
+          timeBeUser: new Date(),
+          referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
+          isAdmin: false,
+          isWorker: false,
+          isClient: false
+        }
         await user.add({
-          data: {
-            timeBeUser: new Date(),
-            referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
-            isAdmin: false,
-            isWorker: false,
-            isClient: false
-          }
+          data: this.globalData.userDetail
         })
+      }
+      // userDetail更新的回调函数
+      if (this.userDetailReadyCallback) {
+        this.userDetailReadyCallback(this.globalData.userDetail)
       }
     } catch (e) {
       console.error('cloud database add error:', e)
