@@ -90,7 +90,7 @@ App({
     })
   },
   authentication: function (e) {
-    const param = {}
+    const param = {func:'login'}// 云函数参数不能全为空
     const that = this;
     if (e.query && e.query.action) {
       param.action = e.query.action
