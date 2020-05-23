@@ -112,7 +112,7 @@ actions.orderDispatchWorker = async (event) => {
   const orderID = event.orderID
   const worker = event.worker
   const order = db.collection('order')
-  order.doc(orderID).update({
+  await order.doc(orderID).update({
     data: {
       worker: worker,
       state: '待接单'
@@ -120,7 +120,24 @@ actions.orderDispatchWorker = async (event) => {
   })
   return true
 }
+/**
+ * 
+ */
+actions.orderStateChange = async (event) => {
+  const stateNew = event.state
+  const openid = event.openid || wxContext.OPENID
+  const orderID = event.orderID
 
+  const order = db.collection('order')
+  await order.doc(orderID).update({
+    data: {
+      state: stateNew,
+      stateTime: new Date(),
+      stateChangeBy: openid
+    }
+  })
+  return true
+}
 /**
  * 
  */
