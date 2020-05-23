@@ -72,6 +72,9 @@ Page({
    */
   onShow: function () {
     this.updateState();
+  },
+  debugDelete: function(){
+    this.cancelOrder();
   }
 
 })
