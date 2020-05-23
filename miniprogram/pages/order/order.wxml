@@ -1,51 +1,51 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">预约安装</view>
+	<view slot="backText">返回</view>
+	<view slot="content">预约安装</view>
 </cu-custom>
-<scroll-view>
-    <view class="bg-white padding">
-        <view class="cu-steps">
-            <view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key>
-                <text class="cuIcon-{{item.icon}}"></text>
-                {{item.name}}
-            </view>
-        </view>
-    </view>
-    <view class='margin-top'>
-        <view class="btn-area" wx:if="{{null==order}}">
-            <button type="primary" bindtap="chooseAddress">选择地址安装吧</button>
-        </view>
-        <view class='cu-card' wx:else>
-            <view class="cu-bar bg-white solid-bottom">
-                <view class="action">
-                    <text class="cuIcon-title text-orange"></text>
-                    预约安装地址
-                </view>
-                <view class="action" wx:if="{{currstep<2}}">
-                    <button class="cu-btn bg-pink shadow" bindtap="cancelOrder">撤销</button>
-                </view>
-            </view>
-            <view class='content bg-white padding text-cyan'>
-                <view>
-                    <text class="text-bold">{{order.address.userName}}</text>
-                    ,{{order.address.telNumber}}
-                </view>
-                <view class='content'>
-                    {{order.address.provinceName}} {{order.address.cityName}} {{order.address.countyName}} {{order.address.detailInfo}}
-                </view>
-            </view>
-        </view>
-    </view>
-    <view class='btn-area margin-top' wx:if="{{currstep==3}}">
-        <button type="primary" bindtap="pay">充值开始净水</button>
-    </view>
-    <view class="cu-timeline margin-top-sm" wx:if="{{null!=order}}">
-        <view class="cu-item" wx:for="{{order.logs}}">
-            <view class='text-black'>{{item.content}}</view>
-        </view>
-    </view>
-    <view class="cu-tabbar-height"></view>
-</scroll-view>
-<view class="flex cu-bar foot">
-    <button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
+<view class="bg-white padding">
+	<view class="cu-steps">
+		<view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key>
+			<text class="cuIcon-{{item.icon}}"></text>
+			{{item.name}}
+		</view>
+	</view>
 </view>
+<view class='margin-top'>
+	<view class="btn-area" wx:if="{{null==order}}">
+		<button type="primary" bindtap="chooseAddress">选择地址安装吧</button>
+	</view>
+	<block wx:else>
+		<view class='cu-card'>
+			<view class="cu-bar bg-white solid-bottom">
+				<view class="action">
+					<text class="cuIcon-title text-orange"></text>
+					预约安装地址
+				</view>
+				<view class="action" wx:if="{{currstep<2}}">
+					<button class="cu-btn bg-pink shadow" bindtap="cancelOrder">撤销</button>
+				</view>
+			</view>
+			<view class='content bg-white padding text-cyan'>
+				<view>
+					<text class="text-bold">{{order.address.userName}}</text>
+					,{{order.address.telNumber}}
+				</view>
+				<view class='content'>
+					{{order.address.provinceName}} {{order.address.cityName}} {{order.address.countyName}} {{order.address.detailInfo}}
+				</view>
+			</view>
+		</view>
+		<view class='btn-area margin-top'>
+			<button type="primary" bindtap="pay">充值开始净水</button>
+		</view>
+	</block>
+</view>
+<!-- 	<view class="cu-timeline margin-top-sm" wx:if="{{null!=order}}">
+		<view class="cu-item" wx:for="{{order.logs}}">
+			<view class='text-black'>{{item.content}}</view>
+		</view>
+	</view>
+	<view class="cu-tabbar-height"></view> -->
+<!-- <view class="flex cu-bar foot">
+	<button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
+</view> -->

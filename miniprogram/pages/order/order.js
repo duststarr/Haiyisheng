@@ -47,8 +47,27 @@ Page({
   updateState() {
     var that = this
     app.wxcloud('orderGetCreating').then(res => {
+      var step = that.data.currstep
+      if (res.result[0]) {
+        switch (res.result[0].state) {
+          case '新订单':
+            step = 0
+            break;
+          case '待接单':
+            step = 1
+            break;
+          case '待执行':
+          case '待确认':
+            step = 2
+            break;
+          default:
+            step = 3
+            break;
+        }
+      }
       that.setData({
-        order: res.result[0] || null
+        order: res.result[0] || null,
+        currstep: step
       })
     })
   },
