@@ -94,7 +94,7 @@ actions.orderCancel = async (event, context) => {
  * @param type
  * @param state
  */
-actions.orderGet = async (event, context) => {
+actions.orderGetList = async (event, context) => {
   const order = db.collection('order');
   const param = {}
   if (event.type)
@@ -104,4 +104,15 @@ actions.orderGet = async (event, context) => {
   console.log('param',event.states)
   const res = await order.where(param).get()
   return res.data;
+}
+
+/**
+ * 
+ */
+actions.workerGetList = async (event) => {
+  const user = db.collection('user');
+  const res = await user.where({
+    isWorker : true
+  }).get()
+  return res.data
 }
