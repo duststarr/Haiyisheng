@@ -95,6 +95,7 @@ actions.orderCancel = async (event, context) => {
  * 查询订单
  * @param type
  * @param state
+ * @param isWorker
  */
 actions.orderGetList = async (event, context) => {
   const order = db.collection('order');
@@ -103,10 +104,16 @@ actions.orderGetList = async (event, context) => {
     param.type = event.type
   if (event.states)
     param.state = _.in(event.states)
+  if(event.isWorker){
+    param.worker={}
+    param.worker.openid = wxContext.OPENID
+  }
   console.log('param', event.states)
   const res = await order.where(param).get()
+  console.log(res)
   return res.data;
 }
+
 /**
  * 
  */
