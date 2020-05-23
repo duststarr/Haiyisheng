@@ -79,7 +79,7 @@ Page({
     param.orderID = this.data.orders[pos]._id
     param.worker = {
       id: worker._id,
-      open: worker._openid,
+      openid: worker._openid,
       name: worker.name,
       phone: worker.phone
     }
