@@ -7,10 +7,10 @@
     <view class="cu-item solid-bottom {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for='{{workers}}' wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
         <view class="cu-avatar round lg" style="background-image:url({{item.avatarUrl}});"></view>
         <view class="content">
-            <view class="text-grey">{{item.nickName}}</view>
+            <view class="text-grey">{{item.name}}</view>
             <view class="text-gray text-sm">
                 <text class="cuIcon-infofill text-red"></text>
-                13612345678
+                {{item.phone}}
             </view>
         </view>
         <view class="action">

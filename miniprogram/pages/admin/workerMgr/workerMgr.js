@@ -9,18 +9,14 @@ Page({
   data: {
     workers: []
   },
-  MockData() {
-    var w = []
-    w.push(app.globalData.userInfo)
-    w.push(app.globalData.userInfo)
-    w.push(app.globalData.userInfo)
-    this.setData({
-      workers: w
+  fetchData() {
+    var that = this
+    app.wxcloud('workerGetList').then(res => {
+      that.setData({
+        workers: res.result
+      })
     })
-    console.log(w)
   },
-
-
   // ListTouch触摸开始
   ListTouchStart(e) {
     this.setData({
@@ -59,13 +55,13 @@ Page({
     var that = this
     console.log('on load')
     if (app.globalData.userInfo) {
-      this.MockData()
+      this.fetchData()
     } else {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
         console.log('app update')
-        that.MockData();
+        that.fetchData();
       }
     }
   },
