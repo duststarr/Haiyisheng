@@ -35,11 +35,21 @@
 						{{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
 					</view>
 				</view>
-				<view class='justify-between flex solids-top'>
-					<button class='cu-btn' wx:if="{{item.state === ('新订单') || item.state === ('待接单')}}" bindtap='onDispatch' data-pos="{{index}}">分配客服</button>
-					<view class='padding-sm' wx:else>接单客服</view>
-					<view class='padding-sm'><text class="text-bold">{{item.address.userName}}</text>
-						,{{item.address.telNumber}}</view>
+				<view class='solids-top align-right'>
+					<view class='padding-sm' wx:if="{{!item.worker}}">
+						<picker bindchange="workerChange" value="{{workerIndex}}" range="{{workers}}" range-key="name" data-pos="{{index}}">
+							<view class="picker text-right">
+								未分配客服 >>>
+							</view>
+						</picker>
+					</view>
+					<!-- <button class='cu-btn' wx:if="{{item.state === ('新订单') || item.state === ('待接单')}}" bindtap='onDispatch' data-id="{{item._id}}">分配客服</button>
+					<view class='padding-sm' wx:else>接单客服</view>-->
+					<view wx:else class='padding-sm text-right'>
+						<text class='text-blue'>客服:</text>
+						<text class="text-bold">{{item.worker.name}}</text>
+						<text>,{{item.worker.phone}}</text>
+					</view>
 				</view>
 			</view>
 		</view>

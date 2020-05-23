@@ -101,9 +101,24 @@ actions.orderGetList = async (event, context) => {
     param.type = event.type
   if (event.states)
     param.state = _.in(event.states)
-  console.log('param',event.states)
+  console.log('param', event.states)
   const res = await order.where(param).get()
   return res.data;
+}
+/**
+ * 
+ */
+actions.orderDispatchWorker = async (event) => {
+  const orderID = event.orderID
+  const worker = event.worker
+  const order = db.collection('order')
+  order.doc(orderID).update({
+    data: {
+      worker: worker,
+      state: '待接单'
+    }
+  })
+  return true
 }
 
 /**
@@ -112,7 +127,7 @@ actions.orderGetList = async (event, context) => {
 actions.workerGetList = async (event) => {
   const user = db.collection('user');
   const res = await user.where({
-    isWorker : true
+    isWorker: true
   }).get()
   return res.data
 }

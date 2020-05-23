@@ -3,7 +3,7 @@ const app = getApp()
 Page({
   data: {
     CustomBar: app.globalData.CustomBar,
-
+    workers: null,
     orders: null,
     categoryCurr: 0,
     typeCurr: 0,
@@ -15,15 +15,15 @@ Page({
     this.setData({
       categoryCurr: e.currentTarget.dataset.id
     })
-    this.updateState()
+    this.getOrders()
   },
   TypeChange(e) {
     this.setData({
       typeCurr: e.currentTarget.dataset.id
     })
-    this.updateState()
+    this.getOrders()
   },
-  updateState() {
+  getOrders() {
     var that = this
     var param = {}
     switch (this.data.categoryCurr) {
@@ -48,11 +48,39 @@ Page({
       })
     })
   },
-  onDispatch: function(e) {
-    const pos = e.currentTarget.dataset.pos;
+  onDispatch: function (e) {
+    const pos = e.currentTarget.dataset.id;
 
   },
+  workerChange: function (e) {
+    console.log('workerChange', e)
+    var that = this
+    var param = {}
+    var worker = this.data.workers[e.detail.value]
+    const pos = e.currentTarget.dataset.pos
+    param.orderID = this.data.orders[pos]._id
+    param.worker = {
+      workerID: worker._id,
+      name: worker.name,
+      phone: worker.phone
+    }
+    var slotState = 'orders[' + pos + '].state'
+    var slotWorker = 'orders[' + pos + '].worker'
+    app.wxcloud('orderDispatchWorker', param).then(res => {
+      that.setData({
+        [slotState]: '待接单',
+        [slotWorker]: worker
+      })
+    })
+  },
   onShow: function () {
-    this.updateState();
+    this.getOrders();
+    var that = this
+    app.wxcloud('workerGetList').then(res => {
+      console.log('workerGetList', res.result)
+      that.setData({
+        workers: res.result
+      })
+    })
   }
 })
