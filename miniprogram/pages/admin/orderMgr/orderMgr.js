@@ -78,7 +78,8 @@ Page({
     const pos = e.currentTarget.dataset.pos
     param.orderID = this.data.orders[pos]._id
     param.worker = {
-      workerID: worker._id,
+      id: worker._id,
+      open: worker._openid,
       name: worker.name,
       phone: worker.phone
     }
