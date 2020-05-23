@@ -38,14 +38,38 @@
 		<view class='btn-area margin-top' wx:if='{{!order.timePay}}'>
 			<navigator url='/pages/payment/payment?orderID={{order._id}}'><button type="primary">充值开始净水</button></navigator>
 		</view>
+		<view class="cu-timeline margin-top-sm" wx:if="{{order}}">
+			<view class="cu-item" wx:if="{{order.createTime}}">
+				<view class='text-cut' style='width:130px'>{{order.createTime}}</view>
+				<view class='text-black'>预约安装。感谢您选择我们的产品。</view>
+			</view>
+			<view class="cu-item" wx:if="{{order.timePick}}">
+				<view class='text-cut' style='width:130px'>{{order.timePick}}</view>
+				<view class='text-black'>客服
+					<text class='text-red'>({{order.worker.name}},{{order.worker.phone}})</text>
+					正在准备订单</view>
+			</view>
+			<view class="cu-item" wx:if="{{order.timeWorkdone}}">
+				<view class='text-cut' style='width:130px'>{{order.timeWorkdone}}</view>
+				<view class='text-black'>上门安装完成</view>
+			</view>
+			<view class="cu-item" wx:if="{{order.timePay}}">
+				<view class='text-cut' style='width:120px'>{{order.timePay}}</view>
+				<view class='text-black'>您已{{order.payment.message}}</view>
+			</view>
+			<view class="cu-item" wx:if="{{order.timePay}}">
+				<view class='text-cut' style='width:130px'>{{order.timePay}}</view>
+				<view class='text-black'>开始服务</view>
+			</view>
+		</view>
 	</block>
+	<view class="cu-tabbar-height"></view>
 </view>
 <!-- 	<view class="cu-timeline margin-top-sm" wx:if="{{null!=order}}">
 		<view class="cu-item" wx:for="{{order.logs}}">
 			<view class='text-black'>{{item.content}}</view>
 		</view>
 	</view>
-	<view class="cu-tabbar-height"></view> -->
-<!-- <view class="flex cu-bar foot">
+<view class="flex cu-bar foot">
 	<button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
 </view> -->
