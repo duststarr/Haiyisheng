@@ -103,22 +103,18 @@ App({
       console.log('db.user.get=', res)
       if (res.data.length > 0) {
         this.globalData.userDetail = res.data[0]
-      } else { // 新人
-        this.globalData.userDetail = {
+      } else { // 新人        
+        const detail = {
           timeBeUser: new Date(),
           referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
           isAdmin: false,
           isWorker: false,
           isClient: false
         }
-        await user.add({
-          data: this.globalData.userDetail
+        this.globalData.userDetail = await user.add({
+          data: detail
         })
-        // 如果是邀请客服,需要再申请一次userDetail
-        if (e.query.action == 'recruit') {
-          const res = await user.get();
-          this.globalData.userDetail = res.data[0]
-        }
+        console.log('new user', this.globalData.userDetail)
       }
       // userDetail更新的回调函数
       if (this.userDetailReadyCallback) {
@@ -127,6 +123,7 @@ App({
     } catch (e) {
       console.error('cloud database add error:', e)
     }
+    console.log('userDetail',this.globalData.userDetail)
 
     // 新人首次打开,在数据库中插入
     // if (0 == res.data.length) { // 新人
