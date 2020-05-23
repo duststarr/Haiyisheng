@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
 
   if (event.action && actions.hasOwnProperty(event.action)) {
     const res = await actions[event.action](event, context);
-    console.log('return',res)
+    console.log('return', res)
     return res
   }
   return { error: 'action not find:' + event.action }
@@ -215,6 +215,7 @@ actions.orderPayTest = async (event) => {
       orderID,
       stateNew: '已完成'
     })
+
   } catch (e) {
     return false
   }

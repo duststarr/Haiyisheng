@@ -37,7 +37,9 @@ Page({
     })
   },
   cancelOrder() {
-    app.wxcloud('orderCancel',{orderID:this.data.order._id}).then(this.updateState)
+    if (this.data.order) {
+      app.wxcloud('orderCancel', { orderID: this.data.order._id }).then(this.updateState)
+    }
   },
   updateState() {
     var that = this
@@ -73,8 +75,17 @@ Page({
   onShow: function () {
     this.updateState();
   },
-  debugDelete: function(){
+  debugDelete: async function () {
     this.cancelOrder();
+    const db = wx.cloud.database();
+    const user = db.collection('user'); // 仅创建者可读写
+    await user.doc(app.globalData.userDetail._id).update({
+      data: {
+        isClient: false
+      }
+    })
+    app.globalData.userDetail.isClient = false
+
   }
 
 })

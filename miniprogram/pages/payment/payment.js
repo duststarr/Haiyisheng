@@ -25,6 +25,15 @@ Page({
       amount: policy.amount,
       message: policy.content
     })
+
+    const db = wx.cloud.database();
+    await db.collection('user').doc(app.globalData.userDetail._id).update({
+      data: {
+        isClient: true
+      }
+    })
+    app.globalData.userDetail.isClient = true
+
     wx.showToast({
       title: policy.content,
       icon: 'none',
