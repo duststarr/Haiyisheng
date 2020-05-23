@@ -37,7 +37,7 @@ Page({
     })
   },
   cancelOrder() {
-    app.wxcloud('orderCancel').then(this.updateState)
+    app.wxcloud('orderCancel',{orderID:this.data.order._id}).then(this.updateState)
   },
   updateState() {
     var that = this

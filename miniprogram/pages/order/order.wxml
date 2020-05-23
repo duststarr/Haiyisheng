@@ -74,7 +74,7 @@
 	<button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
 </view> -->
 
-<floatMenu>
+<floatMenu posX='20' posY='200'>
 	<view slot="content">
 		<button bindtap='debugDelete'>取消我的订单</button>
 	</view>

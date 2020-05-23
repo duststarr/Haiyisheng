@@ -17,10 +17,12 @@ const actions = {
 }
 // 云函数入口函数
 exports.main = async (event, context) => {
-  console.log("action", event)
+  console.log("cloud", event)
 
   if (event.action && actions.hasOwnProperty(event.action)) {
-    return actions[event.action](event, context);
+    const res = await actions[event.action](event, context);
+    console.log('return',res)
+    return res
   }
   return { error: 'action not find:' + event.action }
 }
@@ -49,7 +51,6 @@ actions.orderCreate = async (event, context) => {
       address: event.address,
       createTime: new Date(),
       state: '新订单',
-      done: false,
       logs: [
         {
           content: '已预约，稍后客服将与您约定上门安装时间。感谢您选择我们的产品。'
@@ -68,7 +69,7 @@ actions.orderGetCreating = async (event, context) => {
   const res = await order.where({
     userID: wxContext.OPENID,
     type: '新装',
-    done: false
+    state: _.neq('已取消')
   }).get()
   console.log('orderGetCreating', res)
   return res.data;
@@ -77,13 +78,10 @@ actions.orderGetCreating = async (event, context) => {
  * 用户本人取消订单
  */
 actions.orderCancel = async (event, context) => {
+  const orderID = event.orderID
   const order = db.collection('order');
-  const res = await order.where({
-    userID: wxContext.OPENID,
-    type: '新装'
-  }).update({
+  const res = await order.doc(orderID).update({
     data: {
-      done: true,
       state: '已取消'
     }
   })

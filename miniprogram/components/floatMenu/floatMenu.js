@@ -14,19 +14,19 @@ Component({
   properties: {
     posX:{
       type: Number,
-      default: 10
+      value: 10
     },
     poxY:{
       type: Number,
-      default: 100
+      value: 100
     },
     height:{
       type: Number,
-      default: 100
+      value: 100
     },
     width:{
       type: Number,
-      default: 100
+      value: 100
     }
   },
 
