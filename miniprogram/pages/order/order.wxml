@@ -4,7 +4,7 @@
 </cu-custom>
 <view class="bg-white padding">
 	<view class="cu-steps">
-		<view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key>
+		<view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key="icon">
 			<text class="cuIcon-{{item.icon}}"></text>
 			{{item.name}}
 		</view>
