@@ -148,6 +148,40 @@ actions.orderStateChange = async (event) => {
   return true
 }
 /**
+ * 客服接单
+ */
+actions.orderPick = async(event) => {
+  const orderID = event.orderID
+  const operator = event.operator || wxContext.OPENID
+  const order = db.collection('order')
+  await order.doc(orderID).update({
+    data: {
+      state: '待执行',
+      stateTime: new Date(),
+      stateChangeBy: operator,
+      timePick: new Date()
+    }
+  })
+  return true
+}
+/**
+ * 客服完成工作
+ */
+actions.orderWorkdone = async(event) => {
+  const orderID = event.orderID
+  const operator = event.operator || wxContext.OPENID
+  const order = db.collection('order')
+  await order.doc(orderID).update({
+    data: {
+      state: '待确认',
+      stateTime: new Date(),
+      stateChangeBy: operator,
+      timeWorkdone: new Date()
+    }
+  })
+  return true
+}
+/**
  * 
  */
 actions.workerGetList = async (event) => {
