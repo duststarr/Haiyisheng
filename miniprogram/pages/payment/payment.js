@@ -1,4 +1,6 @@
 // miniprogram/pages/payment/payment.js
+const app = getApp()
+
 Page({
 
   /**
@@ -11,17 +13,24 @@ Page({
       { content: '充值三年1095天，2000元', amount: 2000 },
       { content: '充值四年1460天，2600元', amount: 2600 },
       { content: '充值五年1825天，3100元；到期后产权归客户', amount: 3100 },
-    ]
+    ],
+    orderID: null
   },
-  pay(e) {
-    var policy = e.currentTarget.dataset.policy
-    console.log('pay amount',this.data.policies[policy].amount)
+  async pay(e) {
+    console.log(e)
+    const pos = e.currentTarget.dataset.pos
+    const policy = this.data.policies[pos]
+    const res = await app.wxcloud('orderPayTest',{
+      orderID: this.data.orderID,
+      amount: policy.amount,
+      message: policy.content
+    })
     wx.showToast({
-      title: this.data.policies[policy].content,
+      title: policy.content,
       icon: 'none',
       duration: 2000,
-      success: ()=>{
-        setTimeout(wx.navigateBack,2000)
+      success: () => {
+        setTimeout(wx.navigateBack, 2000)
       }
     })
   },
@@ -29,6 +38,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    this.setData({
+      orderID: options.orderID
+    })
   },
 
   /**

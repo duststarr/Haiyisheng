@@ -17,7 +17,7 @@ const actions = {
 }
 // 云函数入口函数
 exports.main = async (event, context) => {
-  console.log("action",event)
+  console.log("action", event)
 
   if (event.action && actions.hasOwnProperty(event.action)) {
     return actions[event.action](event, context);
@@ -104,8 +104,8 @@ actions.orderGetList = async (event, context) => {
     param.type = event.type
   if (event.states)
     param.state = _.in(event.states)
-  if(event.isWorker){
-    param.worker={}
+  if (event.isWorker) {
+    param.worker = {}
     param.worker.openid = wxContext.OPENID
   }
   console.log('param', event.states)
@@ -150,7 +150,7 @@ actions.orderStateChange = async (event) => {
 /**
  * 客服接单
  */
-actions.orderPick = async(event) => {
+actions.orderPick = async (event) => {
   const orderID = event.orderID
   const operator = event.operator || wxContext.OPENID
   const order = db.collection('order')
@@ -167,7 +167,7 @@ actions.orderPick = async(event) => {
 /**
  * 客服完成工作
  */
-actions.orderWorkdone = async(event) => {
+actions.orderWorkdone = async (event) => {
   const orderID = event.orderID
   const operator = event.operator || wxContext.OPENID
   const order = db.collection('order')
@@ -190,4 +190,35 @@ actions.workerGetList = async (event) => {
     isWorker: true
   }).get()
   return res.data
+}
+
+/**
+ * 模拟充值
+ */
+actions.orderPayTest = async (event) => {
+  const orderID = event.orderID
+  const amount = event.amount
+  const message = event.message
+  const timePay = new Date()
+  try {
+    await db.collection('order').doc(orderID).update({
+      data: {
+        timePay,
+        payment: {
+          orderID,
+          amount,
+          message,
+          timePay,
+          openid: wxContext.OPENID
+        }
+      }
+    })
+    await actions.orderStateChange({
+      orderID,
+      stateNew: '已完成'
+    })
+  } catch (e) {
+    return false
+  }
+  return true
 }

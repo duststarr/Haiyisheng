@@ -35,8 +35,8 @@
 				</view>
 			</view>
 		</view>
-		<view class='btn-area margin-top'>
-			<button type="primary" bindtap="pay">充值开始净水</button>
+		<view class='btn-area margin-top' wx:if='{{!order.timePay}}'>
+			<navigator url='/pages/payment/payment?orderID={{order._id}}'><button type="primary">充值开始净水</button></navigator>
 		</view>
 	</block>
 </view>

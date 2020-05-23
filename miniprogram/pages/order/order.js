@@ -39,11 +39,6 @@ Page({
   cancelOrder() {
     app.wxcloud('orderCancel').then(this.updateState)
   },
-  pay() {
-    wx.navigateTo({
-      url: '/pages/payment/payment'
-    })
-  },
   updateState() {
     var that = this
     app.wxcloud('orderGetCreating').then(res => {

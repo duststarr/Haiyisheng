@@ -8,5 +8,5 @@
 </view>
 
 <view class='padding flex flex-direction'>
-    <button class='cu-btn bg-cyan lg margin-top' wx:for='{{policies}}' bindtap='pay' data-policy='{{index}}'>{{item.content}}</button>
+    <button class='cu-btn bg-cyan lg margin-top' wx:for='{{policies}}' bindtap='pay' data-pos='{{index}}'>{{item.content}}</button>
 </view>
