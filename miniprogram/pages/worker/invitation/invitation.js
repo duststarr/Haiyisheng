@@ -7,16 +7,41 @@ Page({
    * 页面的初始数据
    */
   data: {
-    errormsg: null
+    errormsg: null,
+    phone: '136',
+    name: '',
+    userInfo: {},
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    canIUsegetPhoneNumber: wx.canIUse('button.open-type.getPhoneNumber')
+  },
+  attached: function () {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    }
+  },
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+  },
+  getPhoneNumber: function(e){
+    console.log()
   },
   onSure: function (e) {
-    var data = e.detail.value
-    if("" == data.name){
+    var formdata = e.detail.value
+    if ("" == formdata.name) {
       this.setData({
         errormsg: '请输入姓名'
       })
       return
-    }else if("" == data.phone){
+    } else if ("" == formdata.phone) {
       this.setData({
         errormsg: '请输入手机号'
       })
@@ -32,8 +57,9 @@ Page({
         data: {
           isWorker: true,
           workerFromWho: fromWho,
-          name: data.name,
-          phone: data.phone,
+          name: formdata.name,
+          phone: formdata.phone,
+          avatar: this.data.hasUserInfo ? this.data.userInfo.avatarUrl : '',
           timeBeWorker: new Date()
         },
         success: function (res) {
@@ -41,7 +67,7 @@ Page({
           wx.navigateBack()
         }
       })
-    }else{
+    } else {
       wx.navigateBack()
     }
   },
