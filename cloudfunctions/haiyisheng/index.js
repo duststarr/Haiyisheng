@@ -17,6 +17,8 @@ const actions = {
 }
 // 云函数入口函数
 exports.main = async (event, context) => {
+  console.log("action",event)
+
   if (event.action && actions.hasOwnProperty(event.action)) {
     return actions[event.action](event, context);
   }
@@ -124,8 +126,8 @@ actions.orderDispatchWorker = async (event) => {
  * 
  */
 actions.orderStateChange = async (event) => {
-  const stateNew = event.state
-  const openid = event.openid || wxContext.OPENID
+  const stateNew = event.stateNew
+  const operator = event.operator || wxContext.OPENID
   const orderID = event.orderID
 
   const order = db.collection('order')
@@ -133,7 +135,7 @@ actions.orderStateChange = async (event) => {
     data: {
       state: stateNew,
       stateTime: new Date(),
-      stateChangeBy: openid
+      stateChangeBy: operator
     }
   })
   return true

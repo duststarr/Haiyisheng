@@ -1,5 +1,12 @@
 const app = getApp()
 
+const ORDER_STATE_EMUN = [
+  {
+    state:'新订单',
+    category: '未处理',
+    color: '#0ff'
+  }
+]
 Page({
   data: {
     CustomBar: app.globalData.CustomBar,
@@ -9,6 +16,7 @@ Page({
     typeCurr: 0,
     types: ['全部', '新装', '拆机', '移机', '换芯', '报修'],//新装，移机，拆机，换芯，报修
     categories: ['全部状态', '待处理', '进行中', '已完成'],
+    states: ['新订单','待接单', '待执行', '待确认','已完成', '已取消'],
     stateColors: ['']
   },
   StateChange(e) {
@@ -24,8 +32,8 @@ Page({
     this.getOrders()
   },
   getOrders() {
-    var that = this
-    var param = {}
+    const that = this
+    const param = {}
     switch (this.data.categoryCurr) {
       case 1: {
         param.states = ['新订单']
@@ -48,15 +56,25 @@ Page({
       })
     })
   },
-  onDispatch: function (e) {
-    const pos = e.currentTarget.dataset.id;
-
+  manualChangeState: function (e) {
+    const that = this
+    const pos = e.currentTarget.dataset.pos;
+    const stateNew = this.data.states[e.detail.value]
+    const slotState = 'orders[' + pos + '].state'
+    const param = {}
+    param.orderID = this.data.orders[pos]._id
+    param.stateNew = stateNew
+    app.wxcloud('orderStateChange', param).then(res => {
+      that.setData({
+        [slotState]: stateNew
+      })
+    })
   },
   workerChange: function (e) {
     console.log('workerChange', e)
-    var that = this
-    var param = {}
-    var worker = this.data.workers[e.detail.value]
+    const that = this
+    const param = {}
+    const worker = this.data.workers[e.detail.value]
     const pos = e.currentTarget.dataset.pos
     param.orderID = this.data.orders[pos]._id
     param.worker = {
@@ -64,8 +82,8 @@ Page({
       name: worker.name,
       phone: worker.phone
     }
-    var slotState = 'orders[' + pos + '].state'
-    var slotWorker = 'orders[' + pos + '].worker'
+    const slotState = 'orders[' + pos + '].state'
+    const slotWorker = 'orders[' + pos + '].worker'
     app.wxcloud('orderDispatchWorker', param).then(res => {
       that.setData({
         [slotState]: '待接单',
@@ -75,7 +93,7 @@ Page({
   },
   onShow: function () {
     this.getOrders();
-    var that = this
+    const that = this
     app.wxcloud('workerGetList').then(res => {
       console.log('workerGetList', res.result)
       that.setData({

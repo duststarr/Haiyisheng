@@ -18,13 +18,17 @@
 		</view>
 	</scroll-view>
 </view>
-<view style='position:absolute;top:{{CustomBar+250}}rpx;width:100%'>
+<view style='position:absolute;top:{{CustomBar+260}}rpx;width:100%'>
 	<scroll-view wx:if="{{orders && orders.length>0 }}">
-		<view class="cu-card case " wx:for="{{orders}}">
+		<view class="margin-sm bg-white radius" wx:for="{{orders}}">
 			<view class="cu-item shadow">
 				<view class='justify-between flex solids-bottom padding-lr padding-tb-sm'>
 					<view>{{item.type}}订单</view>
-					<view>{{item.state}}</view>
+					<view>
+						<picker bindchange="manualChangeState" range="{{states}}" data-pos="{{index}}">
+							{{item.state}}>
+						</picker>
+					</view>
 				</view>
 				<view class='content bg-white padding text-cyan'>
 					<view>
@@ -36,11 +40,9 @@
 					</view>
 				</view>
 				<view class='solids-top align-right'>
-					<view class='padding-sm' wx:if="{{!item.worker}}">
+					<view class=' align-right' wx:if="{{!item.worker}}">
 						<picker bindchange="workerChange" value="{{workerIndex}}" range="{{workers}}" range-key="name" data-pos="{{index}}">
-							<view class="picker text-right">
-								未分配客服 >>>
-							</view>
+							<button class='cu-btn'>分配客服</button>
 						</picker>
 					</view>
 					<!-- <button class='cu-btn' wx:if="{{item.state === ('新订单') || item.state === ('待接单')}}" bindtap='onDispatch' data-id="{{item._id}}">分配客服</button>
