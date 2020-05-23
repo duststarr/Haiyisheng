@@ -12,7 +12,22 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    posX:{
+      type: Number,
+      default: 10
+    },
+    poxY:{
+      type: Number,
+      default: 100
+    },
+    height:{
+      type: Number,
+      default: 100
+    },
+    width:{
+      type: Number,
+      default: 100
+    }
   },
 
   /**
@@ -20,10 +35,7 @@ Component({
    */
   data: {
     showConsole: false,
-    posX: 10,
-    poxY: 100,
-    height: 100,
-    width: 100,
+
     maxX: 750,
     maxY: 1080
   },
