@@ -42,12 +42,10 @@ Page({
     }
     if (0 != this.data.typeCurr)
       param.type = this.data.types[this.data.typeCurr]
-    app.wxcloud('orderGet', param).then(res => {
-      console.log(res.result)
+    app.wxcloud('orderGetList', param).then(res => {
       that.setData({
         orders: res.result || null
       })
-      console.log(this.data.orders.length)
     })
   },
   onDispatch: function(e) {
