@@ -1,4 +1,4 @@
-<cover-image class='_float_menu' style="left:{{posX}}px;top:{{poxY}}px;height:{{height}}px;width:{{width}}px" src='/images/home.png' bindtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd" catchtouchcancel='onTouchCancel' catchtap="onTap"></cover-image>
+<cover-image class='_float_menu' style="left:{{posX}}px;top:{{posY}}px;height:{{height}}px;width:{{width}}px" src='/images/home.png' bindtouchstart="onTouchStart" catchtouchmove="onTouchMove" catchtouchend="onTouchEnd" catchtouchcancel='onTouchCancel' catchtap="onTap"></cover-image>
 
 
 <view class="cu-modal {{showConsole?'show':''}}" bindtap='onModalClick'>

@@ -16,7 +16,7 @@ Component({
       type: Number,
       value: 10
     },
-    poxY:{
+    posY:{
       type: Number,
       value: 100
     },
@@ -66,7 +66,7 @@ Component({
       temp.lastY = e.touches[0].pageY
 
       var newX = this.data.posX + moveX;
-      var newY = this.data.poxY + moveY;
+      var newY = this.data.posY + moveY;
       newX = newX < 0 ? 0 : newX;
       newX = newX > this.data.maxX ? this.data.maxX : newX;
       newY = newY < 0 ? 0 : newY;
@@ -74,7 +74,7 @@ Component({
 
       this.setData({
         posX: newX,
-        poxY: newY
+        posY: newY
       })
     },
     onTouchEnd: function (e) {
