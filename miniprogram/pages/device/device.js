@@ -2,7 +2,7 @@ import * as echarts from '../../ec-canvas/echarts';
 
 let chart = null;
 function initChart(canvas, width, height, dpr) {
-  const chart = echarts.init(canvas, null, {
+  chart = echarts.init(canvas, null, {
     width: width,
     height: height,
     devicePixelRatio: dpr // 像素
@@ -49,20 +49,62 @@ function initChart(canvas, width, height, dpr) {
   chart.setOption(option);
   return chart;
 }
-
+function dateDiff(firstDate, secondDate) {
+  var firstDate = new Date(firstDate);
+  var secondDate = new Date(secondDate);
+  var diff = Math.abs(firstDate.getTime() - secondDate.getTime())
+  var result = parseInt(diff / (1000 * 60 * 60 * 24));
+  return result
+}
 const app = getApp();
 
 Component({
   options: {
     addGlobalClass: true,
   },
-  attached: function () {
+  attached: async function () {
     let that = this;
     setTimeout(function () {
       that.setData({
         loading: true
       })
+
     }, 500)
+
+    // 更新服务时间
+    const db = wx.cloud.database()
+    const res = await db.collection('user').doc(app.globalData.userDetail._id).get()
+    const userData = res.data
+    console.log(userData)
+    if (userData.serviceDays) {
+      const alldays = userData.serviceDays
+      const today = new Date()
+      const pastdays = dateDiff(today, userData.serviceStart)
+      const filter1 = dateDiff(today, userData.filters.first)
+      const lifespan1 = parseInt(100 - 100 * filter1 / 180)
+      const filter2 = dateDiff(today, userData.filters.second)
+      const lifespan2 = parseInt(100 - 100 * filter2 / 330)
+      const filter3 = dateDiff(today, userData.filters.third)
+      const lifespan3 = parseInt(100 - 100 * filter3 / 480)
+
+      chart.setOption({
+        series: [{
+          max: alldays,
+          data: [{
+            value: pastdays
+          }]
+        }]
+      })
+      const slot1 = 'filters[0].lifespan'
+      this.setData({
+        'filters[0].lifespan': lifespan1,
+        'filters[1].lifespan': lifespan2,
+        'filters[2].lifespan': lifespan3,
+        'filters[3].lifespan': lifespan3,
+        'filters[4].lifespan': lifespan3
+      })
+    }
+
   },
   data: {
     cardCur: 0,

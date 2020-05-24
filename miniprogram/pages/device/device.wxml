@@ -12,7 +12,7 @@
   </scroll-view>
 </view>
 <view class="padding bg-white">
-  <view class='prog align-center' wx:for="{{filters}}" wx:key>
+  <view class='prog align-center' wx:for="{{filters}}" wx:key='pos'>
     <view class='prog-pos'>
       <button class="cu-btn icon bg-orange">
         <text>{{item.pos}}</text>
