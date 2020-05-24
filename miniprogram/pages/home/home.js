@@ -60,5 +60,8 @@ Page({
     app.globalData.userDetail.isAdmin = val.includes('isAdmin')
     app.globalData.userDetail.isClient = val.includes('isClient')
     app.globalData.userDetail.isWorker = val.includes('isWorker')
+  },
+  sliderChange: function(e){
+    app.globalData.debugDays = e.detail.value
   }
 })
