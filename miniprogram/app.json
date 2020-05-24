@@ -8,7 +8,8 @@
     "pages/payment/payment",
     "pages/about/about",
     "pages/aftersale/aftersale",
-    "pages/worker/invitation/invitation"
+    "pages/worker/invitation/invitation",
+    "pages/payment2/payment2"
   ],
   "window": {
     "backgroundTextStyle": "light",

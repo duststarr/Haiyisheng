@@ -106,6 +106,17 @@ Component({
       })
     }
   },
+  pageLifetimes: {
+    show: function() {
+      console.log('show')
+    },
+    hide: function() {
+      // 页面被隐藏
+    },
+    resize: function(size) {
+      // 页面尺寸变化
+    }
+  },
   data: {
     cardCur: 0,
     TabCur: 0,

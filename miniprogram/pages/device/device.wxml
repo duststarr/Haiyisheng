@@ -35,7 +35,7 @@
 		</view>
 	</view>
 </view>
-<view class='flex'>
-	<navigator url='/pages/payment2/payment2'><button class="cu-btn flex-sub round bg-blue">设备充值</button></navigator>
-	<navigator url='/pages/aftersale/aftersale'><button class="cu-btn flex-sub round bg-green">售后服务</button></navigator>
+<view class='flex justify-between margin-top'>
+	<navigator class='cu-btn round bg-blue flex-sub cu-btn' url='/pages/payment2/payment2'>设备充值</navigator>
+	<navigator class='cu-btn round bg-green flex-sub cu-btn' url='/pages/aftersale/aftersale'>售后服务</navigator>
 </view>
