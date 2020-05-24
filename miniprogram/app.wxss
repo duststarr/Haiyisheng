@@ -1,11 +1,2 @@
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";
-
-
-.h-time{
-    text-overflow: clip;
-    white-space:nowrap;
-    overflow: hidden;
-    width: 72px;
-    height:24px;
-}

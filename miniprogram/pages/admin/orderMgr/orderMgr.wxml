@@ -1,3 +1,5 @@
+<wxs module="tutil" src="../../../utils/util.wxs" />
+
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
 	<view slot="backText">返回</view>
 	<view slot="content">订单管理</view>
@@ -23,7 +25,7 @@
 		<view class="margin-sm bg-white radius" wx:for="{{orders}}" wx:key="_id">
 			<view class="cu-item shadow">
 				<view class='justify-between flex solids-bottom padding-lr padding-tb-sm bg-{{stateColors[item.state]}}'>
-					<view class='h-time'>{{item.createTime}}</view>
+					<view>{{tutil.shortTime(item.createTime)}}</view>
 					<view>{{item.type}}订单</view>
 					<view>
 						<picker bindchange="manualChangeState" range="{{states}}" data-pos="{{index}}">
