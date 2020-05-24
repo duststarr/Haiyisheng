@@ -2,10 +2,6 @@
 const app = getApp()
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     steps: [{
       icon: 'locationfill',
@@ -22,11 +18,6 @@ Page({
     },],
     currstep: 0,
     order: null
-  },
-  nextStep() {
-    this.setData({
-      currstep: this.data.currstep == this.data.steps.length ? 0 : this.data.currstep + 1
-    })
   },
   chooseAddress() {
     var that = this;
@@ -85,7 +76,5 @@ Page({
       }
     })
     app.globalData.userDetail.isClient = false
-
   }
-
 })
