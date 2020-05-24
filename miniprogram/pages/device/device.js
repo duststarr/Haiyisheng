@@ -54,7 +54,7 @@ function dateDiff(firstDate, secondDate) {
   var secondDate = new Date(secondDate);
   var diff = Math.abs(firstDate.getTime() - secondDate.getTime())
   var result = parseInt(diff / (1000 * 60 * 60 * 24));
-  if(app.globalData.debugDays)
+  if (app.globalData.debugDays)
     result += app.globalData.debugDays
   return result
 }
@@ -77,7 +77,6 @@ Component({
     const db = wx.cloud.database()
     const res = await db.collection('user').doc(app.globalData.userDetail._id).get()
     const userData = res.data
-    console.log(userData)
     if (userData.serviceDays) {
       const alldays = userData.serviceDays
       const today = new Date()
@@ -151,11 +150,6 @@ Component({
     tabSelect(e) {
       this.setData({
         TabCur: e.currentTarget.dataset.id
-      })
-    },
-    aftersale(e) {
-      wx.navigateTo({
-        url: '../aftersale/aftersale',
       })
     }
   }
