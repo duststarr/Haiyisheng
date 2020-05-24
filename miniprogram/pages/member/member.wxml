@@ -39,7 +39,7 @@
     </button>
   </view>
   <view class="cu-item arrow">
-    <navigator class="content" url="/pages/about/about" hover-class="none">
+    <navigator class="content" url="/pages/member/myQRcode/myQRcode" hover-class="none">
       <text class="cuIcon-text text-green"></text>
       <text class="text-grey">二维码推广</text>
     </navigator>

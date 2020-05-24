@@ -1,0 +1,7 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">推广二维码</view>
+</cu-custom>
+<image src="{{qrcode}}"></image>
+<button bindtap='saveQRcode'>保存二维码到相册</button>
+<text class='text-red'>这个二维不带会员信息。需要１.企业版小程序，２.发布上线后才能用。现在调试都不行。唉，腾讯好坑</text>

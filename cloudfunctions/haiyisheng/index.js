@@ -220,7 +220,7 @@ actions.orderPayTest = async (event) => {
 actions.generateQRcode = async (event) => {
   try {
     const result = await cloud.openapi.wxacode.getUnlimited({
-        scene: 'a=1'
+        scene: 'openid='+wxContext.OPENID
       })
       
     return await cloud.uploadFile({
