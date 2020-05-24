@@ -9,7 +9,9 @@ Component({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    orders: null
+    orders: null,
+    stateColors: app.globalData.stateColors
+
   },
   attached: function () {
     const that = this

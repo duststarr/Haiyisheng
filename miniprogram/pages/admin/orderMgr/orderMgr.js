@@ -17,7 +17,7 @@ Page({
     types: ['全部', '新装', '拆机', '移机', '换芯', '报修'],//新装，移机，拆机，换芯，报修
     categories: ['全部状态', '待处理', '进行中', '已完成'],
     states: ['新订单','待接单', '待执行', '待确认','已完成', '已取消'],
-    stateColors: ['']
+    stateColors: app.globalData.stateColors
   },
   StateChange(e) {
     this.setData({

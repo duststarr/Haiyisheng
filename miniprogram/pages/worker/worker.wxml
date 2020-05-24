@@ -44,9 +44,10 @@
     </view>
   </view> -->
   <scroll-view wx:if="{{orders && orders.length>0 }}">
-  	<view class="margin-sm bg-white radius" wx:for="{{orders}}">
+  	<view class="margin-sm bg-white radius" wx:for="{{orders}}" wx:key="_id">
   		<view class="cu-item shadow">
-  			<view class='justify-between flex solids-bottom padding-lr padding-tb-sm'>
+  			<view class='justify-between flex solids-bottom padding-lr padding-tb-sm bg-{{stateColors[item.state]}}'>
+  				<view class='h-time'>{{item.createTime}}</view>
   				<view>{{item.type}}订单</view>
   				<view>
   					{{item.state}}

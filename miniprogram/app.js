@@ -266,6 +266,14 @@ App({
       name: 'white',
       color: '#ffffff'
     },
-    ]
+    ],
+    stateColors: {
+      '新订单':'blue',
+      '待接单':'green',
+      '待执行':'green',
+      '待确认':'green',
+      '已完成':'grey',
+      '已取消':'grey',
+    }
   }
 })
