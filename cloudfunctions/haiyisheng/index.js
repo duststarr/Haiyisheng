@@ -46,7 +46,7 @@ actions.orderCreate = async (event, context) => {
   const order = db.collection('order');
   const res = await order.add({
     data: {
-      userID: wxContext.OPENID,
+      _openid: wxContext.OPENID,
       type: '新装',
       address: event.address,
       createTime: new Date(),
@@ -67,7 +67,7 @@ actions.orderCreate = async (event, context) => {
 actions.orderGetCreating = async (event, context) => {
   const order = db.collection('order');
   const res = await order.where({
-    userID: wxContext.OPENID,
+    _openid: wxContext.OPENID,
     type: '新装',
     state: _.neq('已取消')
   }).get()
