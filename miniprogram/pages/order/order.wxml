@@ -35,7 +35,7 @@
 				</view>
 			</view>
 		</view>
-		<view class='btn-area margin-top' wx:if='{{!order.timePay}}'>
+		<view class='btn-area margin-top' wx:if="{{order.state=='待确认'}}">
 			<navigator url='/pages/payment/payment?orderID={{order._id}}'><button type="primary">充值开始净水</button></navigator>
 		</view>
 		<view class="cu-timeline margin-top-sm" wx:if="{{order}}">

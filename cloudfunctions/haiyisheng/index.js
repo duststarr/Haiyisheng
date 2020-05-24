@@ -107,7 +107,7 @@ actions.orderGetList = async (event, context) => {
     param.worker.openid = wxContext.OPENID
   }
   console.log('param', event.states)
-  const res = await order.where(param).get()
+  const res = await order.where(param).orderBy('createTime', 'desc').get()
   console.log(res)
   return res.data;
 }
