@@ -8,11 +8,11 @@ Page({
    */
   data: {
     policies: [
-      { content: '充值一年365天，730元', amount: 730 },
-      { content: '充值二年730天，1400元', amount: 1400 },
-      { content: '充值三年1095天，2000元', amount: 2000 },
-      { content: '充值四年1460天，2600元', amount: 2600 },
-      { content: '充值五年1825天，3100元；到期后产权归客户', amount: 3100 },
+      { content: '充值一年365天，730元', days: 365, amount: 730 },
+      { content: '充值二年730天，1400元', days: 730, amount: 1400 },
+      { content: '充值三年1095天，2000元', days: 1095, amount: 2000 },
+      { content: '充值四年1460天，2600元', days: 1460, amount: 2600 },
+      { content: '充值五年1825天，3100元；到期后产权归客户', days: 1825, amount: 3100 },
     ],
     orderID: null
   },
@@ -20,16 +20,24 @@ Page({
     console.log(e)
     const pos = e.currentTarget.dataset.pos
     const policy = this.data.policies[pos]
-    const res = await app.wxcloud('orderPayTest',{
+    const res = await app.wxcloud('orderPayTest', {
       orderID: this.data.orderID,
       amount: policy.amount,
       message: policy.content
     })
 
     const db = wx.cloud.database();
+    var today = new Date()
     await db.collection('user').doc(app.globalData.userDetail._id).update({
       data: {
-        isClient: true
+        isClient: true,
+        serviceStart: today,
+        serviceDays: policy.days,
+        filters: {
+          first: today,
+          second: today,
+          third: today
+        }
       }
     })
     app.globalData.userDetail.isClient = true
