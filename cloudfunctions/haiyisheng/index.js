@@ -213,3 +213,21 @@ actions.orderPayTest = async (event) => {
   }
   return true
 }
+
+/**
+ * 二维码
+ */
+actions.generateQRcode = async (event) => {
+  try {
+    const result = await cloud.openapi.wxacode.getUnlimited({
+        scene: 'a=1'
+      })
+      
+    return await cloud.uploadFile({
+      cloudPath: 'qrcode.jpg',
+      fileContent: result.buffer,
+    })
+  } catch (err) {
+    return err
+  }
+}
