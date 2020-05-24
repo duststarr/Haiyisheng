@@ -1,29 +1,32 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init()
-const db = cloud.database()
-const wxContext = cloud.getWXContext()
-const _ = db.command
+var db
+var wxContext
+var _
+var db_order
 
-const actions = {
-  // ,
-  // ,
-  // ,
-  // orderDispatch,
-  // orderAccept,
-  // orderSuccess,
-  // orderRecharge,
-  // orderDone,
-}
+const actions = {}
 // 云函数入口函数
 exports.main = async (event, context) => {
-  console.log("cloud", event)
+  cloud.init()
+  db = cloud.database()
+  _ = db.command
+  wxContext = cloud.getWXContext() // 必须在main函数里执行，操
+  db_order = db.collection('order')
 
   if (event.action && actions.hasOwnProperty(event.action)) {
-    const res = await actions[event.action](event, context);
-    console.log('return', res)
-    return res
+    console.log("" + event.action, event)
+    console.log("openid", wxContext.OPENID)
+    try {
+      const res = await actions[event.action](event, context);
+      console.log('return', res)
+      return res
+    } catch (e) {
+      console.error('function error', e)
+    }
+    return false
   }
+  console.log('action not find', event)
   return { error: 'action not find:' + event.action }
 }
 
@@ -43,19 +46,14 @@ exports.main = async (event, context) => {
  * @param address 用户联系方式
  */
 actions.orderCreate = async (event, context) => {
-  const order = db.collection('order');
-  const res = await order.add({
+  const address = event.address
+  const res = await db_order.add({
     data: {
       _openid: wxContext.OPENID,
       type: '新装',
-      address: event.address,
+      address: address,
       createTime: new Date(),
-      state: '新订单',
-      logs: [
-        {
-          content: '已预约，稍后客服将与您约定上门安装时间。感谢您选择我们的产品。'
-        }
-      ]
+      state: '新订单'
     }
   })
   return res;
@@ -65,27 +63,24 @@ actions.orderCreate = async (event, context) => {
  * @return 数据库get的结果
  */
 actions.orderGetCreating = async (event, context) => {
-  const order = db.collection('order');
-  const res = await order.where({
+  const res = await db_order.where({
     _openid: wxContext.OPENID,
     type: '新装',
     state: _.neq('已取消')
   }).get()
-  console.log('orderGetCreating', res)
   return res.data;
 }
 /**
  * 用户本人取消订单
+ * @param orderID
  */
 actions.orderCancel = async (event, context) => {
   const orderID = event.orderID
-  const order = db.collection('order');
-  const res = await order.doc(orderID).update({
+  const res = await db_order.doc(orderID).update({
     data: {
       state: '已取消'
     }
   })
-
   return res;
 }
 
@@ -96,7 +91,7 @@ actions.orderCancel = async (event, context) => {
  * @param isWorker
  */
 actions.orderGetList = async (event, context) => {
-  const order = db.collection('order');
+  const db_order = db.collection('order');
   const param = {}
   if (event.type)
     param.type = event.type
@@ -106,9 +101,7 @@ actions.orderGetList = async (event, context) => {
     param.worker = {}
     param.worker.openid = wxContext.OPENID
   }
-  console.log('param', event.states)
-  const res = await order.where(param).orderBy('createTime', 'desc').get()
-  console.log(res)
+  const res = await db_order.where(param).orderBy('createTime', 'desc').get()
   return res.data;
 }
 
@@ -118,8 +111,8 @@ actions.orderGetList = async (event, context) => {
 actions.orderDispatchWorker = async (event) => {
   const orderID = event.orderID
   const worker = event.worker
-  const order = db.collection('order')
-  await order.doc(orderID).update({
+  const db_order = db.collection('order')
+  await db_order.doc(orderID).update({
     data: {
       worker: worker,
       state: '待接单'
@@ -135,8 +128,8 @@ actions.orderStateChange = async (event) => {
   const operator = event.operator || wxContext.OPENID
   const orderID = event.orderID
 
-  const order = db.collection('order')
-  await order.doc(orderID).update({
+  const db_order = db.collection('order')
+  await db_order.doc(orderID).update({
     data: {
       state: stateNew,
       stateTime: new Date(),
@@ -151,8 +144,8 @@ actions.orderStateChange = async (event) => {
 actions.orderPick = async (event) => {
   const orderID = event.orderID
   const operator = event.operator || wxContext.OPENID
-  const order = db.collection('order')
-  await order.doc(orderID).update({
+  const db_order = db.collection('order')
+  await db_order.doc(orderID).update({
     data: {
       state: '待执行',
       stateTime: new Date(),
@@ -168,8 +161,8 @@ actions.orderPick = async (event) => {
 actions.orderWorkdone = async (event) => {
   const orderID = event.orderID
   const operator = event.operator || wxContext.OPENID
-  const order = db.collection('order')
-  await order.doc(orderID).update({
+  const db_order = db.collection('order')
+  await db_order.doc(orderID).update({
     data: {
       state: '待确认',
       stateTime: new Date(),
@@ -215,7 +208,6 @@ actions.orderPayTest = async (event) => {
       orderID,
       stateNew: '已完成'
     })
-
   } catch (e) {
     return false
   }
