@@ -1,6 +1,8 @@
 import * as echarts from '../../ec-canvas/echarts';
 
 let chart = null;
+let component = null;
+
 function initChart(canvas, width, height, dpr) {
   chart = echarts.init(canvas, null, {
     width: width,
@@ -9,7 +11,7 @@ function initChart(canvas, width, height, dpr) {
   });
   canvas.setChart(chart);
 
-  var option = {
+  const option = {
     backgroundColor: "#ffffff",
     color: ["#37A2DA", "#32C5E9", "#67E0E3"],
     series: [{
@@ -43,19 +45,18 @@ function initChart(canvas, width, height, dpr) {
         value: 80,
         name: '',
       }]
-
     }]
   };
   chart.setOption(option);
   return chart;
 }
-function dateDiff(firstDate, secondDate) {
-  var firstDate = new Date(firstDate);
-  var secondDate = new Date(secondDate);
-  var diff = Math.abs(firstDate.getTime() - secondDate.getTime())
+function dateDiff(secondDate) {
+  const firstDate = new Date();
+  //const secondDate = new Date(secondDate);
+  const diff = Math.abs(firstDate.getTime() - secondDate.getTime())
   var result = parseInt(diff / (1000 * 60 * 60 * 24));
-  if (app.globalData.debugDays)
-    result += app.globalData.debugDays
+  // 调试用，模拟多少天以后
+  result += app.globalData.debugDays || 0
   return result
 }
 const app = getApp();
@@ -65,62 +66,16 @@ Component({
     addGlobalClass: true,
   },
   attached: async function () {
+    component = this;
     let that = this;
     setTimeout(function () {
       that.setData({
         loading: true
       })
+      app.globalWatch('userDetail', that.updateDatas)
+      app.globalWatch('debugDays', that.updateDatas)
     }, 500)
 
-    // 更新服务时间
-    const db = wx.cloud.database()
-    const res = await db.collection('user').doc(app.globalData.userDetail._id).get()
-    const userData = res.data
-    if (userData.serviceDays) {
-      const alldays = userData.serviceDays
-      const today = new Date()
-      const pastdays = dateDiff(today, userData.serviceStart)
-      const filter1 = dateDiff(today, userData.filters.first)
-      const lifespan1 = parseInt(100 - 100 * filter1 / 180)
-      const filter2 = dateDiff(today, userData.filters.second)
-      const lifespan2 = parseInt(100 - 100 * filter2 / 330)
-      const filter3 = dateDiff(today, userData.filters.third)
-      const lifespan3 = parseInt(100 - 100 * filter3 / 480)
-
-      chart.setOption({
-        series: [{
-          max: alldays,
-          data: [{
-            value: pastdays
-          }]
-        }]
-      })
-      const slot1 = 'filters[0].lifespan'
-      this.setData({
-        'filters[0].lifespan': lifespan1,
-        'filters[1].lifespan': lifespan2,
-        'filters[2].lifespan': lifespan3,
-        'filters[3].lifespan': lifespan3,
-        'filters[4].lifespan': lifespan3
-      })
-    }else {
-      wx.showToast({
-        title:'模拟充值再试',
-        icon: 'none',
-        duration: 5000
-      })
-    }
-  },
-  pageLifetimes: {
-    show: function() {
-      console.log('show')
-    },
-    hide: function() {
-      // 页面被隐藏
-    },
-    resize: function(size) {
-      // 页面尺寸变化
-    }
   },
   data: {
     cardCur: 0,
@@ -166,6 +121,46 @@ Component({
     tabSelect(e) {
       this.setData({
         TabCur: e.currentTarget.dataset.id
+      })
+    },
+    updateDatas(e) {
+      const today = new Date()
+
+      // 更新服务时间
+      const userData = app.globalData.userDetail
+      const alldays = userData.serviceDays || 365
+      const pastdays = dateDiff(userData.serviceStart || today)
+      var cores;
+      if (userData.filters) {
+        cores = userData.filters
+      } else {
+        cores = {
+          first: today,
+          second: today,
+          third: today
+        }
+      }
+      const filter1 = dateDiff(cores.first)
+      const lifespan1 = parseInt(100 - 100 * filter1 / 180)
+      const filter2 = dateDiff(cores.second)
+      const lifespan2 = parseInt(100 - 100 * filter2 / 330)
+      const filter3 = dateDiff(cores.third)
+      const lifespan3 = parseInt(100 - 100 * filter3 / 480)
+
+      chart.setOption({
+        series: [{
+          max: alldays,
+          data: [{
+            value: pastdays
+          }]
+        }]
+      })
+      component.setData({
+        'filters[0].lifespan': lifespan1,
+        'filters[1].lifespan': lifespan2,
+        'filters[2].lifespan': lifespan3,
+        'filters[3].lifespan': lifespan3,
+        'filters[4].lifespan': lifespan3
       })
     }
   }

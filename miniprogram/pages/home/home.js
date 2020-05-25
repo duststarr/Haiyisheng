@@ -45,5 +45,6 @@ Page({
   },
   sliderChange: function (e) {
     app.globalData.debugDays = e.detail.value
+    app.globalEmit('debugDays')
   }
 })

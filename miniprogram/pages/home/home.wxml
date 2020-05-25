@@ -47,7 +47,7 @@
 				<checkbox value="isClient" checked='{{isClient}}' />是会员</label>
 		</checkbox-group>
 		<view class='margin-top solids-top' wx:if="{{isClient}}">
-			<view>模拟运行Ｎ天以后(需要切换页面）</view>
+			<view>模拟运行Ｎ天以后</view>
 			<slider bindchange="sliderChange" min="0" max="600" step="30" show-value />
 		</view>
 	</view>
