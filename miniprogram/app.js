@@ -103,25 +103,9 @@ App({
       console.error('cloud database add error:', e)
     }
   },
-  // /**
-  //  * 赋值可监控全局变量
-  //  * @param {*} name 
-  //  */
-  // globalGet: function (name) {
-  //   return this.globalData[name]
-  // },
-  // /**
-  //  * 
-  //  * @param {*} name 
-  //  * @param {*} value 
-  //  */
-  // globalSet: function (name, value) {
-  //   this.globalData[name] = value
-  //   this.globalEmit(name)
-  // },
+
   /**
    * 手动触发更新
-   * 因为[name]可能为对象，目前不能对子元素globalSet
    * @param {*} name 
    */
   globalEmit: function (name) {
@@ -132,7 +116,7 @@ App({
     }
   },
   /**
-   * 
+   * 订阅全局变量的变更
    * @param {*} name 
    * @param {*} callback 
    * @param {*} callAtonce 如果有值是否立即回调
