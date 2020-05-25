@@ -16,8 +16,8 @@ Page({
    * 
    * 必须在云端user库中有数据后才执行
    */
-  userDetailUpdated: function () {
-    const detail = app.globalData.userDetail
+  userDetailUpdated: function (detail) {
+    // const detail = app.globalData.userDetail
 
     // 是否有客服邀请
     const param = wx.getLaunchOptionsSync();
@@ -39,15 +39,16 @@ Page({
   onShow: function (options) {
     // 获取用户信息
     var that = this
-    if (app.globalData.userDetail) {
-      that.userDetailUpdated()
-    } else {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userDetailReadyCallback = res => {
-        that.userDetailUpdated();
-      }
-    }
+    app.globalWatch('userDetail',this.userDetailUpdated)
+    // if (app.globalData.userDetail) {
+    //   that.userDetailUpdated()
+    // } else {
+    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+    //   // 所以此处加入 callback 以防止这种情况
+    //   app.userDetailReadyCallback = res => {
+    //     that.userDetailUpdated();
+    //   }
+    // }
   },
 
   checkboxChange: function (e) {

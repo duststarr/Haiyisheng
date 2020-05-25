@@ -96,24 +96,53 @@ App({
   authentication: async function (e) {
     try {
       const res = await this.wxcloud('authentication', { query: e.query });
-      this.globalData.userDetail = res.result
+      this.globalSet('userDetail',res.result)
       console.log('userDetail', this.globalData.userDetail)
-
-      // userDetail更新的回调函数
-      if (this.userDetailReadyCallback) {
-        this.userDetailReadyCallback(this.globalData.userDetail)
-      }
     } catch (e) {
       console.error('cloud database add error:', e)
     }
   },
-  onShow: function (e) {
-
+  /**
+   * 赋值可监控全局变量
+   * @param {*} name 
+   */
+  globalGet: function (name) {
+    return this.globalData[name]
+  },
+  /**
+   * 
+   * @param {*} name 
+   * @param {*} value 
+   */
+  globalSet: function (name, value) {
+    this.globalData[name] = value
+    if (this.globalData._watches && this.globalData._watches[name]) {
+      this.globalData._watches[name].forEach(func => {
+        func(value)
+      })
+    }
+  },
+  /**
+   * 
+   * @param {*} name 
+   * @param {*} callback 
+   * @param {*} callAtonce 如果有值是否立即回调
+   */
+  globalWatch: function (name, callback, callAtonce=true) {
+    if (!this.globalData._watches)
+      this.globalData._watches = {}
+    if (!this.globalData._watches[name])
+      this.globalData._watches[name] = []
+    this.globalData._watches[name].push(callback)
+    if(callAtonce && this.globalData[name])
+      callback(this.globalData[name])
   },
   globalData: {
     userInfo: null, // 微信userinfo
     openid: '',
     userDetail: null, // 项目本身的user表
+    
+    
     ColorList: [{
       title: '嫣红',
       name: 'red',
