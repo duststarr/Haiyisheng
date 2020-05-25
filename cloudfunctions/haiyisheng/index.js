@@ -4,6 +4,7 @@ var db
 var wxContext
 var _
 var db_order
+var db_user
 
 const actions = {}
 // 云函数入口函数
@@ -13,6 +14,7 @@ exports.main = async (event, context) => {
   _ = db.command
   wxContext = cloud.getWXContext() // 必须在main函数里执行，操
   db_order = db.collection('order')
+  db_user = db.collection('user')
 
   if (event.action && actions.hasOwnProperty(event.action)) {
     console.log("" + event.action, event)
@@ -176,8 +178,7 @@ actions.orderWorkdone = async (event) => {
  * 
  */
 actions.workerGetList = async (event) => {
-  const user = db.collection('user');
-  const res = await user.where({
+  const res = await db_user.where({
     isWorker: true
   }).get()
   return res.data
@@ -192,7 +193,7 @@ actions.orderPayTest = async (event) => {
   const message = event.message
   const timePay = new Date()
   try {
-    await db.collection('order').doc(orderID).update({
+    await db_order.doc(orderID).update({
       data: {
         timePay,
         payment: {
@@ -218,17 +219,34 @@ actions.orderPayTest = async (event) => {
  * 二维码
  */
 actions.generateQRcode = async (event) => {
-  const query = 'pages/home/home?action=marketing&openid='+wxContext.OPENID
-  console.log('generateQRcode',query)
-  try {
-    const result = await cloud.openapi.wxacode.get({
-      path: query
-    })
-    return await cloud.uploadFile({
-      cloudPath: wxContext.OPENID + '.jpg',
-      fileContent: result.buffer,
-    })
-  } catch (err) {
-    return err
+  const res = await db_user.where({
+    _openid: wxContext.OPENID
+  }).get();
+  const user = res.data[0]
+  console.log(user)
+  if(user.qrcode){
+    console.log('find qrcode')
+    return user.qrcode
+  }else{
+    console.log('generate new qrcode')
+    const query = 'pages/home/home?action=marketing&openid='+wxContext.OPENID
+    console.log('generateQRcode',query)
+    try {
+      const result = await cloud.openapi.wxacode.get({
+        path: query
+      })
+      const file = await cloud.uploadFile({
+        cloudPath: wxContext.OPENID + '.jpg',
+        fileContent: result.buffer,
+      })
+      await db_user.doc(user._id).update({
+        data:{
+          qrcode:file
+        }
+      })
+      return file
+    } catch (err) {
+      return err
+    }
   }
 }
