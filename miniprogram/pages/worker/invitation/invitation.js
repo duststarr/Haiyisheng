@@ -8,20 +8,12 @@ Page({
    */
   data: {
     errormsg: null,
-    phone: '136',
+    phone: '13',
     name: '',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUsegetPhoneNumber: wx.canIUse('button.open-type.getPhoneNumber')
-  },
-  attached: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    }
   },
   getUserInfo: function (e) {
     console.log(e)
@@ -31,19 +23,21 @@ Page({
       hasUserInfo: true
     })
   },
-  getPhoneNumber: function(e){
-    console.log()
+  getPhoneNumber: function (e) {
+    console.log(e)
   },
   onSure: function (e) {
+    const myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+
     var formdata = e.detail.value
     if ("" == formdata.name) {
       this.setData({
         errormsg: '请输入姓名'
       })
       return
-    } else if ("" == formdata.phone) {
+    } else if (!myreg.test(formdata.phone)) {
       this.setData({
-        errormsg: '请输入手机号'
+        errormsg: '请输入正确的手机号码'
       })
       return
     }
@@ -52,7 +46,8 @@ Page({
     const detail = app.globalData.userDetail
     if (detail && !detail.isWorker) {
       const param = wx.getLaunchOptionsSync()
-      const fromWho = param.openid // 邀请加入的管理员的openid
+      console.log(param)
+      const fromWho = param.query.openid // 邀请加入的管理员的openid
       user.doc(app.globalData.userDetail._id).update({
         data: {
           isWorker: true,
@@ -64,7 +59,14 @@ Page({
         },
         success: function (res) {
           app.globalData.userDetail.isWorker = true;
-          wx.navigateBack()
+          wx.showToast({
+            title: '恭喜您已成功加入海益团队',
+            icon: 'none',
+            duration: 2000,
+            success: () => {
+              setTimeout(wx.navigateBack, 2000)
+            }
+          })
         }
       })
     } else {
@@ -76,6 +78,12 @@ Page({
    */
   onLoad: function (options) {
     app.globalData.roger = true // 邀请已收到,避免重复处理
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    }
   },
 
   /**
