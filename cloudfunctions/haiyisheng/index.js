@@ -35,25 +35,34 @@ exports.main = async (event, context) => {
 /**
  * 小程序启动时鉴权
  * 
- * @param action
- * @param openid
+ * @param query
  */
 actions.authentication = async (event) => {
+  const query = event.query
   var result = null;
-
+  var referrerID = null;
   // 数据库中是否有此用户
   const res = await db_user.where({
     _openid: wxContext.OPENID
   }).get();
   if (res.data.length > 0) {
     result = res.data[0]
+    // 如果有推广人，且当前用户没有推广人，更新之
+    if ('marketing' == query.action && !result.referrerID) {
+      referrerID = query.openid
+      await db_user.doc(result._id).update({
+        data: {
+          referrerID
+        }
+      })
+    }
   } else { // 新人        
-    const referrerID = 'marketing' == event.action ? event.openid : null// 推荐人的openid
+    referrerID = 'marketing' == query.action ? query.openid : null// 推荐人的openid
     const detail = {
       _id: wxContext.OPENID,
       _openid: wxContext.OPENID,
       timeBeUser: new Date(),
-      referrerID: referrerID,
+      referrerID,
       fans: 0,
       coupons: 0,
       profits: 0,
@@ -65,15 +74,15 @@ actions.authentication = async (event) => {
       data: detail
     })
     result = detail
-    if (referrerID) { // 推荐人粉丝+1
-      db_user.doc(referrerID).update({
-        data: {
-          fans: _.inc(1)
-        }
-      })
-    }
   }
-
+  // 推荐人粉丝+1
+  if (referrerID) {
+    db_user.doc(referrerID).update({
+      data: {
+        fans: _.inc(1)
+      }
+    })
+  }
   return result
 }
 /**=============

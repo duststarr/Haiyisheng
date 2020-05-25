@@ -95,102 +95,19 @@ App({
   },
   authentication: async function (e) {
     try {
-      const res = await this.wxcloud('authentication',e.query);
+      const res = await this.wxcloud('authentication', { query: e.query });
       this.globalData.userDetail = res.result
+      console.log('userDetail', this.globalData.userDetail)
+
       // userDetail更新的回调函数
       if (this.userDetailReadyCallback) {
         this.userDetailReadyCallback(this.globalData.userDetail)
       }
-
-      // const db = wx.cloud.database();
-      // const db_user = db.collection('user'); // 仅创建者可读写
-
-      // // 数据库中是否有此用户
-      // const res = await db_user.get();
-      // console.log('db.user.get=', res)
-      // if (res.data.length > 0) {
-      //   this.globalData.userDetail = res.data[0]
-      // } else { // 新人        
-      //   const detail = {
-      //     timeBeUser: new Date(),
-      //     referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
-      //     isAdmin: false,
-      //     isWorker: false,
-      //     isClient: false
-      //   }
-      //   await db_user.add({
-      //     data: detail
-      //   })
-      //   const res = await db_user.get();
-      //   this.globalData.userDetail = res.data[0]
-      //   console.log('new user', this.globalData.userDetail)
-      // }
-
     } catch (e) {
       console.error('cloud database add error:', e)
     }
-    console.log('userDetail', this.globalData.userDetail)
-
-    // 新人首次打开,在数据库中插入
-    // if (0 == res.data.length) { // 新人
-    //   userDetail = {
-    //     _openid: '{openid}',
-    //     timeBeUser: new Date(),
-    //     referrer: 'marketing' == action ? fromWho : null, // 推荐人的openid
-    //     isAdmin: false,
-    //     isWorker: false,
-    //     isClient: false
-    //   }
-    //   await user.add({
-    //     data:userDetail
-    //   })
-    // }else { // 已存用户
-    //   userDetail = res.data[0]
-    // }
-
-    // // 如果有推荐人,且当前用户不是客户,更新推荐人
-    // if ('marketing' == action && !userDetail.isClient) { 
-    //   await user.where({
-    //     _openid: wxContext.OPENID
-    //   }).update({
-    //     data: {
-    //       referer: fromWho
-    //     }
-    //   })
-    // } 
-
-    // wx.cloud.callFunction({
-    //   name: 'login',
-    //   data: param,
-    //   success: res => {
-    //     console.log('[云函数] [login] openid:', res.result.openid)
-    //     that.globalData.openid = res.result.openid
-    //     // if (res.result.userDetail) {
-    //     //   that.globalData.userDetail = res.result.userDetail
-    //     //   if (that.userDetailReadyCallback) {
-    //     //     that.userDetailReadyCallback(res.result.userDetail)
-    //     //   }
-    //     // }
-    //   },
-    //   fail: err => {
-    //     console.error('[云函数] [login] 调用失败', err)
-    //   }
-    // })
-
-    // switch (action) {
-    //   case 'recruit': { // 招募工人或邀请合作商
-
-    //   } break;
-    //   case 'marketing': { // 会员推广
-    //     wx.showModal({
-    //       title: "推荐人：",
-    //       content: "openid:" + fromWho
-    //     })
-    //   } break;
-    // }
   },
   onShow: function (e) {
-
 
   },
   globalData: {
