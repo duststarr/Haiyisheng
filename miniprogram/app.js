@@ -30,7 +30,7 @@ import wxcloud from '/utils/wxcloud.js'
 
 App({
   onLaunch: function (e) {
-    console.log('onLaunch',e)
+    console.log('onLaunch', e)
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -95,35 +95,41 @@ App({
   },
   authentication: async function (e) {
     try {
-      const db = wx.cloud.database();
-      const user = db.collection('user'); // 仅创建者可读写
-
-      // 数据库中是否有此用户
-      const res = await user.get();
-      console.log('db.user.get=', res)
-      if (res.data.length > 0) {
-        this.globalData.userDetail = res.data[0]
-      } else { // 新人        
-        const detail = {
-          timeBeUser: new Date(),
-          referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
-          isAdmin: false,
-          isWorker: false,
-          isClient: false
-        }
-        this.globalData.userDetail = await user.add({
-          data: detail
-        })
-        console.log('new user', this.globalData.userDetail)
-      }
+      const res = await this.wxcloud('authentication',e.query);
+      this.globalData.userDetail = res.result
       // userDetail更新的回调函数
       if (this.userDetailReadyCallback) {
         this.userDetailReadyCallback(this.globalData.userDetail)
       }
+
+      // const db = wx.cloud.database();
+      // const db_user = db.collection('user'); // 仅创建者可读写
+
+      // // 数据库中是否有此用户
+      // const res = await db_user.get();
+      // console.log('db.user.get=', res)
+      // if (res.data.length > 0) {
+      //   this.globalData.userDetail = res.data[0]
+      // } else { // 新人        
+      //   const detail = {
+      //     timeBeUser: new Date(),
+      //     referrer: 'marketing' == e.query.action ? e.query.openid : null, // 推荐人的openid
+      //     isAdmin: false,
+      //     isWorker: false,
+      //     isClient: false
+      //   }
+      //   await db_user.add({
+      //     data: detail
+      //   })
+      //   const res = await db_user.get();
+      //   this.globalData.userDetail = res.data[0]
+      //   console.log('new user', this.globalData.userDetail)
+      // }
+
     } catch (e) {
       console.error('cloud database add error:', e)
     }
-    console.log('userDetail',this.globalData.userDetail)
+    console.log('userDetail', this.globalData.userDetail)
 
     // 新人首次打开,在数据库中插入
     // if (0 == res.data.length) { // 新人
@@ -268,12 +274,12 @@ App({
     },
     ],
     stateColors: {
-      '新订单':'blue',
-      '待接单':'green',
-      '待执行':'green',
-      '待确认':'green',
-      '已完成':'grey',
-      '已取消':'grey',
+      '新订单': 'blue',
+      '待接单': 'green',
+      '待执行': 'green',
+      '待确认': 'green',
+      '已完成': 'grey',
+      '已取消': 'grey',
     }
   }
 })

@@ -32,6 +32,50 @@ exports.main = async (event, context) => {
   return { error: 'action not find:' + event.action }
 }
 
+/**
+ * 小程序启动时鉴权
+ * 
+ * @param action
+ * @param openid
+ */
+actions.authentication = async (event) => {
+  var result = null;
+
+  // 数据库中是否有此用户
+  const res = await db_user.where({
+    _openid: wxContext.OPENID
+  }).get();
+  if (res.data.length > 0) {
+    result = res.data[0]
+  } else { // 新人        
+    const referrerID = 'marketing' == event.action ? event.openid : null// 推荐人的openid
+    const detail = {
+      _id: wxContext.OPENID,
+      _openid: wxContext.OPENID,
+      timeBeUser: new Date(),
+      referrerID: referrerID,
+      fans: 0,
+      coupons: 0,
+      profits: 0,
+      isAdmin: false,
+      isWorker: false,
+      isClient: false
+    }
+    await db_user.add({
+      data: detail
+    })
+    result = detail
+    if (referrerID) { // 推荐人粉丝+1
+      db_user.doc(referrerID).update({
+        data: {
+          fans: _.inc(1)
+        }
+      })
+    }
+  }
+
+  return result
+}
 /**=============
  * order
  * 
@@ -224,13 +268,13 @@ actions.generateQRcode = async (event) => {
   }).get();
   const user = res.data[0]
   console.log(user)
-  if(user.qrcode){
+  if (user.qrcode) {
     console.log('find qrcode')
     return user.qrcode
-  }else{
+  } else {
     console.log('generate new qrcode')
-    const query = 'pages/home/home?action=marketing&openid='+wxContext.OPENID
-    console.log('generateQRcode',query)
+    const query = 'pages/home/home?action=marketing&openid=' + wxContext.OPENID
+    console.log('generateQRcode', query)
     try {
       const result = await cloud.openapi.wxacode.get({
         path: query
@@ -240,8 +284,8 @@ actions.generateQRcode = async (event) => {
         fileContent: result.buffer,
       })
       await db_user.doc(user._id).update({
-        data:{
-          qrcode:file
+        data: {
+          qrcode: file
         }
       })
       return file
