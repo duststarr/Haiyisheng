@@ -15,7 +15,7 @@
     </view>
   </view>
   <view class="flex flex-sub flex-direction solid-right">
-    <view class="text-xxl text-blue">66</view>
+    <view class="text-xxl text-blue">{{fans}}</view>
     <view>
       <text class="cuIcon-refund"></text>
       粉丝数

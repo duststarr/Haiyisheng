@@ -5,10 +5,15 @@ Component({
     addGlobalClass: true,
   },
   data: {
-    
+    fans: 0
   },
-  attached: function(){
-
+  attached: function () {
+    const that = this
+    app.globalWatch('userDetail', detail => {
+      that.setData({
+        fans: detail.fans || 0
+      })
+    })
   },
   methods: {
 
