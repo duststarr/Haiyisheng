@@ -116,11 +116,7 @@ App({
    */
   globalSet: function (name, value) {
     this.globalData[name] = value
-    if (this.globalData._watches && this.globalData._watches[name]) {
-      this.globalData._watches[name].forEach(func => {
-        func(value)
-      })
-    }
+    this.globalEmit(name)
   },
   /**
    * 手动触发更新
@@ -130,7 +126,7 @@ App({
   globalEmit: function (name) {
     if (this.globalData._watches && this.globalData._watches[name]) {
       this.globalData._watches[name].forEach(func => {
-        func(value)
+        func(this.globalData[name])
       })
     }
   },

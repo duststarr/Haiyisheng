@@ -41,6 +41,7 @@ Page({
       }
     })
     app.globalData.userDetail.isClient = true
+    app.globalEmit('userDetail')
 
     wx.showToast({
       title: policy.content,

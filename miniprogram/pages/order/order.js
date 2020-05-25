@@ -76,5 +76,6 @@ Page({
       }
     })
     app.globalData.userDetail.isClient = false
+    app.globalEmit('userDetail')
   }
 })
