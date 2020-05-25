@@ -96,7 +96,7 @@ App({
   authentication: async function (e) {
     try {
       const res = await this.wxcloud('authentication', { query: e.query });
-      this.globalSet('userDetail',res.result)
+      this.globalSet('userDetail', res.result)
       console.log('userDetail', this.globalData.userDetail)
     } catch (e) {
       console.error('cloud database add error:', e)
@@ -123,26 +123,38 @@ App({
     }
   },
   /**
+   * 手动触发更新
+   * 因为[name]可能为对象，目前不能对子元素globalSet
+   * @param {*} name 
+   */
+  globalEmit: function (name) {
+    if (this.globalData._watches && this.globalData._watches[name]) {
+      this.globalData._watches[name].forEach(func => {
+        func(value)
+      })
+    }
+  },
+  /**
    * 
    * @param {*} name 
    * @param {*} callback 
    * @param {*} callAtonce 如果有值是否立即回调
    */
-  globalWatch: function (name, callback, callAtonce=true) {
+  globalWatch: function (name, callback, callAtonce = true) {
     if (!this.globalData._watches)
       this.globalData._watches = {}
     if (!this.globalData._watches[name])
       this.globalData._watches[name] = []
     this.globalData._watches[name].push(callback)
-    if(callAtonce && this.globalData[name])
+    if (callAtonce && this.globalData[name])
       callback(this.globalData[name])
   },
   globalData: {
     userInfo: null, // 微信userinfo
     openid: '',
     userDetail: null, // 项目本身的user表
-    
-    
+
+
     ColorList: [{
       title: '嫣红',
       name: 'red',
