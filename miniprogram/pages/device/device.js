@@ -70,7 +70,6 @@ Component({
       that.setData({
         loading: true
       })
-
     }, 500)
 
     // 更新服务时间
@@ -103,6 +102,12 @@ Component({
         'filters[2].lifespan': lifespan3,
         'filters[3].lifespan': lifespan3,
         'filters[4].lifespan': lifespan3
+      })
+    }else {
+      wx.showToast({
+        title:'模拟充值再试',
+        icon: 'none',
+        duration: 5000
       })
     }
   },

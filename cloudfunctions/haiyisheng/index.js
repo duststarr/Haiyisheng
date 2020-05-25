@@ -218,9 +218,11 @@ actions.orderPayTest = async (event) => {
  * 二维码
  */
 actions.generateQRcode = async (event) => {
+  const query = 'pages/home/home?action=marketing&openid='+wxContext.OPENID
+  console.log('generateQRcode',query)
   try {
-    const result = await cloud.openapi.wxacode.getUnlimited({
-      scene: 'openid=' + wxContext.OPENID
+    const result = await cloud.openapi.wxacode.get({
+      path: query
     })
     return await cloud.uploadFile({
       cloudPath: wxContext.OPENID + '.jpg',

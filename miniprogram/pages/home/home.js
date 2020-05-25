@@ -34,7 +34,7 @@ Page({
     }
   },
   onLoad: function (options) {
-
+    console.log('home onLoad',options)
   },
   onShow: function (options) {
     // 获取用户信息
