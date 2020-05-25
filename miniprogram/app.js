@@ -96,28 +96,29 @@ App({
   authentication: async function (e) {
     try {
       const res = await this.wxcloud('authentication', { query: e.query });
-      this.globalSet('userDetail', res.result)
+      this.globalData.userDetail = res.result
+      this.globalEmit('userDetail')
       console.log('userDetail', this.globalData.userDetail)
     } catch (e) {
       console.error('cloud database add error:', e)
     }
   },
-  /**
-   * 赋值可监控全局变量
-   * @param {*} name 
-   */
-  globalGet: function (name) {
-    return this.globalData[name]
-  },
-  /**
-   * 
-   * @param {*} name 
-   * @param {*} value 
-   */
-  globalSet: function (name, value) {
-    this.globalData[name] = value
-    this.globalEmit(name)
-  },
+  // /**
+  //  * 赋值可监控全局变量
+  //  * @param {*} name 
+  //  */
+  // globalGet: function (name) {
+  //   return this.globalData[name]
+  // },
+  // /**
+  //  * 
+  //  * @param {*} name 
+  //  * @param {*} value 
+  //  */
+  // globalSet: function (name, value) {
+  //   this.globalData[name] = value
+  //   this.globalEmit(name)
+  // },
   /**
    * 手动触发更新
    * 因为[name]可能为对象，目前不能对子元素globalSet
