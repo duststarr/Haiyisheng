@@ -6,25 +6,30 @@ Component({
     cardCur: 0,
     swiperList: [
       {
-        id: 2,
+        id: 0,
         type: 'image',
         url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+      },
+      {
+        id: 1,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39001.jpg'
+      },
+      {
+        id: 2,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39002.jpg'
       }
     ]
   },
-  attached: function(){
-    const db = wx.cloud.database();
-    db.collection('swiper').get().then( res => {
-      this.setData({
-        swiperList: res.data
-      })
-    })
+  attached: function () {
+
   },
   methods: {
-    showIntro: function(e){
+    showIntro: function (e) {
       const id = e.currentTarget.dataset.id
       wx.navigateTo({
-        url: '/pages/order/order?id='+id
+        url: '/pages/order/order?id=' + id
       })
     }
   }
