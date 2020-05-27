@@ -3,22 +3,59 @@
 <usertop></usertop>
 <!-- money earn -->
 <view class="padding-sm flex text-center text-grey bg-white shadow-warp">
-	<view class="flex flex-sub flex-direction solid-right">
-		<view class="text-xxl text-orange">9999</view>
+	<view class="flex flex-sub flex-direction solids-right {{showInstall?'bg-olive':''}}" bindtap='onToggleInstall'>
+		<view class="text-xxl text-orange">{{numInstallWorking}}/{{numInstall}}</view>
 		<view>
-			<text class="cuIcon-recharge"></text>
-			我的收益
+			<text class="cuIcon-home"></text>
+			新装订单
+		</view>
+	</view>
+	<view class="flex flex-sub flex-direction solids-right {{showAftersale?'bg-olive':''}}" bindtap='onToggleAftersale'>
+		<view class="text-xxl text-orange">{{numAftersaleWorking}}/{{numAftersale}}</view>
+		<view>
+			<text class="cuIcon-service"></text>
+			售后订单
 		</view>
 	</view>
 	<view class="flex flex-sub flex-direction solid-right">
 		<view class="text-xxl text-blue">888</view>
 		<view>
 			<text class="cuIcon-refund"></text>
-			可提现金额
+			未提现报酬
 		</view>
 	</view>
 </view>
-<!-- <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+
+<scroll-view wx:if="{{orders && orders.length>0 }}">
+	<view wx:for="{{orders}}" wx:key="_id">
+		<view class="margin-sm bg-white radius" wx:if="{{(showInstall&&item.type=='新装') || (showAftersale&&item.type!='新装')}}">
+			<view class="cu-item shadow">
+				<view class='justify-between flex solids-bottom padding-lr padding-tb-sm bg-{{stateColors[item.state]}}'>
+					<view>{{tutil.shortTime(item.createTime)}}</view>
+					<view>{{item.type}}订单</view>
+					<view>
+						{{item.state}}
+					</view>
+				</view>
+				<view class='content bg-white padding text-cyan'>
+					<view>
+						<text class="text-bold">{{item.address.userName}}</text>
+						,{{item.address.telNumber}}
+					</view>
+					<view class='content'>
+						{{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
+					</view>
+				</view>
+				<view class='solids-top align-right flex'>
+					<button class='cu-btn bg-blue lg' wx:if="{{!item.timePick}}" bindtap='orderPick' data-pos='{{index}}'>我要接单</button>
+					<button class='cu-btn bg-green lg' wx:elif="{{!item.timeWorkdone}}" bindtap='orderWorkdone' data-pos='{{index}}'>我已完成安装</button>
+				</view>
+			</view>
+		</view>
+	</view>
+</scroll-view>
+
+<view wx:else class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
     <view class="cu-item arrow">
       <navigator class="content" url="/pages/about/about" hover-class="none">
         <text class="cuIcon-text text-green"></text>
@@ -43,31 +80,5 @@
         <text class="text-grey">意见反馈</text>
       </button>
     </view>
-  </view> -->
-<scroll-view wx:if="{{orders && orders.length>0 }}">
-	<view class="margin-sm bg-white radius" wx:for="{{orders}}" wx:key="_id">
-		<view class="cu-item shadow">
-			<view class='justify-between flex solids-bottom padding-lr padding-tb-sm bg-{{stateColors[item.state]}}'>
-				<view>{{tutil.shortTime(item.createTime)}}</view>
-				<view>{{item.type}}订单</view>
-				<view>
-					{{item.state}}
-				</view>
-			</view>
-			<view class='content bg-white padding text-cyan'>
-				<view>
-					<text class="text-bold">{{item.address.userName}}</text>
-					,{{item.address.telNumber}}
-				</view>
-				<view class='content'>
-					{{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
-				</view>
-			</view>
-			<view class='solids-top align-right flex'>
-				<button class='cu-btn bg-blue lg' wx:if="{{!item.timePick}}" bindtap='orderPick' data-pos='{{index}}'>我要接单</button>
-				<button class='cu-btn bg-green lg' wx:elif="{{!item.timeWorkdone}}" bindtap='orderWorkdone' data-pos='{{index}}'>我已完成安装</button>
-			</view>
-		</view>
-	</view>
-</scroll-view>
+  </view>
 <view class="cu-tabbar-height"></view>

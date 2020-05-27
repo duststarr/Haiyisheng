@@ -5,13 +5,18 @@ Component({
     addGlobalClass: true,
   },
   data: {
+    numInstall: 0,
+    numAftersale: 0,
+    numInstallWorking: 0,
+    numAftersaleWorking: 0,
+    showInstall: true,
+    showAftersale: true,
     motto: 'Hi 开发者！',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     orders: null,
     stateColors: app.globalData.stateColors
-
   },
   attached: function () {
     const that = this
@@ -47,14 +52,40 @@ Component({
       })
       this.getOrders();
     },
-    getOrders() {
+    getOrders(sub = null) {
       const that = this
       const param = {}
       param.isWorker = true
+      if (sub)
+        param.sub = sub
       app.wxcloud('orderGetList', param).then(res => {
         that.setData({
           orders: res.result || null
         })
+        that.countOrders()
+      })
+    },
+    countOrders() {
+      let numInstall = 0
+      let numAftersale = 0
+      let numInstallWorking = 0
+      let numAftersaleWorking = 0
+      this.data.orders.forEach(order => {
+        if ('新装' == order.type) {
+          numInstall += 1
+          if (!order.timeWorkdone)
+            numInstallWorking += 1
+        } else {
+          numAftersale += 1
+          if (!order.timeWorkdone)
+            numAftersaleWorking += 1
+        }
+      })
+      this.setData({
+        numInstall,
+        numAftersale,
+        numInstallWorking,
+        numAftersaleWorking
       })
     },
     orderPick(e) {
@@ -77,6 +108,18 @@ Component({
         that.setData({
           [slotWorkdone]: new Date()
         })
+        that.countOrders()
+
+      })
+    },
+    onToggleInstall(e){
+      this.setData({
+        showInstall: !this.data.showInstall
+      })
+    },
+    onToggleAftersale(e){
+      this.setData({
+        showAftersale: !this.data.showAftersale
       })
     }
   }
