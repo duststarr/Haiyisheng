@@ -1,0 +1,14 @@
+<view class='cu-card'>
+	<view class="btn-area" wx:if="{{!address}}">
+		<button type="primary" bindtap="chooseAddress">选择地址</button>
+	</view>
+	<view class='content bg-white padding text-cyan' wx:else>
+		<view>
+			<text class="text-bold">{{address.userName}}</text>
+			,{{address.telNumber}}
+		</view>
+		<view class='content'>
+			{{address.provinceName}} {{address.cityName}} {{address.countyName}} {{address.detailInfo}}
+		</view>
+	</view>
+</view>

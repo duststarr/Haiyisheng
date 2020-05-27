@@ -12,30 +12,19 @@
 	</view>
 </view>
 <view class='margin-top'>
-	<view class="btn-area" wx:if="{{null==order}}">
-		<button type="primary" bindtap="chooseAddress">选择地址安装吧</button>
-	</view>
-	<block wx:else>
-		<view class='cu-card'>
-			<view class="cu-bar bg-white solid-bottom">
-				<view class="action">
-					<text class="cuIcon-title text-orange"></text>
-					预约安装地址
-				</view>
-				<view class="action" wx:if="{{currstep<2}}">
-					<button class="cu-btn bg-pink shadow" bindtap="cancelOrder">撤销</button>
-				</view>
+	<view class='cu-card'>
+		<view class="cu-bar bg-white solid-bottom">
+			<view class="action">
+				<text class="cuIcon-title text-orange"></text>
+				预约安装
 			</view>
-			<view class='content bg-white padding text-cyan'>
-				<view>
-					<text class="text-bold">{{order.address.userName}}</text>
-					,{{order.address.telNumber}}
-				</view>
-				<view class='content'>
-					{{order.address.provinceName}} {{order.address.cityName}} {{order.address.countyName}} {{order.address.detailInfo}}
-				</view>
+			<view class="action" wx:if="{{order && currstep<2}}">
+				<button class="cu-btn bg-pink shadow" bindtap="cancelOrder">撤销</button>
 			</view>
 		</view>
+		<address address="{{order&&order.address}}" bind:AddressChange='chooseAddress'></address>
+	</view>
+	<block wx:if="{{order}}">
 		<view class='btn-area margin-top' wx:if="{{order.state=='待确认'}}">
 			<navigator url='/pages/payment/payment?orderID={{order._id}}'><button type="primary">充值开始净水</button></navigator>
 		</view>

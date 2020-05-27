@@ -19,13 +19,9 @@ Page({
     currstep: 0,
     order: null
   },
-  chooseAddress() {
-    var that = this;
-    wx.chooseAddress({
-      success: res => {
-        app.wxcloud('orderCreate', { address: res }).then(that.updateState)
-      }
-    })
+  chooseAddress(address) {
+    console.log(address)
+    app.wxcloud('orderCreate', { address:address.detail }).then(this.updateState)
   },
   cancelOrder() {
     if (this.data.order) {
