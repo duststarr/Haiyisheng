@@ -20,7 +20,7 @@ Page({
     order: null
   },
   chooseAddress(address) {
-    app.wxcloud('orderCreate', { address:address.detail }).then(this.updateState)
+    app.wxcloud('orderCreate', { address: address.detail }).then(this.updateState)
   },
   cancelOrder() {
     if (this.data.order) {
@@ -52,7 +52,8 @@ Page({
         order: res.result[0] || null,
         currstep: step
       })
-      app.globalData.address = res.result[0].address
+      if (res.result[0])
+        app.globalData.address = res.result[0].address
     })
   },
 

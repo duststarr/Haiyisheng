@@ -1,4 +1,5 @@
 // components/floatMenu/floatMenu.js
+const app = getApp()
 var temp = {}
 Component({
   /**
@@ -12,19 +13,19 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    posX:{
+    posX: {
       type: Number,
       value: 10
     },
-    posY:{
+    posY: {
       type: Number,
       value: 100
     },
-    height:{
+    height: {
       type: Number,
       value: 100
     },
-    width:{
+    width: {
       type: Number,
       value: 100
     }
@@ -37,7 +38,13 @@ Component({
     showConsole: false,
 
     maxX: 750,
-    maxY: 1080
+    maxY: 1080,
+    isClient: false,
+    isWorker: false,
+    isAdmin: false,
+    date1: '',
+    date2: '',
+    date3: ''
   },
   attached: function () {
     var that = this
@@ -48,6 +55,17 @@ Component({
           maxY: res.windowHeight - that.data.height
         })
       },
+    })
+    app.globalWatch('userDetail', res => {
+      console.log(res)
+      that.setData({
+        isClient: res.isClient,
+        isAdmin: res.isAdmin,
+        isWorker: res.isWorker,
+        date1: res.filters.first,
+        date2: res.filters.second,
+        date3: res.filters.third,
+      })
     })
   },
 
@@ -97,7 +115,63 @@ Component({
       this.hideModal();
     },
     onDialogClick(e) {
+    },
+
+    /**=============================
+  * debug functions
+  * 
+  */
+    checkboxChange: function (e) {
+      const val = e.detail.value;
+      app.globalData.userDetail.isAdmin = val.includes('isAdmin')
+      app.globalData.userDetail.isClient = val.includes('isClient')
+      app.globalData.userDetail.isWorker = val.includes('isWorker')
+      app.globalEmit('userDetail')
+    },
+    sliderChange: function (e) {
+      app.globalData.debugDays = e.detail.value
+      app.globalEmit('debugDays')
+    },
+    DateChange1: async function (e) {
+      const date = e.detail.value
+      const openid = app.globalData.userDetail._openid
+      const db = wx.cloud.database()
+      const db_user = db.collection('user')
+      await db_user.doc(openid).update({
+        data: {
+          "filters.first": date
+        }
+      })
+      app.globalData.userDetail.filters.first = date
+      app.globalEmit('userDetail')
+    },
+    DateChange2: async function (e) {
+      const date = e.detail.value
+      const openid = app.globalData.userDetail._openid
+      const db = wx.cloud.database()
+      const db_user = db.collection('user')
+      await db_user.doc(openid).update({
+        data: {
+          "filters.second": date
+        }
+      })
+      app.globalData.userDetail.filters.second = date
+      app.globalEmit('userDetail')
+    },
+    DateChange3: async function (e) {
+      const date = e.detail.value
+      const openid = app.globalData.userDetail._openid
+      const db = wx.cloud.database()
+      const db_user = db.collection('user')
+      await db_user.doc(openid).update({
+        data: {
+          "filters.third": date
+        }
+      })
+      app.globalData.userDetail.filters.third = date
+      app.globalEmit('userDetail')
     }
+
   },
 
 

@@ -36,15 +36,5 @@ Page({
     console.log('home onLoad', options)
     app.globalWatch('userDetail', this.userDetailUpdated)
   },
-  checkboxChange: function (e) {
-    const val = e.detail.value;
-    app.globalData.userDetail.isAdmin = val.includes('isAdmin')
-    app.globalData.userDetail.isClient = val.includes('isClient')
-    app.globalData.userDetail.isWorker = val.includes('isWorker')
-    app.globalEmit('userDetail')
-  },
-  sliderChange: function (e) {
-    app.globalData.debugDays = e.detail.value
-    app.globalEmit('debugDays')
-  }
+ 
 })

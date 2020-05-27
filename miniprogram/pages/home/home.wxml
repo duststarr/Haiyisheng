@@ -36,19 +36,4 @@
 		<view class="{{PageCur=='admin'?'text-green':'text-gray'}}">后台管理</view>
 	</view>
 </view>
-<floatMenu>
-	<view slot="content">
-		<checkbox-group bindchange="checkboxChange">
-			<label class="checkbox">
-				<checkbox value="isAdmin" checked='{{isAdmin}}' />是管理员</label>
-			<label class="checkbox">
-				<checkbox value="isWorker" checked='{{isWorker}}' />是客服</label>
-			<label class="checkbox">
-				<checkbox value="isClient" checked='{{isClient}}' />是会员</label>
-		</checkbox-group>
-		<view class='margin-top solids-top' wx:if="{{isClient}}">
-			<view>模拟运行Ｎ天以后</view>
-			<slider bindchange="sliderChange" min="0" max="600" step="30" show-value />
-		</view>
-	</view>
-</floatMenu>
+<floatMenu></floatMenu>

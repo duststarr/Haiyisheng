@@ -10,7 +10,50 @@
 			</view>
 		</view>
 		<view class="padding-xl">
-            <slot name="content"></slot>
+			<slot name="content"></slot>
+		</view>
+		<view class="padding-xl">
+			<checkbox-group bindchange="checkboxChange">
+				<label class="checkbox">
+					<checkbox value="isAdmin" checked='{{isAdmin}}' />是管理员</label>
+				<label class="checkbox">
+					<checkbox value="isWorker" checked='{{isWorker}}' />是客服</label>
+				<label class="checkbox">
+					<checkbox value="isClient" checked='{{isClient}}' />是会员</label>
+			</checkbox-group>
+			<view class='margin-top solids-top' wx:if="{{isClient}}">
+				<view>模拟运行Ｎ天以后</view>
+				<slider bindchange="sliderChange" min="0" max="600" step="30" show-value />
+			</view>
+			<view class='margin-top solids-top' wx:if="{{isClient}}">
+				<view>模拟滤芯更换时间</view>
+				<view class="cu-form-group">
+					<view class="title">滤芯1</view>
+					<picker mode="date" value="{{date1}}" start="2015-05-20" end="2020-05-20" bindchange="DateChange1">
+						<view class="picker">
+							{{date1}}
+						</view>
+					</picker>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">滤芯2</view>
+					<picker mode="date" value="{{date2}}" start="2015-05-20" end="2020-05-20" bindchange="DateChange2">
+						<view class="picker">
+							{{date2}}
+						</view>
+					</picker>
+				</view>
+				<view class="cu-form-group">
+					<view class="title">滤芯345</view>
+					<picker mode="date" value="{{date3}}" start="2015-05-20" end="2020-05-20" bindchange="DateChange3">
+						<view class="picker">
+							{{date3}}
+						</view>
+					</picker>
+				</view>
+			</view>
+			<button type='primary' bindtap='debugDelete'>取消我的订单</button>
+
 		</view>
 	</view>
 </view>
