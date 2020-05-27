@@ -20,7 +20,8 @@
   },
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom",
-    "floatMenu": "/components/floatMenu/floatMenu"
+    "floatMenu": "/components/floatMenu/floatMenu",
+    "address": "/components/address/address"
   },
   "sitemapLocation": "sitemap.json"
 }

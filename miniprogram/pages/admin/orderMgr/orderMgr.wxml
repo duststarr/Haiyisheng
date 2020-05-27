@@ -33,15 +33,7 @@
 						</picker>
 					</view>
 				</view>
-				<view class='content bg-white padding text-cyan'>
-					<view>
-						<text class="text-bold">{{item.address.userName}}</text>
-						,{{item.address.telNumber}}
-					</view>
-					<view class='content'>
-						{{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
-					</view>
-				</view>
+				<address address="{{item.address}}"></address>
 				<view class='solids-top align-right'>
 					<view class=' align-right' wx:if="{{!item.worker}}">
 						<picker bindchange="workerChange" value="{{workerIndex}}" range="{{workers}}" range-key="name" data-pos="{{index}}">

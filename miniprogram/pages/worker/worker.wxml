@@ -33,19 +33,9 @@
 				<view class='justify-between flex solids-bottom padding-lr padding-tb-sm bg-{{stateColors[item.state]}}'>
 					<view>{{tutil.shortTime(item.createTime)}}</view>
 					<view>{{item.type}}订单</view>
-					<view>
-						{{item.state}}
-					</view>
+					<view>{{item.state}}</view>
 				</view>
-				<view class='content bg-white padding text-cyan'>
-					<view>
-						<text class="text-bold">{{item.address.userName}}</text>
-						,{{item.address.telNumber}}
-					</view>
-					<view class='content'>
-						{{item.address.provinceName}} {{item.address.cityName}} {{item.address.countyName}} {{item.address.detailInfo}}
-					</view>
-				</view>
+				<address address="{{item.address}}"></address>
 				<view class='solids-top align-right flex'>
 					<button class='cu-btn bg-blue lg' wx:if="{{!item.timePick}}" bindtap='orderPick' data-pos='{{index}}'>我要接单</button>
 					<button class='cu-btn bg-green lg' wx:elif="{{!item.timeWorkdone}}" bindtap='orderWorkdone' data-pos='{{index}}'>我已完成安装</button>
@@ -56,29 +46,29 @@
 </scroll-view>
 
 <view wx:else class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-    <view class="cu-item arrow">
-      <navigator class="content" url="/pages/about/about" hover-class="none">
-        <text class="cuIcon-text text-green"></text>
-        <text class="text-grey">客服须知</text>
-      </navigator>
-    </view>
-    <view class="cu-item arrow">
-      <navigator class="content" url="/pages/about/about" hover-class="none">
-        <text class="cuIcon-deliver text-green"></text>
-        <text class="text-grey">我的安装订单</text>
-      </navigator>
-    </view>
-    <view class="cu-item arrow">
-      <navigator class="content" url="/pages/about/about" hover-class="none">
-        <text class="cuIcon-settings text-green"></text>
-        <text class="text-grey">我的售后订单</text>
-      </navigator>
-    </view>
-    <view class="cu-item arrow">
-      <button class="cu-btn content" open-type="feedback">
-        <text class="cuIcon-writefill text-cyan"></text>
-        <text class="text-grey">意见反馈</text>
-      </button>
-    </view>
-  </view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/about/about" hover-class="none">
+			<text class="cuIcon-text text-green"></text>
+			<text class="text-grey">客服须知</text>
+		</navigator>
+	</view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/about/about" hover-class="none">
+			<text class="cuIcon-deliver text-green"></text>
+			<text class="text-grey">我的安装订单</text>
+		</navigator>
+	</view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/about/about" hover-class="none">
+			<text class="cuIcon-settings text-green"></text>
+			<text class="text-grey">我的售后订单</text>
+		</navigator>
+	</view>
+	<view class="cu-item arrow">
+		<button class="cu-btn content" open-type="feedback">
+			<text class="cuIcon-writefill text-cyan"></text>
+			<text class="text-grey">意见反馈</text>
+		</button>
+	</view>
+</view>
 <view class="cu-tabbar-height"></view>
