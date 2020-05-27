@@ -1,26 +1,57 @@
 <!-- miniprogram/pages/aftersale/aftersale.wxml -->
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">申请售后</view>
+	<view slot="backText">返回</view>
+	<view slot="content">申请售后</view>
 </cu-custom>
+<address address="{{address}}" wx:if="{{address}}"></address>
 
 <view class="cu-bar margin-top bg-white">
-  <view class="action">
-    <text class="cuIcon-title text-blue"></text>进行中的售后申请
-  </view>
+	<view class="action">
+		<text class="cuIcon-title text-blue"></text>进行中的售后服务
+	</view>
 </view>
 <view class="cu-bar margin-top bg-white">
-  <view class="action">
-    <text class="cuIcon-title text-blue"></text>新的申请
-  </view>
+	<view class="action">
+		<text class="cuIcon-title text-blue"></text>新的售后申请
+	</view>
 </view>
-<address address="{{address}}" wx:if="{{address}}"></address>
-<view class='margin-top'>
-    <button>拆机</button>
-    <button>移机</button>
-    <button>换芯</button>
-    <button>故障</button>
+<view class='margin-top' wx:if="{{worktype==0}}">
+	<button bindtap='onMove'>移机</button>
+	<button bindtap='onDestroy'>拆机</button>
+	<button bindtap='onExchange'>换芯</button>
+	<button bindtap='onRepair'>故障</button>
 </view>
+<view class='margin-top padding bg-white' wx:else>
+	<view wx:if="{{worktype==1}}">
+		<view class='padding-lr text-lg text-cyan'>迁移目的地</view>
+		<address></address>
+	</view>
+	<view wx:if="{{worktype==2}}">
+		<view class='padding-lr text-lg text-cyan'>确定申请拆机吗？</view>
+	</view>
+	<view wx:if="{{worktype==3}}">
+		<view class='padding-lr text-lg text-cyan'>需要更换哪个滤芯？</view>
+		<checkbox-group bindchange="checkboxChange" class='flex flex-direction'>
+			<label class="checkbox solid-bottom padding-sm">
+				<checkbox value="1" />滤芯1号</label>
+			<label class="checkbox solid-bottom padding-sm">
+				<checkbox value="2" />滤芯2号</label>
+			<label class="checkbox solid-bottom padding-sm">
+				<checkbox value="3" />滤芯3、4、5号</label>
+		</checkbox-group>
+	</view>
+	<view wx:if="{{worktype==4}}">
+		<view class='padding-lr text-lg text-cyan'>请描述故障现象</view>
+		<view class="cu-form-group">
+			<textarea class='solid' maxlength="-1" placeholder="问题现象"></textarea>
+		</view>
+	</view>
+	<view class='flex margin justify-between'>
+		<view class='cu-btn bg-green radius basis-sm' bindtap='onOK'>确定</view>
+		<view class='cu-btn bg-blue radius basis-sm' bindtap='onCancel'>取消</view>
+	</view>
+</view>
+
 <!-- 
 <view class="cu-bar bg-white solid-bottom margin-top action">
     <view class="cu-item">客户信息</view>

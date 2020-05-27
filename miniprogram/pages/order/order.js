@@ -52,7 +52,7 @@ Page({
         order: res.result[0] || null,
         currstep: step
       })
-      app.globalData.address = res.result[0]
+      app.globalData.address = res.result[0].address
     })
   },
 
