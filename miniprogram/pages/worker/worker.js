@@ -57,25 +57,25 @@ Component({
         })
       })
     },
-    orderPick(e){
+    orderPick(e) {
       const pos = e.currentTarget.dataset.pos
       const orderID = this.data.orders[pos]._id
       const that = this
-      const slotState = 'orders['+pos+'].state'
-      app.wxcloud('orderPick',{orderID}).then(res => {
+      const slotPick = 'orders[' + pos + '].timePick'
+      app.wxcloud('orderPick', { orderID }).then(res => {
         that.setData({
-          [slotState]: '待执行'
+          [slotPick]: new Date()
         })
       })
     },
-    orderWorkdone(e){
+    orderWorkdone(e) {
       const pos = e.currentTarget.dataset.pos
       const orderID = this.data.orders[pos]._id
       const that = this
-      const slotState = 'orders['+pos+'].state'
-      app.wxcloud('orderWorkdone',{orderID}).then(res => {
+      const slotWorkdone = 'orders[' + pos + '].timeWorkdone'
+      app.wxcloud('orderWorkdone', { orderID }).then(res => {
         that.setData({
-          [slotState]: '待确认'
+          [slotWorkdone]: new Date()
         })
       })
     }

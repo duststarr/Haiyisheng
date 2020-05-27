@@ -64,8 +64,8 @@
 				</view>
 			</view>
 			<view class='solids-top align-right flex'>
-				<button class='cu-btn bg-blue lg' wx:if="{{item.state=='待接单'}}" bindtap='orderPick' data-pos='{{index}}'>我要接单</button>
-				<button class='cu-btn bg-green lg' wx:elif="{{item.state=='待执行'}}" bindtap='orderWorkdone' data-pos='{{index}}'>我已完成安装</button>
+				<button class='cu-btn bg-blue lg' wx:if="{{!item.timePick}}" bindtap='orderPick' data-pos='{{index}}'>我要接单</button>
+				<button class='cu-btn bg-green lg' wx:elif="{{!item.timeWorkdone}}" bindtap='orderWorkdone' data-pos='{{index}}'>我已完成安装</button>
 			</view>
 		</view>
 	</view>
