@@ -1,4 +1,6 @@
 <!-- miniprogram/pages/aftersale/aftersale.wxml -->
+<wxs module="tutil" src="../../utils/util.wxs" />
+
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
 	<view slot="backText">返回</view>
 	<view slot="content">申请售后</view>
@@ -10,79 +12,71 @@
 		<text class="cuIcon-title text-blue"></text>进行中的售后服务
 	</view>
 </view>
+<view wx:if="{{orders}}">
+	<view class="margin-sm bg-white radius" wx:for="{{orders}}" wx:key="_id">
+		<view class="cu-item shadow">
+			<view class='justify-between flex solids-bottom padding-lr padding-tb-sm '>
+				<view>{{tutil.shortTime(item.createTime)}}</view>
+				<view>{{item.type}}服务</view>
+			</view>
+			<view class='padding-sm text-brown' wx:if='{{item.message}}'>{{item.message}}</view>
+			<address address="{{item.addr2}}" wx:if='{{item.addr2}}'></address>
+		</view>
+		<view class='solids-top align-right flex'>
+			<view class=''>
+				<button class='cu-btn' bindtap='onConfirm' data-id='{{item._id}}'>服务已完成</button>
+			</view>
+			<view wx:if="{{item.worker}}" class='padding-sm text-right'>
+				<text class='text-blue'>客服:</text>
+				<text class="text-bold">{{item.worker.name}}</text>
+				<text>,{{item.worker.phone}}</text>
+			</view>
+		</view>
+	</view>
+</view>
 <view class="cu-bar margin-top bg-white">
 	<view class="action">
 		<text class="cuIcon-title text-blue"></text>新的售后申请
 	</view>
 </view>
-<view class='margin-top' wx:if="{{worktype==0}}">
+
+<view class='margin-top' wx:if="{{worktype==''}}">
 	<button bindtap='onMove'>移机</button>
 	<button bindtap='onDestroy'>拆机</button>
 	<button bindtap='onExchange'>换芯</button>
-	<button bindtap='onRepair'>故障</button>
+	<button bindtap='onRepair'>报修</button>
 </view>
 <view class='margin-top padding bg-white' wx:else>
-	<view wx:if="{{worktype==1}}">
-		<view class='padding-lr text-lg text-cyan'>迁移目的地</view>
-		<address></address>
-	</view>
-	<view wx:if="{{worktype==2}}">
-		<view class='padding-lr text-lg text-cyan'>确定申请拆机吗？</view>
-	</view>
-	<view wx:if="{{worktype==3}}">
-		<view class='padding-lr text-lg text-cyan'>需要更换哪个滤芯？</view>
-		<checkbox-group bindchange="checkboxChange" class='flex flex-direction'>
-			<label class="checkbox solid-bottom padding-sm">
-				<checkbox value="1" />滤芯1号</label>
-			<label class="checkbox solid-bottom padding-sm">
-				<checkbox value="2" />滤芯2号</label>
-			<label class="checkbox solid-bottom padding-sm">
-				<checkbox value="3" />滤芯3、4、5号</label>
-		</checkbox-group>
-	</view>
-	<view wx:if="{{worktype==4}}">
-		<view class='padding-lr text-lg text-cyan'>请描述故障现象</view>
-		<view class="cu-form-group">
-			<textarea class='solid' maxlength="-1" placeholder="问题现象"></textarea>
-		</view>
-	</view>
-	<view class='flex margin justify-between'>
-		<view class='cu-btn bg-green radius basis-sm' bindtap='onOK'>确定</view>
-		<view class='cu-btn bg-blue radius basis-sm' bindtap='onCancel'>取消</view>
-	</view>
-</view>
+	<form bindsubmit="bindFormSubmit">
 
-<!-- 
-<view class="cu-bar bg-white solid-bottom margin-top action">
-    <view class="cu-item">客户信息</view>
+		<view wx:if="{{worktype=='移机'}}">
+			<view class='padding-lr text-lg text-cyan'>迁移目的地</view>
+			<address id='addr2'></address>
+		</view>
+		<view wx:if="{{worktype=='拆机'}}">
+			<view class='padding-lr text-lg text-cyan'>确定申请拆机吗？</view>
+		</view>
+		<view wx:if="{{worktype=='换芯'}}">
+			<view class='padding-lr text-lg text-cyan'>需要更换哪个滤芯？</view>
+			<checkbox-group name='cbFilters' bindchange="checkboxChange" class='flex flex-direction'>
+				<label class="checkbox solid-bottom padding-sm">
+					<checkbox value="1" />滤芯1号</label>
+				<label class="checkbox solid-bottom padding-sm">
+					<checkbox value="2" />滤芯2号</label>
+				<label class="checkbox solid-bottom padding-sm">
+					<checkbox value="3" />滤芯3、4、5号</label>
+			</checkbox-group>
+		</view>
+		<view wx:if="{{worktype=='报修'}}">
+			<view class='padding-lr text-lg text-cyan'>请描述故障现象</view>
+			<view class="cu-form-group">
+				<textarea name='problem' class='solid' maxlength="-1" placeholder="问题现象"></textarea>
+			</view>
+		</view>
+		<view class='padding-sm text-red'>{{errmsg}}</view>
+		<view class='flex margin justify-between'>
+			<button class='cu-btn bg-green radius basis-sm' form-type="submit">确定</button>
+			<button class='cu-btn bg-blue radius basis-sm' bindtap='onCancel'>取消</button>
+		</view>
+	</form>
 </view>
-<form catchsubmit="formSubmit">
-    <view class="cu-form-group">
-        <view class="title">联系人</view>
-        <input placeholder="稍后客服会与您联系" name='phone'></input>
-        <text class='cu-blue'>{{sex?'先生':"女士"}}</text>
-		<switch class="switch-sex" checked="{{sex}}" bindchange="onSexChange" ></switch>
-    </view>
-    <view class="cu-form-group">
-        <view class="title">手机号码</view>
-        <input placeholder="稍后客服会与您联系" name='phone'></input>
-        <view class="cu-capsule radius">
-            <view class="cu-tag bg-blue">+86</view>
-        </view>
-    </view>
-    <view class="cu-form-group">
-        <view class="title">所在区域</view>
-        <input placeholder="稍后客服会与您联系" name='phone'></input>
-    </view>
-    <view class="cu-form-group">
-        <view class="title">详细地址</view>
-		<textarea maxlength="-1"  bindinput="textareaBInput" placeholder="多行文本输入框"></textarea>
-    </view>
-    <button class="btn" type="primary" formType="submit">修改信息</button>
-</form>
-<text class='message'>{{message}}</text>
-<view class='margin-top'>
-    <button>拆机移机</button>
-    <button>更换滤芯</button>
-    <button>故障报修</button>
-</view> -->

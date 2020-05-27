@@ -33,15 +33,16 @@
 						</picker>
 					</view>
 				</view>
-				<address address="{{item.address}}"></address>
+				<address address="{{item.address}}" wx:if='{{item.address}}'></address>
+				<view class='padding-sm text-brown' wx:if='{{item.message}}'>{{item.message}}</view>
+				<address address="{{item.addr2}}" wx:if='{{item.addr2}}'></address>
+
 				<view class='solids-top align-right'>
 					<view class=' align-right' wx:if="{{!item.worker}}">
 						<picker bindchange="workerChange" value="{{workerIndex}}" range="{{workers}}" range-key="name" data-pos="{{index}}">
 							<button class='cu-btn'>分配客服</button>
 						</picker>
 					</view>
-					<!-- <button class='cu-btn' wx:if="{{item.state === ('新订单') || item.state === ('待接单')}}" bindtap='onDispatch' data-id="{{item._id}}">分配客服</button>
-					<view class='padding-sm' wx:else>接单客服</view>-->
 					<view wx:else class='padding-sm text-right'>
 						<text class='text-blue'>客服:</text>
 						<text class="text-bold">{{item.worker.name}}</text>

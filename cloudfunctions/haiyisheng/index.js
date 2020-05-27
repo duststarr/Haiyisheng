@@ -101,12 +101,18 @@ actions.authentication = async (event) => {
  * @param address 用户联系方式
  */
 actions.orderCreate = async (event, context) => {
+  const type = event.type || '新装'
   const address = event.address
+  const addr2 = event.addr2
+  const message = event.message
+
   const res = await db_order.add({
     data: {
       _openid: wxContext.OPENID,
-      type: '新装',
-      address: address,
+      type,
+      address,
+      addr2,
+      message,
       createTime: new Date(),
       state: '新订单'
     }
@@ -155,6 +161,11 @@ actions.orderGetList = async (event, context) => {
   if (event.isWorker) {
     param.worker = {}
     param.worker.openid = wxContext.OPENID
+  }
+  if(event.isClient){
+    param._openid = wxContext.OPENID
+    param.type = _.neq('新装')
+    param.state = _.in(['新订单','待接单', '待执行', '待确认'])
   }
   const res = await db_order.where(param).orderBy('createTime', 'desc').get()
   return res.data;
@@ -226,6 +237,23 @@ actions.orderWorkdone = async (event) => {
     }
   })
   return true
+}
+/**
+ * 客户确认服务完成
+ */
+actions.orderConfirm = async (event) => {
+  const orderID = event.orderID
+  const operator = event.operator || wxContext.OPENID
+  const today = new Date()
+  await db_order.doc(orderID).update({
+    data: {
+      state: '已完成',
+      stateTime: today,
+      stateChangeBy: operator,
+      timeConfirm: today
+    }
+  })
+  return true;
 }
 /**
  * 

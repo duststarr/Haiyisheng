@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/aftersale/aftersale",
     "pages/home/home",
+    "pages/aftersale/aftersale",
     "pages/member/myQRcode/myQRcode",
     "pages/admin/workerMgr/workerMgr",
     "pages/admin/orderMgr/orderMgr",

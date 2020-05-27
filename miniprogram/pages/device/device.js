@@ -50,9 +50,9 @@ function initChart(canvas, width, height, dpr) {
   chart.setOption(option);
   return chart;
 }
-function dateDiff(secondDate) {
+function dateDiff(second) {
   const firstDate = new Date();
-  //const secondDate = new Date(secondDate);
+  const secondDate = new Date(second);
   const diff = Math.abs(firstDate.getTime() - secondDate.getTime())
   var result = parseInt(diff / (1000 * 60 * 60 * 24));
   // 调试用，模拟多少天以后
