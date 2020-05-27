@@ -3,6 +3,25 @@
     <view slot="backText">返回</view>
     <view slot="content">申请售后</view>
 </cu-custom>
+
+<view class="cu-bar margin-top bg-white">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>进行中的售后申请
+  </view>
+</view>
+<view class="cu-bar margin-top bg-white">
+  <view class="action">
+    <text class="cuIcon-title text-blue"></text>新的申请
+  </view>
+</view>
+<address address="{{address}}" wx:if="{{address}}"></address>
+<view class='margin-top'>
+    <button>拆机</button>
+    <button>移机</button>
+    <button>换芯</button>
+    <button>故障</button>
+</view>
+<!-- 
 <view class="cu-bar bg-white solid-bottom margin-top action">
     <view class="cu-item">客户信息</view>
 </view>
@@ -35,4 +54,4 @@
     <button>拆机移机</button>
     <button>更换滤芯</button>
     <button>故障报修</button>
-</view>
+</view> -->

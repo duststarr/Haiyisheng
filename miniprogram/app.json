@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/aftersale/aftersale",
     "pages/home/home",
     "pages/member/myQRcode/myQRcode",
     "pages/admin/workerMgr/workerMgr",
@@ -7,7 +8,6 @@
     "pages/order/order",
     "pages/payment/payment",
     "pages/about/about",
-    "pages/aftersale/aftersale",
     "pages/worker/invitation/invitation",
     "pages/payment2/payment2"
   ],

@@ -20,7 +20,6 @@ Page({
     order: null
   },
   chooseAddress(address) {
-    console.log(address)
     app.wxcloud('orderCreate', { address:address.detail }).then(this.updateState)
   },
   cancelOrder() {
@@ -53,6 +52,7 @@ Page({
         order: res.result[0] || null,
         currstep: step
       })
+      app.globalData.address = res.result[0]
     })
   },
 

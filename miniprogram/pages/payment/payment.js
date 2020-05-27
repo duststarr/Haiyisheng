@@ -37,7 +37,8 @@ Page({
           first: today,
           second: today,
           third: today
-        }
+        },
+        address: app.globalData.address
       }
     })
     app.globalData.userDetail.isClient = true
