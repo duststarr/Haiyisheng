@@ -28,14 +28,50 @@ Page({
         })
     },
     onConfirm: function (e) {
-        const orderID = e.currentTarget.dataset.id
+        const pos = e.currentTarget.dataset.pos
+        const order = this.data.orders[pos]
+        const orderID = order._id
+        const type = order.type
         var that = this
         wx.showModal({
             title: '确认完成',
             content: '您申请的服务已完成?',
-            success(res) {
+            success: async function(res) {
                 if (res.confirm) {
-                    app.wxcloud('orderConfirm', { orderID }).then(res => {
+                    app.wxcloud('orderConfirm', { orderID, type }).then( async res => {
+                        if ('换芯' == type) {
+                            const filters = order.filters;
+                            const today = new Date()
+                            const openid = order._openid
+                            const db = wx.cloud.database()
+                            const db_user = db.collection('user')
+                            if (filters.includes('1')) {
+                                await db_user.doc(openid).update({
+                                    data: {
+                                        "filters.first": today
+                                    }
+                                })
+                                app.globalData.userDetail.filters.first = today
+                            }
+                            if (filters.includes('2')) {
+                                await db_user.doc(openid).update({
+                                    data: {
+                                        "filters.second": today
+                                    }
+                                })
+                                app.globalData.userDetail.filters.second = today
+                            }
+                            if (filters.includes('3')) {
+                                await db_user.doc(openid).update({
+                                    data: {
+                                        "filters.third": today
+                                    }
+                                })
+                                app.globalData.userDetail.filters.third = today
+                            }
+                            app.globalEmit('userDetail')
+                        }
+
                         that.loadOrders()
                     })
                 } else if (res.cancel) {
@@ -118,6 +154,7 @@ Page({
                 param.message += f.includes('2') ? '2、' : ''
                 param.message += f.includes('3') ? '3、4、5' : ''
                 param.message += '号滤芯'
+                param.filters = f
             }
                 break;
             case '报修': {

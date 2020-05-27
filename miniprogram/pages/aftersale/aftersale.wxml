@@ -24,7 +24,7 @@
 		</view>
 		<view class='solids-top align-right flex'>
 			<view class=''>
-				<button class='cu-btn' bindtap='onConfirm' data-id='{{item._id}}'>服务已完成</button>
+				<button class='cu-btn' bindtap='onConfirm' data-pos='{{index}}'>服务已完成</button>
 			</view>
 			<view wx:if="{{item.worker}}" class='padding-sm text-right'>
 				<text class='text-blue'>客服:</text>

@@ -105,6 +105,7 @@ actions.orderCreate = async (event, context) => {
   const address = event.address
   const addr2 = event.addr2
   const message = event.message
+  const filters = event.filters // 需要更换的滤芯
 
   const res = await db_order.add({
     data: {
@@ -113,6 +114,7 @@ actions.orderCreate = async (event, context) => {
       address,
       addr2,
       message,
+      filters,
       createTime: new Date(),
       state: '新订单'
     }
@@ -162,10 +164,10 @@ actions.orderGetList = async (event, context) => {
     param.worker = {}
     param.worker.openid = wxContext.OPENID
   }
-  if(event.isClient){
+  if (event.isClient) {
     param._openid = wxContext.OPENID
     param.type = _.neq('新装')
-    param.state = _.in(['新订单','待接单', '待执行', '待确认'])
+    param.state = _.in(['新订单', '待接单', '待执行', '待确认'])
   }
   const res = await db_order.where(param).orderBy('createTime', 'desc').get()
   return res.data;
@@ -243,6 +245,7 @@ actions.orderWorkdone = async (event) => {
  */
 actions.orderConfirm = async (event) => {
   const orderID = event.orderID
+
   const operator = event.operator || wxContext.OPENID
   const today = new Date()
   await db_order.doc(orderID).update({
@@ -253,6 +256,7 @@ actions.orderConfirm = async (event) => {
       timeConfirm: today
     }
   })
+
   return true;
 }
 /**

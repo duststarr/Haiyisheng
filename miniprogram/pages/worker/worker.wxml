@@ -35,7 +35,7 @@
 					<view>{{item.type}}订单</view>
 					<view>{{item.state}}</view>
 				</view>
-				<address address="{{item.address}}"></address>
+				<address address="{{item.address}}" wx:if="{{item.address}}"></address>
 				<view class='solids-top align-right flex'>
 					<button class='cu-btn bg-blue lg' wx:if="{{!item.timePick}}" bindtap='orderPick' data-pos='{{index}}'>我要接单</button>
 					<button class='cu-btn bg-green lg' wx:elif="{{!item.timeWorkdone}}" bindtap='orderWorkdone' data-pos='{{index}}'>我已完成安装</button>
