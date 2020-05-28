@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qrcode: null
+    qrcode: app.globalData.qrcode
   },
   saveQRcode: function (e) {
     var that = this
@@ -71,56 +71,17 @@ Page({
     })
 
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: async function () {
-    const qr = await app.wxcloud('generateQRcode')
-    console.log('qr', qr)
-    this.setData({
-      qrcode: qr.result.fileID
-    })
-  },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
+  onShow: async function () {
+    var that = this
+    app.globalWatch('qrcode',qr =>{
+      that.setData({
+        qrcode: qr
+      })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
