@@ -294,7 +294,7 @@ actions.orderPayTest = async (event) => {
   // 计算推广奖励
   // 推广分新人,和续费,这里是新人首次充值
   if (referrerID) {
-    db_user.doc(referrerID).update({
+    await db_user.doc(referrerID).update({
       data: {
         vouchers: _.inc(1)  //代金券+1
       }
@@ -325,6 +325,12 @@ actions.recharge = async (event) => {
       timePay: new Date()
     }
   })
+  await db_user.doc(wxContext.OPENID).update({
+    data: {
+      serviceDays: _.inc(days)
+    }
+  })
+
   return res
 }
 /**

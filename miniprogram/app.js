@@ -90,6 +90,7 @@ App({
       const res = await this.wxcloud('authentication', { query: e.query });
       this.globalData.userDetail = res.result
       this.globalEmit('userDetail')
+      console.log('userDetail', res.result)
     } catch (e) {
       console.error('cloud database add error:', e)
     }
