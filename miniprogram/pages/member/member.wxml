@@ -1,60 +1,86 @@
 <usertop></usertop>
 <view class="padding-sm flex text-center text-grey bg-white shadow-warp">
-  <view class="flex flex-sub flex-direction solid-right">
-    <view class="text-xxl text-orange">9999</view>
-    <view>
-      <text class="cuIcon-recharge"></text>
-      代金券
-    </view>
-  </view>
-  <view class="flex flex-sub flex-direction solid-right">
-    <view class="text-xxl text-blue">888</view>
-    <view>
-      <text class="cuIcon-refund"></text>
-      推广奖励
-    </view>
-  </view>
-  <view class="flex flex-sub flex-direction solid-right">
-    <view class="text-xxl text-blue">{{fans}}</view>
-    <view>
-      <text class="cuIcon-refund"></text>
-      粉丝数
-    </view>
-  </view>
+	<view class="flex flex-sub flex-direction solid-right">
+		<view class="text-xxl text-orange">9999</view>
+		<view>
+			<text class="cuIcon-recharge"></text>
+			代金券
+		</view>
+	</view>
+	<view class="flex flex-sub flex-direction solid-right">
+		<view class="text-xxl text-blue">888</view>
+		<view>
+			<text class="cuIcon-refund"></text>
+			推广奖励
+		</view>
+	</view>
+	<view class="flex flex-sub flex-direction solid-right">
+		<view class="text-xxl text-blue">{{fans}}</view>
+		<view>
+			<text class="cuIcon-refund"></text>
+			粉丝数
+		</view>
+	</view>
 </view>
+<!-- 
+<view class='margin-top grid col-2'>
+	<view>
+		<view class="cu-item arrow">
+			<navigator class="content" url="/pages/member/myQRcode/myQRcode" hover-class="none">
+				<text class="cuIcon-text text-green"></text>
+				<text class="text-grey">二维码推广</text>
+        <image src='{{qrcode}}'></image>
+			</navigator>
+		</view>
+	</view>
+	<view class='flex flex-direction'>
+		<view class="cu-item arrow">
+			<navigator class="content" url="/pages/about/about" hover-class="none">
+				<text class="cuIcon-deliver text-green"></text>
+				<text class="text-grey">我的推广成果</text>
+			</navigator>
+		</view>
+		<view class="cu-item arrow">
+			<navigator class="content" url="/pages/about/about" hover-class="none">
+				<text class="cuIcon-settings text-green"></text>
+				<text class="text-grey">收益详情</text>
+			</navigator>
+		</view>
+	</view>
+</view> -->
 <view class="margin-top padding bg-red">
-  <view class="action text-center text-xl">自用省钱，推广赚钱！</view>
+	<view class="action text-center text-xl">自用省钱，推广赚钱！</view>
 </view>
 <view class="cu-list menu card-menu margin-top-sm margin-bottom-xl shadow-lg radius">
-  <view class="cu-item arrow">
-    <navigator class="content" url="/pages/about/about" hover-class="none">
-      <text class="cuIcon-text text-green"></text>
-      <text class="text-grey">会员须知</text>
-    </navigator>
-  </view>
-  <view class="cu-item arrow">
-    <button class="content aligin-left text-left" open-type="share" hover-class="none">
-      <text class="cuIcon-text text-green"></text>
-      <text class="text-grey" >分享推广</text>
-    </button>
-  </view>
-  <view class="cu-item arrow">
-    <navigator class="content" url="/pages/member/myQRcode/myQRcode" hover-class="none">
-      <text class="cuIcon-text text-green"></text>
-      <text class="text-grey">二维码推广</text>
-    </navigator>
-  </view>
-  <view class="cu-item arrow">
-    <navigator class="content" url="/pages/about/about" hover-class="none">
-      <text class="cuIcon-deliver text-green"></text>
-      <text class="text-grey">我的推广成果</text>
-    </navigator>
-  </view>
-  <view class="cu-item arrow">
-    <navigator class="content" url="/pages/about/about" hover-class="none">
-      <text class="cuIcon-settings text-green"></text>
-      <text class="text-grey">收益详情</text>
-    </navigator>
-  </view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/about/about" hover-class="none">
+			<text class="cuIcon-text text-green"></text>
+			<text class="text-grey">会员须知</text>
+		</navigator>
+	</view>
+	<view class="cu-item arrow">
+		<button class="content aligin-left text-left" open-type="share" hover-class="none">
+			<text class="cuIcon-text text-green"></text>
+			<text class="text-grey" >分享推广</text>
+		</button>
+	</view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/member/myQRcode/myQRcode" hover-class="none">
+			<text class="cuIcon-text text-green"></text>
+			<text class="text-grey">二维码推广</text>
+		</navigator>
+	</view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/about/about" hover-class="none">
+			<text class="cuIcon-deliver text-green"></text>
+			<text class="text-grey">我的推广成果</text>
+		</navigator>
+	</view>
+	<view class="cu-item arrow">
+		<navigator class="content" url="/pages/about/about" hover-class="none">
+			<text class="cuIcon-settings text-green"></text>
+			<text class="text-grey">收益详情</text>
+		</navigator>
+	</view>
 </view>
 <view class="cu-tabbar-height"></view>
