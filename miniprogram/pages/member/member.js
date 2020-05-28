@@ -6,7 +6,8 @@ Component({
   },
   data: {
     fans: 0,
-    qrcode:null
+    qrcode: app.globalData.qrcode,
+    firends: null
   },
   attached: function () {
     const that = this
@@ -15,12 +16,21 @@ Component({
         fans: detail.fans || 0
       })
     })
-    app.wxcloud('generateQRcode').then(res => {
-      this.setData({
-        qrcode: res.result.fileID
+    if (!this.data.qrcode) {
+      app.wxcloud('generateQRcode').then(res => {
+        this.setData({
+          qrcode: res.result.fileID
+        })
+        app.globalData.qrcode = res.result.fileID
+        app.globalEmit('qrcode')
+      })
+    }
+
+    app.wxcloud('getFirends').then(res => {
+      that.setData({
+        firends: res.result
       })
     })
-
   },
   methods: {
 

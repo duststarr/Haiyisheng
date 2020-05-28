@@ -280,6 +280,7 @@ actions.orderPayTest = async (event) => {
   const referrerID = event.referrerID || null
   const name = event.name
   const phone = event.phone
+  const avatar = event.avatar
 
   const timePay = new Date()
   await db_order.doc(orderID).update({
@@ -306,6 +307,7 @@ actions.orderPayTest = async (event) => {
       amount,
       name,
       phone,
+      avatar,
       date: timePay
     }
     db_user.doc(referrerID).update({
@@ -329,22 +331,40 @@ actions.generateQRcode = async (event) => {
     return user.qrcode
   } else {
     const query = 'pages/home/home?action=marketing&openid=' + wxContext.OPENID
-    try {
-      const result = await cloud.openapi.wxacode.get({
-        path: query
-      })
-      const file = await cloud.uploadFile({
-        cloudPath: wxContext.OPENID + '.jpg',
-        fileContent: result.buffer,
-      })
-      await db_user.doc(user._id).update({
-        data: {
-          qrcode: file
-        }
-      })
-      return file
-    } catch (err) {
-      return err
-    }
+    const result = await cloud.openapi.wxacode.get({
+      path: query
+    })
+    const file = await cloud.uploadFile({
+      cloudPath: wxContext.OPENID + '.jpg',
+      fileContent: result.buffer,
+    })
+    await db_user.doc(user._id).update({
+      data: {
+        qrcode: file
+      }
+    })
+    return file
   }
+}
+
+actions.getFirends = async (event) => {
+  const res = await db_user.where({
+    isClient: true,
+    // referrerID: wxContext.OPENID
+  }).get()
+  const users = res.data
+  const result = users.map(user => {
+    const firstDate = new Date();
+    const secondDate = new Date(user.serviceStart);
+    const diff = Math.abs(firstDate.getTime() - secondDate.getTime())
+    const past = parseInt(diff / (1000 * 60 * 60 * 24));
+    const inservice = past < user.serviceDays
+    return {
+      name: user.address.userName,
+      phone: user.address.telNumber,
+      avatar: user.avatar,
+      inservice
+    }
+  })
+  return result
 }
