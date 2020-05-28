@@ -2,7 +2,9 @@
 	<view slot="backText">返回</view>
 	<view slot="content">推广二维码</view>
 </cu-custom>
-<image src="{{qrcode}}"></image>
+<view class='align-center'>
+	<image src="{{qrcode}}" mode='aspectFit'></image>
+</view>
 <button bindtap='saveQRcode'>保存二维码到相册</button>
 
 <view class='margin text-red'>这是您的专属二维码。将其扩散出去，有新用户扫此二维码进入小程序，会有惊喜哦。详情……</view>

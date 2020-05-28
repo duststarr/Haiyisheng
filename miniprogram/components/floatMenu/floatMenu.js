@@ -61,10 +61,14 @@ Component({
         isClient: res.isClient,
         isAdmin: res.isAdmin,
         isWorker: res.isWorker,
-        date1: res.filters.first,
-        date2: res.filters.second,
-        date3: res.filters.third,
       })
+      if (res.filters) {
+        that.setData({
+          date1: res.filters.first,
+          date2: res.filters.second,
+          date3: res.filters.third,
+        })
+      }
     })
   },
 
