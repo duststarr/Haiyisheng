@@ -10,6 +10,12 @@ function initChart(canvas, width, height, dpr) {
     devicePixelRatio: dpr // 像素
   });
   canvas.setChart(chart);
+  let alldays = 365
+  let pastdays = 0
+  if (app.globalData.userDetail) {
+    alldays = app.globalData.userDetail.serviceDays || 365
+    pastdays = dateDiff(app.globalData.userDetail.serviceStart || today)
+  }
 
   const option = {
     backgroundColor: "#ffffff",
@@ -39,10 +45,10 @@ function initChart(canvas, width, height, dpr) {
         length: 10
       },
       min: 0,
-      max: 365,
+      max: alldays,
       splitNumber: 2,
       data: [{
-        value: 80,
+        value: pastdays,
         name: '',
       }]
     }]
@@ -72,7 +78,7 @@ Component({
       that.setData({
         loading: true
       })
-      app.globalWatch('userDetail', that.updateDatas)
+      app.globalWatch('userDetail', that.updateDatas,false)
       app.globalWatch('debugDays', that.updateDatas)
     }, 500)
 
@@ -88,31 +94,31 @@ Component({
       {
         pos: '1',
         name: 'PP膜',
-        lifespan: 25,
+        lifespan: 100,
         intro: "可以过滤水中泥沙、铁锈、悬浮物、胶体、虫 卵等固态杂质"
       },
       {
         pos: '2',
         name: '活性炭',
-        lifespan: 9,
+        lifespan: 100,
         intro: "深层次吸附水中余氯、卤代物以及对人体有害 的有机物，改善口感"
       },
       {
         pos: '3',
         name: '超滤膜',
-        lifespan: 70,
+        lifespan: 100,
         intro: "去除微生物、重金属离子、细菌、病毒等物质， 保留人体所需矿物质和微量元素"
       },
       {
         pos: '4',
         name: 'RO膜',
-        lifespan: 70,
+        lifespan: 100,
         intro: "进一步有效去除溶解盐类、微生物、重金属离 子、细菌、病毒等物质"
       },
       {
         pos: '5',
         name: '活性炭',
-        lifespan: 70,
+        lifespan: 100,
         intro: "进一步吸附水中异味、异色，改善口感，使出 水更加甘甜可口"
       }
     ]
@@ -125,43 +131,39 @@ Component({
     },
     updateDatas(e) {
       const today = new Date()
+      const userData = app.globalData.userDetail
+
+      if (userData.filters) {
+        const cores = userData.filters
+        const filter1 = dateDiff(cores.first)
+        const lifespan1 = parseInt(100 - 100 * filter1 / 180)
+        const filter2 = dateDiff(cores.second)
+        const lifespan2 = parseInt(100 - 100 * filter2 / 330)
+        const filter3 = dateDiff(cores.third)
+        const lifespan3 = parseInt(100 - 100 * filter3 / 480)
+
+        component.setData({
+          'filters[0].lifespan': lifespan1,
+          'filters[1].lifespan': lifespan2,
+          'filters[2].lifespan': lifespan3,
+          'filters[3].lifespan': lifespan3,
+          'filters[4].lifespan': lifespan3
+        })
+      }
 
       // 更新服务时间
-      const userData = app.globalData.userDetail
-      const alldays = userData.serviceDays || 365
-      const pastdays = dateDiff(userData.serviceStart || today)
-      var cores;
-      if (userData.filters) {
-        cores = userData.filters
-      } else {
-        cores = {
-          first: today,
-          second: today,
-          third: today
-        }
-      }
-      const filter1 = dateDiff(cores.first)
-      const lifespan1 = parseInt(100 - 100 * filter1 / 180)
-      const filter2 = dateDiff(cores.second)
-      const lifespan2 = parseInt(100 - 100 * filter2 / 330)
-      const filter3 = dateDiff(cores.third)
-      const lifespan3 = parseInt(100 - 100 * filter3 / 480)
-
-      chart.setOption({
-        series: [{
-          max: alldays,
-          data: [{
-            value: pastdays
+      if (chart) {
+        const alldays = userData.serviceDays || 365
+        const pastdays = dateDiff(userData.serviceStart || today)
+        chart.setOption({
+          series: [{
+            max: alldays,
+            data: [{
+              value: pastdays
+            }]
           }]
-        }]
-      })
-      component.setData({
-        'filters[0].lifespan': lifespan1,
-        'filters[1].lifespan': lifespan2,
-        'filters[2].lifespan': lifespan3,
-        'filters[3].lifespan': lifespan3,
-        'filters[4].lifespan': lifespan3
-      })
+        })
+      }
     }
   }
 })
