@@ -1,0 +1,12 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">会员须知</view>
+</cu-custom>
+
+<view class='response'>
+	<view class='title'>会员须知</view>
+	<view class=''>海益生共享净水，采用共享模式运营，自用省钱，推广赚钱。具体会员推广规则如下： </view>
+	<view class=''>1.会员每推广1名客户，奖励180代金券一张，下次充值时刻抵现金使用，每次充值可使用4张代金券。 </view>
+	<view class=''>2.会员累计推广客户达到10名，返还第一年充值金额730元（可提现；以此类推，每推广10名奖励730元。 </view>
+	<view class=''>3.所推广的客户第2年以后继续使用时，可获得推广客户充值金额的10%作为奖励（可提现），客户持续充值使用，该项奖励每年持续收益。 </view>
+</view>
