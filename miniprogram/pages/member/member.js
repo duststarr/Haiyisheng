@@ -7,13 +7,17 @@ Component({
   data: {
     fans: 0,
     qrcode: app.globalData.qrcode,
-    firends: null
+    firends: null,
+    vouchers: 0,
+    voucherLeft:0
   },
   attached: function () {
     const that = this
     app.globalWatch('userDetail', detail => {
       that.setData({
-        fans: detail.fans || 0
+        fans: detail.fans || 0,
+        vouchers: detail.vouchers ||0,
+        voucherLeft: (detail.vouchers - detail.voucherUsed) | 0
       })
     })
     if (!this.data.qrcode) {

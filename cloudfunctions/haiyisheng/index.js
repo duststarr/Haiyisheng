@@ -64,8 +64,6 @@ actions.authentication = async (event) => {
       timeBeUser: new Date(),
       referrerID,
       fans: 0,
-      coupons: 0,
-      profits: 0,
       isAdmin: false,
       isWorker: false,
       isClient: false
@@ -278,9 +276,6 @@ actions.orderPayTest = async (event) => {
   const amount = event.amount
   const message = event.message
   const referrerID = event.referrerID || null
-  const name = event.name
-  const phone = event.phone
-  const avatar = event.avatar
 
   const timePay = new Date()
   await db_order.doc(orderID).update({
@@ -302,17 +297,9 @@ actions.orderPayTest = async (event) => {
   // 计算推广奖励
   // 推广分新人,和续费,这里是新人首次充值
   if (referrerID) {
-    const firend = {
-      userID: wxContext.OPENID,
-      amount,
-      name,
-      phone,
-      avatar,
-      date: timePay
-    }
     db_user.doc(referrerID).update({
       data: {
-        firends: _.push(firend)
+        vouchers: _.inc(1)  //代金券+1
       }
     })
   }
@@ -346,7 +333,9 @@ actions.generateQRcode = async (event) => {
     return file
   }
 }
-
+/**
+ * 获取我的推广下线列表
+ */
 actions.getFirends = async (event) => {
   const res = await db_user.where({
     isClient: true,

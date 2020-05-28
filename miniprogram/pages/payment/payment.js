@@ -25,8 +25,6 @@ Page({
       orderID: this.data.orderID,
       amount: policy.amount,
       message: policy.content,
-      name: user.address.userName,
-      phone: user.address.telNumber,
       referrerID: user.referrerID || null
     })
 
