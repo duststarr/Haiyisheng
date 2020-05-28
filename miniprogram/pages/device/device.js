@@ -14,7 +14,7 @@ function initChart(canvas, width, height, dpr) {
   let pastdays = 0
   if (app.globalData.userDetail) {
     alldays = app.globalData.userDetail.serviceDays || 365
-    pastdays = dateDiff(app.globalData.userDetail.serviceStart || today)
+    pastdays = dateDiff(app.globalData.userDetail.serviceStart || new Date())
   }
 
   const option = {
@@ -141,14 +141,15 @@ Component({
         const lifespan2 = parseInt(100 - 100 * filter2 / 330)
         const filter3 = dateDiff(cores.third)
         const lifespan3 = parseInt(100 - 100 * filter3 / 480)
-
-        component.setData({
-          'filters[0].lifespan': lifespan1,
-          'filters[1].lifespan': lifespan2,
-          'filters[2].lifespan': lifespan3,
-          'filters[3].lifespan': lifespan3,
-          'filters[4].lifespan': lifespan3
-        })
+        if(component){
+          component.setData({
+            'filters[0].lifespan': lifespan1,
+            'filters[1].lifespan': lifespan2,
+            'filters[2].lifespan': lifespan3,
+            'filters[3].lifespan': lifespan3,
+            'filters[4].lifespan': lifespan3
+          })
+        }
       }
 
       // 更新服务时间

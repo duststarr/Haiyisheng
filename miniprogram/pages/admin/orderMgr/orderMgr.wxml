@@ -21,6 +21,7 @@
 	</scroll-view>
 </view>
 <view style='position:absolute;top:{{CustomBar+260}}rpx;width:100%'>
+	<text class='text-gray padding-lr'>客服未接单，可更换客服</text>
 	<scroll-view wx:if="{{orders && orders.length>0 }}">
 		<view class="margin-sm bg-white radius" wx:for="{{orders}}" wx:key="_id">
 			<view class="cu-item shadow">
