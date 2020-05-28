@@ -294,7 +294,25 @@ actions.orderPayTest = async (event) => {
       orderID,
       stateNew: '已完成'
     })
+    // 计算推广奖励
+    // 推广分新人,和续费,这里是新人首次充值
+    const user = db_user.doc(wxContext.OPENID).get();
+    const earnings = {
+      userID: wxContext.OPENID,
+      amount: amount,
+      name: user.address.userName,
+      phone: user.address.telNumber,
+      date: timePay
+    }
+    if (user.referrerID) {
+      db_user.doc(user.referrerID).update({
+        data: {
+          earnings: _.push(earnings)
+        }
+      })
+    }
   } catch (e) {
+    console.error(e)
     return false
   }
   return true
