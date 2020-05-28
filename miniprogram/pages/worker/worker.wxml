@@ -45,30 +45,4 @@
 	</view>
 </scroll-view>
 
-<view wx:else class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
-	<view class="cu-item arrow">
-		<navigator class="content" url="/pages/about/about" hover-class="none">
-			<text class="cuIcon-text text-green"></text>
-			<text class="text-grey">客服须知</text>
-		</navigator>
-	</view>
-	<view class="cu-item arrow">
-		<navigator class="content" url="/pages/about/about" hover-class="none">
-			<text class="cuIcon-deliver text-green"></text>
-			<text class="text-grey">我的安装订单</text>
-		</navigator>
-	</view>
-	<view class="cu-item arrow">
-		<navigator class="content" url="/pages/about/about" hover-class="none">
-			<text class="cuIcon-settings text-green"></text>
-			<text class="text-grey">我的售后订单</text>
-		</navigator>
-	</view>
-	<view class="cu-item arrow">
-		<button class="cu-btn content" open-type="feedback">
-			<text class="cuIcon-writefill text-cyan"></text>
-			<text class="text-grey">意见反馈</text>
-		</button>
-	</view>
-</view>
 <view class="cu-tabbar-height"></view>

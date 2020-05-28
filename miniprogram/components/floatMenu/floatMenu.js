@@ -57,7 +57,6 @@ Component({
       },
     })
     app.globalWatch('userDetail', res => {
-      console.log(res)
       that.setData({
         isClient: res.isClient,
         isAdmin: res.isAdmin,

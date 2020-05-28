@@ -71,7 +71,6 @@ Page({
     })
   },
   workerChange: function (e) {
-    console.log('workerChange', e)
     const that = this
     const param = {}
     const worker = this.data.workers[e.detail.value]

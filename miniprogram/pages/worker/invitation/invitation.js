@@ -16,7 +16,6 @@ Page({
     canIUsegetPhoneNumber: wx.canIUse('button.open-type.getPhoneNumber')
   },
   getUserInfo: function (e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -46,7 +45,6 @@ Page({
     const detail = app.globalData.userDetail
     if (detail && !detail.isWorker) {
       const param = wx.getLaunchOptionsSync()
-      console.log(param)
       const fromWho = param.query.openid // 邀请加入的管理员的openid
       user.doc(app.globalData.userDetail._id).update({
         data: {

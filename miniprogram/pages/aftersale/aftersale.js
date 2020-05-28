@@ -25,7 +25,6 @@ Page({
             that.setData({
                 orders: res.result || null
             })
-            console.log(that.data.orders)
         })
     },
     onConfirm: function (e) {
@@ -120,7 +119,6 @@ Page({
         })
     },
     bindFormSubmit: function (e) {
-        console.log(e)
         const that = this
         let param = {}
         param.type = this.data.worktype
@@ -128,7 +126,6 @@ Page({
         switch (this.data.worktype) {
             case '移机': {
                 const addr2 = that.selectComponent('#addr2')
-                console.log('addr2=', addr2)
                 param.addr2 = addr2.data.address
                 if (!addr2.data.address || '' == addr2.data.address) {
                     that.setData({
@@ -164,9 +161,7 @@ Page({
             }
                 break;
         }
-        console.log(param)
         app.wxcloud('orderCreate', param).then(res => {
-            console.log(res)
             this.setData({
                 worktype: '', errmsg: ''
             })

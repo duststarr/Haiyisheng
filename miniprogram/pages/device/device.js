@@ -134,7 +134,6 @@ Component({
       if (userData.filters) {
         cores = userData.filters
       } else {
-        console.log('no filters datas')
         cores = {
           first: today,
           second: today,

@@ -308,14 +308,10 @@ actions.generateQRcode = async (event) => {
     _openid: wxContext.OPENID
   }).get();
   const user = res.data[0]
-  console.log(user)
   if (user.qrcode) {
-    console.log('find qrcode')
     return user.qrcode
   } else {
-    console.log('generate new qrcode')
     const query = 'pages/home/home?action=marketing&openid=' + wxContext.OPENID
-    console.log('generateQRcode', query)
     try {
       const result = await cloud.openapi.wxacode.get({
         path: query

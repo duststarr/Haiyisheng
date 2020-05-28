@@ -13,7 +13,6 @@ Page({
     ]
   },
   async pay(e) {
-    console.log(e)
     const pos = e.currentTarget.dataset.pos
     const policy = this.data.policies[pos]
 

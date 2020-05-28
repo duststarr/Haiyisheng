@@ -43,16 +43,44 @@
 </view>
 
 <view class="cu-bar margin-top bg-white solid-bottom">
-    <view class='action'>
-        <text class='cuIcon-titles text-orange '></text>
-        我推广的设备
-    </view>
+	<view class='action'>
+		<text class='cuIcon-titles text-orange '></text>
+		我推广的设备
+	</view>
+</view>
+<view class='margin-top-sm bg-white grid col-4 solids-bottom'>
+	<view class="flex flex-direction align-center solid" wx:for='{{7}}'>
+		<text class='text-bold'>张三</text>
+		<text class='text-sm text-gray'>13612345678</text>
+		<view class="cu-avatar lg round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
+		<text class="{{index%3==1?'bg-yellow':''}}">{{index%3==1?'停止使用':'使用中'}}</text>
+	</view>
+
 </view>
 <view class="cu-bar margin-top bg-white solid-bottom">
-    <view class='action'>
-        <text class='cuIcon-titles text-orange '></text>
-        我的收益详情
-    </view>
+	<view class='action'>
+		<text class='cuIcon-titles text-orange '></text>
+		我的收益详情
+	</view>
 </view>
-
+<view class='margin-top-sm bg-white'>
+	<view class='grid col-4 solids-bottom'>
+		<view class='padding-sm'>日期</view>
+		<view class='padding-sm'>客户</view>
+		<view class='padding-sm'>充值金额</view>
+		<view class='padding-sm'>我的收益</view>
+	</view>
+	<view class='grid col-4 solids-bottom'>
+		<view class='padding-sm'>2020-05-05</view>
+		<view class='padding-sm'>张三三</view>
+		<view class='padding-sm'>730</view>
+		<view class='padding-sm'>代金券1张</view>
+	</view>
+	<view class='grid col-4 solids-bottom'>
+		<view class='padding-sm'>2020-05-05</view>
+		<view class='padding-sm'>张三三</view>
+		<view class='padding-sm'>730</view>
+		<view class='padding-sm'>现金73元</view>
+	</view>
+</view>
 <view class="cu-tabbar-height"></view>

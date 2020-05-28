@@ -17,8 +17,6 @@ Page({
    * 更新权限
    */
   userDetailUpdated: function (detail) {
-    console.log('userDetailUpdated', detail)
-
     this.setData({
       isAdmin: detail.isAdmin,
       isWorker: detail.isWorker,

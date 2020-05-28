@@ -55,15 +55,6 @@
 	</block>
 	<view class="cu-tabbar-height"></view>
 </view>
-<!-- 	<view class="cu-timeline margin-top-sm" wx:if="{{null!=order}}">
-		<view class="cu-item" wx:for="{{order.logs}}">
-			<view class='text-black'>{{item.content}}</view>
-		</view>
-	</view>
-<view class="flex cu-bar foot">
-	<button class="cu-btn bg-pink shadow lg" bindtap="nextStep">模拟下一步</button>
-</view> -->
-
 <floatMenu posX='20' posY='200'>
 	<view slot="content">
 		<button bindtap='debugDelete'>取消我的订单</button>

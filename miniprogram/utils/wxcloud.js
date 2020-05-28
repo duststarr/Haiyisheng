@@ -11,7 +11,6 @@ export default async function wxcloud( action, data = {}) {
             },
             fail: () => {
                 wx.hideLoading()
-                console.log('cloud function fail')
                 resolve({ msg: 'error' })
             }
         })

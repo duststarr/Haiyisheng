@@ -68,7 +68,6 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-              console.log("userinfo", res.userInfo)
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
@@ -98,7 +97,6 @@ App({
       const res = await this.wxcloud('authentication', { query: e.query });
       this.globalData.userDetail = res.result
       this.globalEmit('userDetail')
-      console.log('userDetail', this.globalData.userDetail)
     } catch (e) {
       console.error('cloud database add error:', e)
     }
