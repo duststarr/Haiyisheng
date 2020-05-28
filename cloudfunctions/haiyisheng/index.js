@@ -1,21 +1,21 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-var db
+cloud.init()
+const db = cloud.database()
+const _ = db.command
 var wxContext
-var _
 var db_order
 var db_user
+var db_payment
 
 const actions = {}
 // 云函数入口函数
 exports.main = async (event, context) => {
-  cloud.init()
-  db = cloud.database()
-  _ = db.command
   wxContext = cloud.getWXContext() // 必须在main函数里执行，操
   db_order = db.collection('order')
   db_user = db.collection('user')
-
+  db_payment = db.collection('payment')
+  
   if (event.action && actions.hasOwnProperty(event.action)) {
     console.log("" + event.action, event)
     console.log("openid", wxContext.OPENID)
@@ -153,7 +153,6 @@ actions.orderCancel = async (event, context) => {
  * @param isWorker
  */
 actions.orderGetList = async (event, context) => {
-  const db_order = db.collection('order');
   const param = {}
   if (event.type)
     param.type = event.type
@@ -178,7 +177,6 @@ actions.orderGetList = async (event, context) => {
 actions.orderDispatchWorker = async (event) => {
   const orderID = event.orderID
   const worker = event.worker
-  const db_order = db.collection('order')
   await db_order.doc(orderID).update({
     data: {
       worker: worker,
@@ -195,7 +193,6 @@ actions.orderStateChange = async (event) => {
   const operator = event.operator || wxContext.OPENID
   const orderID = event.orderID
 
-  const db_order = db.collection('order')
   await db_order.doc(orderID).update({
     data: {
       state: stateNew,
@@ -211,7 +208,6 @@ actions.orderStateChange = async (event) => {
 actions.orderPick = async (event) => {
   const orderID = event.orderID
   const operator = event.operator || wxContext.OPENID
-  const db_order = db.collection('order')
   await db_order.doc(orderID).update({
     data: {
       state: '待执行',
@@ -228,7 +224,6 @@ actions.orderPick = async (event) => {
 actions.orderWorkdone = async (event) => {
   const orderID = event.orderID
   const operator = event.operator || wxContext.OPENID
-  const db_order = db.collection('order')
   await db_order.doc(orderID).update({
     data: {
       state: '待确认',
@@ -276,6 +271,7 @@ actions.orderPayTest = async (event) => {
   const amount = event.amount
   const message = event.message
   const referrerID = event.referrerID || null
+  const days = event.days
 
   const timePay = new Date()
   await db_order.doc(orderID).update({
@@ -284,6 +280,7 @@ actions.orderPayTest = async (event) => {
       payment: {
         orderID,
         amount,
+        days,
         message,
         timePay,
         openid: wxContext.OPENID
@@ -305,7 +302,41 @@ actions.orderPayTest = async (event) => {
   }
   return true
 }
+/**
+ * 续费
+ */
+actions.recharge = async (event) => {
+  const referrerID = event.referrerID
+  const amount = event.amount
+  const days = event.days
+  const name = event.name
+  const phone = event.phone
+  const message = event.message
 
+  const res = await db_payment.add({
+    data:{
+      _openid: wxContext.OPENID,
+      referrerID,
+      amount,
+      days,
+      name,
+      phone,
+      message,
+      timePay: new Date()
+    }
+  })
+  return res
+}
+/**
+ * 会员现金收益计算
+ */
+actions.clientProfit = async (event) => {
+  const res = await db_payment.where({
+    amount: _.gt(0),
+    // referrerID: wxContext.OPENID
+  }).get()
+  return res.data
+}
 /**
  * 二维码
  */
@@ -352,6 +383,7 @@ actions.getFirends = async (event) => {
       name: user.address.userName,
       phone: user.address.telNumber,
       avatar: user.avatar,
+      date: user.serviceStart,
       inservice
     }
   })

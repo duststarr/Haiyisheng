@@ -19,6 +19,13 @@ var shortTime = function(date) {
 
   return [ month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':')
 }
+var onlyDate = function(date){
+  var date = getDate(date)
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+  return [year, month, day].map(formatNumber).join('-')
+}
 
 var formatNumber = function(n) {
   n = n.toString()
@@ -27,5 +34,6 @@ var formatNumber = function(n) {
 
 module.exports = {
   formatTime: formatTime,
-  shortTime: shortTime
+  shortTime: shortTime,
+  onlyDate: onlyDate
 }

@@ -1,3 +1,4 @@
+<wxs module="tutil" src="../../utils/util.wxs" />
 <usertop></usertop>
 <view class="padding-sm flex text-center text-grey bg-white shadow-warp">
 	<view class="flex flex-sub flex-direction solid-right">
@@ -8,7 +9,7 @@
 		</view>
 	</view>
 	<view class="flex flex-sub flex-direction solid-right">
-		<view class="text-xxl text-blue">8888<text class='text-sm'>元(余{{777}})</text></view>
+		<view class="text-xxl text-blue">{{profit}}<text class='text-sm'>元(余{{profit}})</text></view>
 		<view>
 			<text class="cuIcon-refund"></text>
 			推广奖励
@@ -55,18 +56,6 @@
 		<view class="cu-avatar lg round" style="background-image:url({{item.avatar||'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'}});"></view>
 		<text class="{{item.inservice?'':'bg-yellow'}}">{{item.inservice?'使用中':'停止使用'}}</text>
 	</view>
-	<!-- <view class="flex flex-direction align-center solid">
-		<text class='text-bold'>方案一</text>
-		<text class='text-sm text-gray'>13612345678</text>
-		<view class="cu-avatar lg round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-		<text class="bg-yellow">停止使用</text>
-	</view>
-	<view class="flex flex-direction align-center solid bg-yellow">
-		<text class='text-bold'>方案二</text>
-		<text class='text-sm text-gray'>13612345678</text>
-		<view class="cu-avatar lg round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-		<text class="">停止使用</text>
-	</view> -->
 	<view class="flex flex-direction align-center solid">
 		<text class='text-bold'>李四</text>
 		<text class='text-sm text-gray'>13612345678</text>
@@ -85,20 +74,16 @@
 	<view class='grid col-4 solids-bottom'>
 		<view class='padding-sm'>日期</view>
 		<view class='padding-sm'>客户</view>
-		<view class='padding-sm'>充值金额</view>
+		<view class='padding-sm'>事由</view>
 		<view class='padding-sm'>我的收益</view>
 	</view>
-	<view class='grid col-4 solids-bottom'>
-		<view class='padding-sm'>2020-05-05</view>
-		<view class='padding-sm'>张三三</view>
-		<view class='padding-sm'>730</view>
-		<view class='padding-sm'>代金券1张</view>
-	</view>
-	<view class='grid col-4 solids-bottom'>
-		<view class='padding-sm'>2020-05-05</view>
-		<view class='padding-sm'>张三三</view>
-		<view class='padding-sm'>730</view>
-		<view class='padding-sm'>现金73元</view>
+	<view class='grid col-4 solids-bottom' wx:for="{{earnings}}">
+		<view class='padding-sm'>{{tutil.onlyDate(item.date)}}</view>
+		<view class='padding-sm'>{{item.name}}</view>
+		<view class='padding-sm'>{{item.event}}</view>
+		<view class='padding-sm'>{{item.profit}}</view>
 	</view>
 </view>
+<text>为了测试,所有会员都列出,发布后,只会列自己推广的</text>
+
 <view class="cu-tabbar-height"></view>

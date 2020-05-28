@@ -24,6 +24,7 @@ Page({
     const res = await app.wxcloud('orderPayTest', {
       orderID: this.data.orderID,
       amount: policy.amount,
+      days: policy.days,
       message: policy.content,
       referrerID: user.referrerID || null
     })

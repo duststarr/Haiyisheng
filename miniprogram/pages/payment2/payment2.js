@@ -24,6 +24,17 @@ Page({
         serviceDays: _.inc(policy.days)
       }
     })
+    app.globalData.userDetail.serviceDays += policy.days
+    app.globalEmit('userDetail')
+    const param = {}
+    const user = app.globalData.userDetail
+    param.referrerID = user.referrerID
+    param.amount = policy.amount
+    param.days = policy.days
+    param.name = user.address.userName
+    param.phone = user.address.telNumber
+    param.message = policy.content
+    await app.wxcloud('recharge',param)
 
     wx.showToast({
       title: "服务天数增加："+policy.days,
