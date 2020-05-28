@@ -77,7 +77,7 @@
 		<view class='padding-sm'>事由</view>
 		<view class='padding-sm'>我的收益</view>
 	</view>
-	<view class='grid col-4 solids-bottom' wx:for="{{earnings}}">
+	<view class='grid col-4 solids-bottom' wx:for="{{earningsList}}">
 		<view class='padding-sm'>{{tutil.onlyDate(item.date)}}</view>
 		<view class='padding-sm'>{{item.name}}</view>
 		<view class='padding-sm'>{{item.event}}</view>

@@ -5,40 +5,45 @@ Component({
     addGlobalClass: true,
   },
   data: {
-    fans: 0,
-    qrcode: app.globalData.qrcode,
+    fans: 0, //粉丝数
+    qrcode: null,
     firends: null,
-    vouchers: 0,
+    vouchers: 0, // 代金券
+    voucherUsed: 0,
     voucherLeft: 0,
-    earnings: [],
-    profit: 0,
+    earningsList: [],
+    profit: 0, //现金收益
+    profitUsed: 0,
     profitLeft: 0
   },
   attached: function () {
     const that = this
+    // 个人信息
     app.globalWatch('userDetail', detail => {
       that.setData({
         fans: detail.fans || 0,
-        vouchers: detail.vouchers || 0,
-        voucherLeft: (detail.vouchers - detail.voucherUsed) | 0
+        voucherUsed: detail.voucherUsed || 0,
+        profitUsed: detail.profitUsed || 0
       })
     })
-    if (!this.data.qrcode) {
-      app.wxcloud('generateQRcode').then(res => {
-        this.setData({
-          qrcode: res.result.fileID
-        })
-        app.globalData.qrcode = res.result.fileID
-        app.globalEmit('qrcode')
+    // 二维码
+    app.wxcloud('generateQRcode').then(res => {
+      this.setData({
+        qrcode: res.result.fileID
       })
-    }
-    const earnings = []
+      app.globalData.qrcode = res.result.fileID
+      app.globalEmit('qrcode')
+    })
+    // 收益详情列表
+    const earningsList = []
+    // 我推广的设备
     app.wxcloud('getFirends').then(res => {
       const firends = res.result
       that.setData({
         firends
       })
-      const arr = that.data.earnings
+      const arr = that.data.earningsList
+      let vouchers = 0
       firends.forEach(firend => {
         arr.push({
           name: firend.name,
@@ -46,14 +51,18 @@ Component({
           event: '新装',
           profit: '代金券1张'
         })
+        vouchers += 1
       })
       that.setData({
-        earnings: arr
+        earningsList: arr,
+        vouchers,
+        voucherLeft: vouchers - that.data.voucherUsed
       })
     })
-
+    //我的现金收益
     app.wxcloud('clientProfit').then(res => {
-      const arr = that.data.earnings
+      const that = this
+      const arr = that.data.earningsList
       let profit = 0
       res.result.forEach(payment => {
         const my = (payment.amount * 0.1)
@@ -66,8 +75,9 @@ Component({
         })
       })
       this.setData({
-        earnings:arr,
-        profit
+        earningsList: arr,
+        profit,
+        profitLeft: profit - that.data.profitUsed
       })
     })
   },
