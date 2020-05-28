@@ -9,7 +9,8 @@
     "pages/payment/payment",
     "pages/about/about",
     "pages/worker/invitation/invitation",
-    "pages/payment2/payment2"
+    "pages/payment2/payment2",
+    "pages/member/notice/notice"
   ],
   "window": {
     "backgroundTextStyle": "light",

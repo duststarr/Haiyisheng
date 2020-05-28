@@ -6,7 +6,7 @@ Component({
   },
   data: {
     fans: 0,
-    qrcode
+    qrcode:null
   },
   attached: function () {
     const that = this
@@ -15,11 +15,11 @@ Component({
         fans: detail.fans || 0
       })
     })
-    // app.wxcloud('generateQRcode').then(res => {
-    //   // this.setData({
-    //   //   qrcode: res.result.fileID
-    //   // })
-    // })
+    app.wxcloud('generateQRcode').then(res => {
+      this.setData({
+        qrcode: res.result.fileID
+      })
+    })
 
   },
   methods: {

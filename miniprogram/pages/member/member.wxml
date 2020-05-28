@@ -22,65 +22,37 @@
 		</view>
 	</view>
 </view>
-<!-- 
-<view class='margin-top grid col-2'>
-	<view>
-		<view class="cu-item arrow">
-			<navigator class="content" url="/pages/member/myQRcode/myQRcode" hover-class="none">
-				<text class="cuIcon-text text-green"></text>
-				<text class="text-grey">二维码推广</text>
-        <image src='{{qrcode}}'></image>
-			</navigator>
-		</view>
-	</view>
-	<view class='flex flex-direction'>
-		<view class="cu-item arrow">
-			<navigator class="content" url="/pages/about/about" hover-class="none">
-				<text class="cuIcon-deliver text-green"></text>
-				<text class="text-grey">我的推广成果</text>
-			</navigator>
-		</view>
-		<view class="cu-item arrow">
-			<navigator class="content" url="/pages/about/about" hover-class="none">
-				<text class="cuIcon-settings text-green"></text>
-				<text class="text-grey">收益详情</text>
-			</navigator>
-		</view>
-	</view>
-</view> -->
-<view class="margin-top padding bg-red">
-	<view class="action text-center text-xl">自用省钱，推广赚钱！</view>
-</view>
-<view class="cu-list menu card-menu margin-top-sm margin-bottom-xl shadow-lg radius">
-	<view class="cu-item arrow">
-		<navigator class="content" url="/pages/about/about" hover-class="none">
-			<text class="cuIcon-text text-green"></text>
-			<text class="text-grey">会员须知</text>
-		</navigator>
-	</view>
-	<view class="cu-item arrow">
-		<button class="content aligin-left text-left" open-type="share" hover-class="none">
-			<text class="cuIcon-text text-green"></text>
-			<text class="text-grey" >分享推广</text>
-		</button>
-	</view>
-	<view class="cu-item arrow">
+
+<view class='margin-top flex bg-white'>
+	<view class=' padding-sm'>
 		<navigator class="content" url="/pages/member/myQRcode/myQRcode" hover-class="none">
-			<text class="cuIcon-text text-green"></text>
-			<text class="text-grey">二维码推广</text>
+			<view>
+				<image class='qrcode' src='{{qrcode}}' mode='aspectFit'></image>
+			</view>
+			<text class="text-grey response text-center">我的推广二维码</text>
 		</navigator>
 	</view>
-	<view class="cu-item arrow">
-		<navigator class="content" url="/pages/about/about" hover-class="none">
-			<text class="cuIcon-deliver text-green"></text>
-			<text class="text-grey">我的推广成果</text>
-		</navigator>
-	</view>
-	<view class="cu-item arrow">
-		<navigator class="content" url="/pages/about/about" hover-class="none">
-			<text class="cuIcon-settings text-green"></text>
-			<text class="text-grey">收益详情</text>
+	<view class='padding response'>
+		<navigator class="content" url="/pages/member/notice/notice" hover-class="none">
+			<view class="response text-center text-red text-xl">自用省钱，推广赚钱！</view>
+			<view class=' padding-sm text-lg indent'> 海益生共享净水，采用共享模式运营，自用省钱，推广赚钱。具体会员推广规则见
+				<text class="text-blue">会员须知</text>
+			</view>
 		</navigator>
 	</view>
 </view>
+
+<view class="cu-bar margin-top bg-white solid-bottom">
+    <view class='action'>
+        <text class='cuIcon-titles text-orange '></text>
+        我推广的设备
+    </view>
+</view>
+<view class="cu-bar margin-top bg-white solid-bottom">
+    <view class='action'>
+        <text class='cuIcon-titles text-orange '></text>
+        我的收益详情
+    </view>
+</view>
+
 <view class="cu-tabbar-height"></view>

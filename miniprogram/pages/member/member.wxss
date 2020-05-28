@@ -1,1 +1,8 @@
 /* miniprogram/pages/member/member.wxss */
+.qrcode{
+    width: 250rpx;
+    height:250rpx;
+}
+.indent{
+    text-indent: 2em;
+}

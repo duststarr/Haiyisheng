@@ -1,4 +1,4 @@
-<view class='flex bg-white'>
+<view class='margin-top flex bg-white'>
 	<ec-canvas class='flex-twice' id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
 </view>
 <view class="cu-bar bg-white solid-bottom margin-top">
