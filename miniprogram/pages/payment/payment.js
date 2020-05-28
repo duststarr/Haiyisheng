@@ -20,10 +20,14 @@ Page({
     console.log(e)
     const pos = e.currentTarget.dataset.pos
     const policy = this.data.policies[pos]
+    const user = app.globalData.userDetail
     const res = await app.wxcloud('orderPayTest', {
       orderID: this.data.orderID,
       amount: policy.amount,
-      message: policy.content
+      message: policy.content,
+      name: user.address.userName,
+      phone: user.address.telNumber,
+      referrerID: user.referrerID || null
     })
 
     const db = wx.cloud.database();

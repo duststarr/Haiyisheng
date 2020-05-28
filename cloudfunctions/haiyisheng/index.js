@@ -75,6 +75,7 @@ actions.authentication = async (event) => {
     })
     result = detail
   }
+  console.log('referrerID', referrerID)
   // 推荐人粉丝+1
   if (referrerID) {
     db_user.doc(referrerID).update({
@@ -276,44 +277,42 @@ actions.orderPayTest = async (event) => {
   const orderID = event.orderID
   const amount = event.amount
   const message = event.message
+  const referrerID = event.referrerID || null
+  const name = event.name
+  const phone = event.phone
+
   const timePay = new Date()
-  try {
-    await db_order.doc(orderID).update({
-      data: {
+  await db_order.doc(orderID).update({
+    data: {
+      timePay,
+      payment: {
+        orderID,
+        amount,
+        message,
         timePay,
-        payment: {
-          orderID,
-          amount,
-          message,
-          timePay,
-          openid: wxContext.OPENID
-        }
+        openid: wxContext.OPENID
       }
-    })
-    await actions.orderStateChange({
-      orderID,
-      stateNew: '已完成'
-    })
-    // 计算推广奖励
-    // 推广分新人,和续费,这里是新人首次充值
-    const user = db_user.doc(wxContext.OPENID).get();
-    const earnings = {
+    }
+  })
+  await actions.orderStateChange({
+    orderID,
+    stateNew: '已完成'
+  })
+  // 计算推广奖励
+  // 推广分新人,和续费,这里是新人首次充值
+  if (referrerID) {
+    const firend = {
       userID: wxContext.OPENID,
-      amount: amount,
-      name: user.address.userName,
-      phone: user.address.telNumber,
+      amount,
+      name,
+      phone,
       date: timePay
     }
-    if (user.referrerID) {
-      db_user.doc(user.referrerID).update({
-        data: {
-          earnings: _.push(earnings)
-        }
-      })
-    }
-  } catch (e) {
-    console.error(e)
-    return false
+    db_user.doc(referrerID).update({
+      data: {
+        firends: _.push(firend)
+      }
+    })
   }
   return true
 }
