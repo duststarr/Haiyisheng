@@ -46,7 +46,23 @@ Page({
       ListTouchDirection: null
     })
   },
-
+  onDelete: function (e) {
+    const pos = e.currentTarget.dataset.pos
+    const worker = this.data.workers[pos]
+    const that = this
+    wx.showModal({
+      title: "删除客服？",
+      content: "是否确认删除客服：" + worker.name,
+      success: function (res) {
+        const workers = that.data.workers
+        workers.splice(pos, 1)
+        that.setData({
+          workers
+        })
+        app.wxcloud('workerDelete', { openid: worker._openid })
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

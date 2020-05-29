@@ -5,7 +5,7 @@
 <button class="btn" type="primary" open-type="share">分享邀请客服专属链接</button>
 <view class="cu-list menu-avatar">
     <view class="cu-item solid-bottom {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for='{{workers}}' wx:key="_id" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-        <view class="cu-avatar round lg" style="background-image:url({{item.avatarUrl}});"></view>
+        <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
         <view class="content">
             <view class="text-grey">{{item.name}}</view>
             <view class="text-gray text-sm">
@@ -19,8 +19,8 @@
             </view>
         </view>
         <view class="move">
-            <view class="bg-grey">置顶</view>
-            <view class="bg-red">删除</view>
+            <!-- <view class="bg-grey">置顶</view> -->
+            <view class="bg-red" bindtap='onDelete' data-pos="{{index}}">删除</view>
         </view>
     </view>
 </view>

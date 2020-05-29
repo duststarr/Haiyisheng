@@ -262,6 +262,15 @@ actions.workerGetList = async (event) => {
   }).get()
   return res.data
 }
+actions.workerDelete = async (event) => {
+  const openid = event.openid
+  db_user.doc(openid).update({
+    data: {
+      isWorker: false
+    }
+  })
+  return true;
+}
 
 /**
  * 模拟充值
