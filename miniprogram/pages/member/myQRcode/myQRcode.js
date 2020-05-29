@@ -9,7 +9,7 @@ Page({
     qrcode: app.globalData.qrcode
   },
   saveQRcode: function (e) {
-    var that = this
+    const that = this
     //获取相册授权
     wx.getSetting({
       success(res) {
@@ -27,7 +27,7 @@ Page({
     })
   },
   saveQRcodeDo: function () {
-    var that = this
+    const that = this
     wx.cloud.getTempFileURL({
       fileList: [that.data.qrcode],
       success: res => {
@@ -76,7 +76,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function () {
-    var that = this
+    const that = this
     app.globalWatch('qrcode',qr =>{
       that.setData({
         qrcode: qr

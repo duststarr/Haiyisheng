@@ -11,7 +11,6 @@ Component({
     numAftersaleWorking: 0,
     showInstall: true,
     showAftersale: true,
-    motto: 'Hi 开发者！',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -20,36 +19,22 @@ Component({
   },
   attached: function () {
     const that = this
-    if (app.globalData.userInfo) {
-      that.userinfoReady(app.globalData.userInfo)
-    } else if (this.data.canIUse) {
-      app.userInfoReadyCallback = res => {
-        that.userinfoReady(res.userInfo)
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          that.userinfoReady(res.userInfo)
-        }
+    app.globalWatch('userInfo', res => {
+      that.setData({
+        userInfo: res,
+        hasUserInfo: true
       })
-    }
+      this.getOrders();
+    })
   },
   methods: {
     getUserInfo: function (e) {
       app.globalData.userInfo = e.detail.userInfo
+      app.globalEmit('userInfo')
       this.setData({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       })
-    },
-    userinfoReady: function (info) {
-      this.setData({
-        userInfo: info,
-        hasUserInfo: true
-      })
-      this.getOrders();
     },
     getOrders(sub = null) {
       const that = this
@@ -111,12 +96,12 @@ Component({
 
       })
     },
-    onToggleInstall(e){
+    onToggleInstall(e) {
       this.setData({
         showInstall: !this.data.showInstall
       })
     },
-    onToggleAftersale(e){
+    onToggleAftersale(e) {
       this.setData({
         showAftersale: !this.data.showAftersale
       })

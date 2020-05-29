@@ -20,7 +20,7 @@ Page({
     })
   },
   onLoad: function (options) {
-    var that = this
+    const that = this
 
     app.globalWatch('userDetail', user => {
       const v = user.vouchers || 0

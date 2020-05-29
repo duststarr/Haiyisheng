@@ -32,7 +32,7 @@ Page({
         const order = this.data.orders[pos]
         const orderID = order._id
         const type = order.type
-        var that = this
+        const that = this
         wx.showModal({
             title: '确认完成',
             content: '您申请的服务已完成?',
@@ -85,7 +85,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        var that = this
+        const that = this
         app.globalWatch('userDetail', res => {
             that.setData({
                 address: res.address

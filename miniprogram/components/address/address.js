@@ -19,7 +19,7 @@ Component({
    */
   methods: {
     chooseAddress() {
-      var that = this;
+      const that = this;
       wx.chooseAddress({
         success: res => {
           that.setData({

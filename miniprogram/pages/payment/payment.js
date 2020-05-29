@@ -30,7 +30,7 @@ Page({
     })
 
     const db = wx.cloud.database();
-    var today = new Date()
+    const today = new Date()
     await db.collection('user').doc(app.globalData.userDetail._id).update({
       data: {
         isClient: true,

@@ -1,6 +1,6 @@
 // components/floatMenu/floatMenu.js
 const app = getApp()
-var temp = {}
+let temp = {}
 Component({
   /**
   * 组件的一些选项
@@ -47,7 +47,7 @@ Component({
     date3: ''
   },
   attached: function () {
-    var that = this
+    const that = this
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -81,13 +81,13 @@ Component({
       temp.lastY = e.touches[0].pageY
     },
     onTouchMove: function (e) {
-      var moveX = e.touches[0].pageX - temp.lastX
-      var moveY = e.touches[0].pageY - temp.lastY
+      let moveX = e.touches[0].pageX - temp.lastX
+      let moveY = e.touches[0].pageY - temp.lastY
       temp.lastX = e.touches[0].pageX
       temp.lastY = e.touches[0].pageY
 
-      var newX = this.data.posX + moveX;
-      var newY = this.data.posY + moveY;
+      let newX = this.data.posX + moveX;
+      let newY = this.data.posY + moveY;
       newX = newX < 0 ? 0 : newX;
       newX = newX > this.data.maxX ? this.data.maxX : newX;
       newY = newY < 0 ? 0 : newY;

@@ -28,9 +28,9 @@ Page({
     }
   },
   updateState() {
-    var that = this
+    const that = this
     app.wxcloud('orderGetCreating').then(res => {
-      var step = 0
+      let step = 0
       if (res.result[0]) {
         switch (res.result[0].state) {
           case '新订单':

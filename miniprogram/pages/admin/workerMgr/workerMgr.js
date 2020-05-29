@@ -10,7 +10,7 @@ Page({
     workers: []
   },
   fetchData() {
-    var that = this
+    const that = this
     app.wxcloud('workerGetList').then(res => {
       that.setData({
         workers: res.result
@@ -68,16 +68,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    if (app.globalData.userInfo) {
-      this.fetchData()
-    } else {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        that.fetchData();
-      }
-    }
+    this.fetchData()
   },
 
   /**

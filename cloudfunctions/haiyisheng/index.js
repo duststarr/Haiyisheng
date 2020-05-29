@@ -3,10 +3,10 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database()
 const _ = db.command
-var wxContext
-var db_order
-var db_user
-var db_payment
+let wxContext
+let db_order
+let db_user
+let db_payment
 
 const actions = {}
 // 云函数入口函数
@@ -39,8 +39,8 @@ exports.main = async (event, context) => {
  */
 actions.authentication = async (event) => {
   const query = event.query
-  var result = null;
-  var referrerID = null;
+  let result = null;
+  let referrerID = null;
   // 数据库中是否有此用户
   const res = await db_user.where({
     _openid: wxContext.OPENID

@@ -1,14 +1,14 @@
 import wxcloud from '/utils/wxcloud.js'
 
 !function () {
-  var PageTmp = Page;
+  let PageTmp = Page;
 
   Page = function (pageConfig) {
     // 设置全局默认分享
     pageConfig = Object.assign({
       onShareAppMessage: function () {
         const app = getApp();
-        var path = '/pages/home/home';
+        let path = '/pages/home/home';
         // 如果分享者是客户会员
         if (app.globalData.userDetail && app.globalData.userDetail.isClient) {
           path = path + '?action=marketing&openid=' + app.globalData.userDetail._openid
@@ -61,11 +61,7 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
+              this.globalEmit('userInfo')
             }
           })
         }

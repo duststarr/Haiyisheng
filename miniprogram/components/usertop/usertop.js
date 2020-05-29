@@ -2,42 +2,24 @@ const app = getApp();
 
 Component({
   data: {
-    userInfo: {},
+    userInfo: null,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  attached: function(){
-    if (app.globalData.userInfo) {
-      this.setData({
+  attached: function () {
+    const that = this
+    app.globalWatch('userInfo', res => {
+      that.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    })
   },
   methods: {
-    getUserInfo: function(e) {
+    getUserInfo: function (e) {
       console.log(e)
       app.globalData.userInfo = e.detail.userInfo
+      app.globalEmit('userInfo')
       this.setData({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
