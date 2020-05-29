@@ -111,6 +111,8 @@ actions.orderCreate = async (event, context) => {
       _openid: wxContext.OPENID,
       type,
       address,
+      name: address.userName,
+      phone: address.telNumber,
       addr2,
       message,
       filters,
