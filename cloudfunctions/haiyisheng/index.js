@@ -272,6 +272,13 @@ actions.workerDelete = async (event) => {
   return true;
 }
 
+actions.clientGetList = async (event) => {
+  const res = await db_user.where({
+    isClient: true
+  }).get()
+  return res.data
+}
+
 /**
  * 模拟充值
  */
