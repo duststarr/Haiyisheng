@@ -78,7 +78,7 @@ Component({
       that.setData({
         loading: true
       })
-      app.globalWatch('userDetail', that.updateDatas,false)
+      app.globalWatch('userDetail', that.updateDatas)
       app.globalWatch('debugDays', that.updateDatas)
     }, 500)
 
