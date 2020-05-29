@@ -1,4 +1,6 @@
 // components/floatMenu/floatMenu.js
+import util from '../../utils/util.js';
+
 const app = getApp()
 let temp = {}
 Component({
@@ -136,7 +138,8 @@ Component({
       app.globalEmit('debugDays')
     },
     DateChange1: async function (e) {
-      const date = e.detail.value
+      const date = new Date(e.detail.value)
+      console.log(date)
       const openid = app.globalData.userDetail._openid
       const db = wx.cloud.database()
       const db_user = db.collection('user')
@@ -145,11 +148,11 @@ Component({
           "filters.first": date
         }
       })
-      app.globalData.userDetail.filters.first = date
+      app.globalData.userDetail.filters.first = util.formatTime(date)
       app.globalEmit('userDetail')
     },
     DateChange2: async function (e) {
-      const date = e.detail.value
+      const date = new Date(e.detail.value)
       const openid = app.globalData.userDetail._openid
       const db = wx.cloud.database()
       const db_user = db.collection('user')
@@ -158,11 +161,11 @@ Component({
           "filters.second": date
         }
       })
-      app.globalData.userDetail.filters.second = date
+      app.globalData.userDetail.filters.second = util.formatTime(date)
       app.globalEmit('userDetail')
     },
     DateChange3: async function (e) {
-      const date = e.detail.value
+      const date = new Date(e.detail.value)
       const openid = app.globalData.userDetail._openid
       const db = wx.cloud.database()
       const db_user = db.collection('user')
@@ -171,7 +174,7 @@ Component({
           "filters.third": date
         }
       })
-      app.globalData.userDetail.filters.third = date
+      app.globalData.userDetail.filters.third = util.formatTime(date)
       app.globalEmit('userDetail')
     }
 
