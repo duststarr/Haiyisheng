@@ -1,6 +1,6 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
     <view slot="backText">返回</view>
-    <view slot="content">会员管理</view>
+    <view slot="content">会员清单</view>
 </cu-custom>
 <view class="cu-list menu-avatar">
     <view class="cu-item solid-bottom {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for='{{clients}}' wx:key="_id" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
@@ -12,10 +12,10 @@
             </view>
         </view>
         <view class="action">
-            <view class="text-grey text-xs">22:20</view>
+            <!-- <view class="text-grey text-xs">22:20</view>
             <view class="cu-tag round bg-grey sm">
                 （左滑）
-            </view>
+            </view> -->
         </view>
         <view class="move">
             <!-- <view class="bg-grey">置顶</view> -->
