@@ -3,7 +3,7 @@
     <view slot="content">会员清单</view>
 </cu-custom>
 <view class="cu-list menu-avatar">
-    <view class="cu-item solid-bottom {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for='{{clients}}' wx:key="_id" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
+    <view class="cu-item solid-bottom {{modalName=='move-box-'+ index?'move-cur':''}}" bindtap='onClient' wx:for='{{clients}}' wx:key="_id" data-pos="{{index}}">
         <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
         <view class="content">
             <view class="text-grey">{{item.name}}</view>
@@ -23,4 +23,3 @@
         </view>
     </view>
 </view>
-<text class='text-gray text-sm'>需求之外，但也应有，目前只列清单</text>

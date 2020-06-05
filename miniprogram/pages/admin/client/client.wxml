@@ -1,0 +1,36 @@
+<wxs module="tutil" src="../../../utils/util.wxs" />
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">客户信息</view>
+</cu-custom>
+<address address='{{client.address}}' />
+<form>
+	<view class='cu-form-group'>
+		<view class='title'>姓名</view>
+		<view class=''>{{client.address.userName}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>手机号</view>
+		<view class=''>{{client.address.telNumber}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>安装时间</view>
+		<view class=''>{{tutil.onlyDate(client.serviceStart)}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>剩余天数</view>
+		<view class=''>{{client.serviceDays - tutil.daysPast(client.serviceStart)}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>滤芯1天数</view>
+		<view class=''>{{tutil.daysPast(client.filters.first)}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>滤芯2天数</view>
+		<view class=''>{{tutil.daysPast(client.filters.second)}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>滤芯3天数</view>
+		<view class=''>{{tutil.daysPast(client.filters.third)}}</view>
+	</view>
+</form>

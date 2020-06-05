@@ -21,5 +21,12 @@ Page({
       })
     })
   },
+  onClient: function(e){
+    const pos = e.currentTarget.dataset.pos;
+    app.globalData.curClient = this.data.clients[pos];
+    wx.navigateTo({
+      url: '/pages/admin/client/client',
+    })
+  }
 
 })
