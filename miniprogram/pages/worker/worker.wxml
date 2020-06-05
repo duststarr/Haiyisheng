@@ -17,13 +17,13 @@
 			售后订单
 		</view>
 	</view>
-	<view class="flex flex-sub flex-direction solid-right">
+	<!-- <view class="flex flex-sub flex-direction solid-right">
 		<view class="text-xxl text-blue">888</view>
 		<view>
 			<text class="cuIcon-refund"></text>
 			未提现报酬
 		</view>
-	</view>
+	</view> -->
 </view>
 
 <scroll-view wx:if="{{orders && orders.length>0 }}">

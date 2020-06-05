@@ -6,9 +6,35 @@ Page({
    * 页面的初始数据
    */
   data: {
-    client: null
+    client: null,
+    vouchers: null,
+    voucherUsed: 0,
+    profit: null,
+    profitUsed: 0
   },
-
+  onCalcVouchers: function(e){
+    const that = this
+    app.wxcloud('getFirends').then(res => {
+      that.setData({
+        vouchers: res.result.length
+      })
+    })
+  },
+  onCalcProfit: function(e){
+    //我的现金收益
+    // @result 我的下线的续费充值情况
+    app.wxcloud('clientProfit').then(res => {
+      const that = this
+      let profit = 0
+      res.result.forEach(payment => {
+        const my = (payment.amount * 0.1)
+        profit += my
+      })
+      this.setData({
+        profit
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -29,7 +55,9 @@ Page({
   onShow: function () {
     if(app.globalData.curClient){
       this.setData({
-        client: app.globalData.curClient
+        client: app.globalData.curClient,
+        voucherUsed: app.globalData.voucherUsed || 0,
+        profitUsed: app.globalData.profitUsed || 0
       })
     }
   },

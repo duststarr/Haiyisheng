@@ -19,18 +19,36 @@
 	</view>
 	<view class='cu-form-group'>
 		<view class='title'>剩余天数</view>
-		<view class=''>{{client.serviceDays - tutil.daysPast(client.serviceStart)}}</view>
+		<view class=''>剩余{{client.serviceDays - tutil.daysPast(client.serviceStart)}} 天</view>
 	</view>
 	<view class='cu-form-group'>
 		<view class='title'>滤芯1天数</view>
-		<view class=''>{{tutil.daysPast(client.filters.first)}}</view>
+		<view class=''>已工作 {{tutil.daysPast(client.filters.first)}} 天</view>
 	</view>
 	<view class='cu-form-group'>
 		<view class='title'>滤芯2天数</view>
-		<view class=''>{{tutil.daysPast(client.filters.second)}}</view>
+		<view class=''>已工作 {{tutil.daysPast(client.filters.second)}} 天</view>
 	</view>
 	<view class='cu-form-group'>
 		<view class='title'>滤芯3天数</view>
+		<view class=''>已工作 {{tutil.daysPast(client.filters.third)}} 天</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>粉丝数</view>
 		<view class=''>{{tutil.daysPast(client.filters.third)}}</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>代金券</view>
+		<view wx:if="{{!vouchers}}">
+			 <button bindtap='onCalcVouchers'><text class='text-sm text-gray'>为节约云资源不自动</text>计算</button>
+		</view>
+		<view wx:else class=''>{{voucherUsed}}已用 / 共{{vouchers}}张</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>推广收益</view>
+		<view wx:if="{{!profit}}">
+			<button bindtap='onCalcProfit'><text class='text-sm text-gray'>为节约云资源不自动</text>计算</button>
+		</view>
+		<view wx:else class=''>{{profitUsed}}已取 / 共{{profit}}元</view>
 	</view>
 </form>

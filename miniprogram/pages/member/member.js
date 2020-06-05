@@ -60,6 +60,7 @@ Component({
       })
     })
     //我的现金收益
+    // @result 我的下线的续费充值情况
     app.wxcloud('clientProfit').then(res => {
       const that = this
       const arr = that.data.earningsList
