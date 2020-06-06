@@ -15,13 +15,12 @@ exports.main = async (event, context) => {
   db_order = db.collection('order')
   db_user = db.collection('user')
   db_payment = db.collection('payment')
-  
+
   if (event.action && actions.hasOwnProperty(event.action)) {
     console.log("" + event.action, event)
     console.log("openid", wxContext.OPENID)
     try {
       const res = await actions[event.action](event, context);
-      console.log('return', res)
       return res
     } catch (e) {
       console.error('function error', e)
@@ -256,14 +255,79 @@ actions.orderConfirm = async (event) => {
   return true;
 }
 /**
- * 
+ * @param needCountOrders bool 是否统计客服的订单情况
  */
 actions.workerGetList = async (event) => {
   const res = await db_user.where({
     isWorker: true
-  }).get()
+  })
+    .field({
+      name: true,
+      phone: true,
+      avatar: true,
+      _openid: true,
+      workerFromWho: true
+    })
+    .get()
+  if (event.needCountOrders) {
+    const result = await Promise.all(res.data.map(async (worker) => {
+      const num1 = await db_order.where({
+        worker: { id: worker._id },
+        type: '新装',
+        state: '已完成'
+      }).count()
+      worker.numInstallDone = num1.total
+      const num2 = await db_order.where({
+        worker: { id: worker._id },
+        type: _.neq('新装'),
+        state: '已完成'
+      }).count()
+      worker.numAftersaleDone = num2.total
+      return worker
+    }))
+    return result
+  }
   return res.data
 }
+// /**
+//  * count worker's tasks
+//  */
+// actions.ordersCountByWorker = async (event) => {
+//   var result = {}
+//   const res = await db_order.where({
+//     worker: _.exists(true)
+//   }).get()
+//   console.log(res)
+//   if (!res.data || res.data.length == 0)
+//     return false
+//   res.data.forEach(order => {
+//     const key = order.worker.id
+//     if (!result.hasOwnProperty(key)) {
+//       result[key] = {
+//         numInstall: 0,
+//         numAftersale: 0,
+//         numInstallDone: 0,
+//         numAftersaleDone: 0
+//       }
+//     }
+//     if ('新装' == order.type) {
+//       result[key].numInstall++
+//       if ('已完成' == order.state) {
+//         result[key].numInstallDone++
+//       }
+//     } else {
+//       result[key].numAftersale++
+//       if ('已完成' == order.state) {
+//         result[key].numAftersaleDone++
+//       }
+//     }
+//   })
+//   return result;
+// }
+
+/**
+ * 删除客服
+ */
 actions.workerDelete = async (event) => {
   const openid = event.openid
   db_user.doc(openid).update({
@@ -332,7 +396,7 @@ actions.recharge = async (event) => {
   const message = event.message
 
   const res = await db_payment.add({
-    data:{
+    data: {
       _openid: wxContext.OPENID,
       referrerID,
       amount,
@@ -413,3 +477,4 @@ actions.getFirends = async (event) => {
   })
   return result
 }
+

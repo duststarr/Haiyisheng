@@ -11,7 +11,8 @@ Page({
   },
   fetchData() {
     const that = this
-    app.wxcloud('workerGetList').then(res => {
+    app.wxcloud('workerGetList',{needCountOrders:true}).then(res => {
+      console.log(res.result)
       that.setData({
         workers: res.result
       })
