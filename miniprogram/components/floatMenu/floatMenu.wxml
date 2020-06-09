@@ -53,6 +53,8 @@
 				</view>
 			</view>
 			<button type='primary' bindtap='debugDelete'>取消我的订单</button>
+			<button type='primary' bindtap='testPay'>测试支付0.01元</button>
+
 
 		</view>
 	</view>
