@@ -415,6 +415,10 @@ actions.recharge = async (event) => {
   const name = event.name
   const phone = event.phone
   const message = event.message
+  const outTradeNo = event.outTradeNo
+  const nonceStr = event.nonceStr
+  const vouchers = event.vouchers || 0
+
 
   const res = await db_payment.add({
     data: {
@@ -425,12 +429,16 @@ actions.recharge = async (event) => {
       name,
       phone,
       message,
-      timePay: new Date()
+      timePay: new Date(),
+      outTradeNo,
+      nonceStr,
+      vouchers
     }
   })
   await db_user.doc(wxContext.OPENID).update({
     data: {
-      serviceDays: _.inc(days)
+      serviceDays: _.inc(days),
+      voucherUsed: _.inc(vouchers)
     }
   })
 

@@ -19,7 +19,7 @@ Page({
       show: false
     })
   },
-  onLoad: function (options) {
+  onShow: function () {
     const that = this
 
     app.globalWatch('userDetail', user => {
@@ -55,7 +55,8 @@ Page({
     const policy = {
       amount,
       days: 365,
-      message: '使用' + val + '张代金券,并充值'
+      content: '使用' + val + '张代金券,并充值',
+      vouchers: val
     }
     this.payAction(policy)
   },
@@ -68,9 +69,19 @@ Page({
     param.message = policy.content
     param.name = user.address.userName
     param.phone = user.address.telNumber
+    param.vouchers = policy.vouchers
+
+    const paydata = await app.paycloud(policy.content, policy.amount);
+    param.outTradeNo = paydata.outTradeNo
+    param.nonceStr = paydata.nonceStr
+
+    console.log('before cloud recharge', param)
     await app.wxcloud('recharge', param)
 
     app.globalData.userDetail.serviceDays += policy.days
+    if (policy.vouchers) {
+      app.globalData.userDetail.voucherUsed += policy.vouchers
+    }
     app.globalEmit('userDetail')
 
     wx.showToast({

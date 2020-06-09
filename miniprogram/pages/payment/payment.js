@@ -22,41 +22,7 @@ Page({
     const policy = this.data.policies[pos]
     const user = app.globalData.userDetail
 
-    const nonceStr = Math.random().toString(36).substr(2, 15)
-    const timeStamp = parseInt(Date.now() / 1000) + ''
-    const outTradeNo = "hys" + nonce_str + timeStamp.substr(0, 12)
-
-    try {
-
-      const prepay = await wx.cloud.callFunction({
-        name: 'pay',
-        data: {
-          bodyMsg: policy.content,
-          totalFee: policy.amount * 100,
-          nonceStr,
-          outTradeNo
-        }
-      });
-
-      const payment = prepay.result.payment
-      const payres = await wx.requestPayment({
-        ...payment
-      });
-      console.log('pay success', payres)
-      wx.showToast({
-        title: '支付成功',
-        icon: 'none',
-        duration: 2000
-      })
-    } catch (e) {
-      console.error(e);
-      wx.showToast({
-        title: '支付错误',
-        icon: 'none',
-        duration: 2000
-      })
-      return;
-    }
+    const paydata = await app.paycloud(policy.content, policy.amount);
 
     try {
       const res = await app.wxcloud('orderPayTest', {
@@ -66,13 +32,17 @@ Page({
         message: policy.content,
         referrerID: user.referrerID || null,
         address: app.globalData.address,
-        outTradeNo,
-        nonceStr
+        outTradeNo: paydata.outTradeNo,
+        nonceStr: paydata.nonceStr
       })
 
       app.globalData.userDetail.isClient = true
       app.globalEmit('userDetail')
+      wx.navigateBack({
+        complete: (res) => {},
+      })
     } catch (e) {
+      console.error(e)
       wx.showModal({
         title: '发生错误',
         content: '支付成功但入账失败,请联系管理员'
