@@ -354,8 +354,10 @@ actions.orderPayTest = async (event) => {
   const message = event.message
   const referrerID = event.referrerID || null
   const days = event.days
+  const address = event.address;
 
   const timePay = new Date()
+  // 更新order记录
   await db_order.doc(orderID).update({
     data: {
       timePay,
@@ -372,6 +374,21 @@ actions.orderPayTest = async (event) => {
   await actions.orderStateChange({
     orderID,
     stateNew: '已完成'
+  })
+
+  // 更新user表
+  await db.collection('user').doc(wxContext.OPENID).update({
+    data: {
+      isClient: true,
+      serviceStart: timePay,
+      serviceDays: days,
+      filters: {
+        first: timePay,
+        second: timePay,
+        third: timePay
+      },
+      address: address
+    }
   })
   // 计算推广奖励
   // 推广分新人,和续费,这里是新人首次充值
