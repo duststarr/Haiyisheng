@@ -8,17 +8,22 @@ Component({
       {
         id: 0,
         type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+        url: 'cloud://hys-k9bhf.6879-hys-k9bhf-1302238335/1.png'
       },
       {
         id: 1,
         type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39001.jpg'
+        url: 'cloud://hys-k9bhf.6879-hys-k9bhf-1302238335/2.png'
       },
       {
         id: 2,
         type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39002.jpg'
+        url: 'cloud://hys-k9bhf.6879-hys-k9bhf-1302238335/3.png'
+      },
+      {
+        id: 3,
+        type: 'image',
+        url: 'cloud://hys-k9bhf.6879-hys-k9bhf-1302238335/4.png'
       }
     ]
   },
