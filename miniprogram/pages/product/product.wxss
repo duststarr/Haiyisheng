@@ -1,1 +1,4 @@
 /* pages/product/product.wxss */
+.p {
+    text-indent: 2em;
+}

@@ -1,62 +1,123 @@
 <wxs module="tutil" src="../../utils/util.wxs" />
-<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+<cu-custom bgcolor="bg-gradual-pink" isBack="{{true}}">
 	<view slot="backText">返回</view>
 	<view slot="content">预约安装</view>
 </cu-custom>
-<view class="bg-white padding">
-	<view class="cu-steps">
-		<view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key="icon">
-			<text class="cuIcon-{{item.icon}}"></text>
-			{{item.name}}
-		</view>
-	</view>
-</view>
-<view class='margin-top'>
-	<view class='cu-card'>
-		<view class="cu-bar bg-white solid-bottom">
-			<view class="action">
-				<text class="cuIcon-title text-orange"></text>
-				预约安装
-			</view>
-			<view class="action" wx:if="{{order && currstep<2}}">
-				<button class="cu-btn bg-pink shadow" bindtap="cancelOrder">撤销</button>
+<block wx:if="{{order}}">
+	<view class="bg-white padding">
+		<view class="cu-steps">
+			<view class="cu-item {{index>currstep?'':'text-pink'}}" wx:for="{{steps}}" wx:key="icon">
+				<text class="cuIcon-{{item.icon}}"></text>
+				{{item.name}}
 			</view>
 		</view>
-		<address address="{{order&&order.address}}" bind:AddressChange='chooseAddress'></address>
 	</view>
-	<block wx:if="{{order}}">
-		<view class='btn-area margin-top' wx:if="{{order.state=='待确认'}}">
-			<navigator url='/pages/payment/payment?orderID={{order._id}}'><button type="primary">充值开始净水</button></navigator>
+	<view class="margin-top">
+		<view class="cu-card">
+			<view class="cu-bar bg-white solid-bottom">
+				<view class="action">
+					<text class="cuIcon-title text-orange"></text>
+					预约安装
+				</view>
+				<view class="action" wx:if="{{order && currstep<2}}">
+					<button class="cu-btn bg-pink shadow" bindtap="cancelOrder">撤销</button>
+				</view>
+			</view>
+			<address address="{{order.address}}"></address>
+		</view>
+		<view class="btn-area margin-top" wx:if="{{order.state=='待确认'}}">
+			<navigator url="/pages/payment/payment?orderID={{order._id}}">
+				<button type="primary">充值开始净水</button>
+			</navigator>
 		</view>
 		<view class="cu-timeline margin-top-sm" wx:if="{{order}}">
 			<view class="cu-item" wx:if="{{order.createTime}}">
 				<view>{{tutil.formatTime(order.createTime)}}</view>
-				<view class='text-black'>预约安装。感谢您选择我们的产品。</view>
+				<view class="text-black">预约安装。感谢您选择我们的产品。</view>
 			</view>
 			<view class="cu-item" wx:if="{{order.timePick}}">
 				<view>{{tutil.formatTime(order.timePick)}}</view>
-				<view class='text-black'>客服
-					<text class='text-red'>({{order.worker.name}},{{order.worker.phone}})</text>
-					正在准备订单</view>
+				<view class="text-black">
+					客服
+					<text class="text-red">({{order.worker.name}},{{order.worker.phone}})</text>
+					正在准备订单
+				</view>
 			</view>
 			<view class="cu-item" wx:if="{{order.timeWorkdone}}">
 				<view>{{tutil.formatTime(order.timeWorkdone)}}</view>
-				<view class='text-black'>上门安装完成</view>
+				<view class="text-black">上门安装完成</view>
 			</view>
 			<view class="cu-item" wx:if="{{order.timePay}}">
 				<view>{{tutil.formatTime(order.timePay)}}</view>
-				<view class='text-black'>您已{{order.payment.message}}</view>
+				<view class="text-black">您已{{order.payment.message}}</view>
 			</view>
 			<view class="cu-item" wx:if="{{order.timePay}}">
 				<view>{{tutil.formatTime(order.timePay)}}</view>
-				<view class='text-black'>开始服务</view>
+				<view class="text-black">开始服务</view>
 			</view>
 		</view>
-	</block>
-	<view class="cu-tabbar-height"></view>
+	</view>
+</block>
+<view wx:else>
+	<view>
+		<view class='margin bg-white radius padding'>
+			<view class='h1 text-lg text-bold margin text-center'>用户使用协议</view>
+			<view class='text-lg text-bold margin-tb-sm'>尊敬的用户：</view>
+			<view class='context'>
+				您好，首先感谢您选择海益生净水科技的智能双水器，希望它能为您的生活提供便利。在使用智能双水器前，请您仔细阅读《用户使用协议》以下各项，并请切实遵守。
+			</view>
+			<view class='context'>
+				海益生智能双水器，系舟山益猫电子商务有限公司和深圳市海洛斯净水科技有限公司联合研发生产的智能净水机器人。在使用海益生智能双水器前，请您仔细阅读《用户使用协议》（简称本协议），您通过手机客户端同意本协议，即表示您确认已完全了解本协议全部内容，您与本公司已就本协议全部内容达成协议（协议已生效）并同意接受本协议的全部约定内容、与本协议有关的各项规则。
+			</view>
+			<view class='context'>
+				第一条、舟山益猫电子商务有限公司负责提供符合国家相关安全和质量标准的净水产品。
+			</view>
+			<view class='context'>
+				第二条、除充值时明确的一次性充值五年、海益生智能双水器机器的所有权、产权归客户所有。其他充值金额情况，海益生智能双水器的所有权、产权归舟山益猫电子商务有限公司所有。公司承诺针对产品免费上门安装及使用、免费更换滤芯、终身免费维护、符合条件免费产品更新.
+			</view>
+			<view class='context'>
+				第三条、海益生智能双水器每年服务费为730元，即每台每天平均2元。
+			</view>
+			<view class='context'>
+				第四条、用户可以根据需求选择充值时间，当机器欠费则本公司不提供售后服务。无特殊原因，若欠费时长超过一个月，公司将有权上门强制性拆回。特殊情况，需提前电话告知公司报备。
+			</view>
+			<view class='context'>
+				第五条、海益生智能双水器仅限于室内场所使用，由用户负责净水器安全、提供水源。用户不得私自拆机、移机，不得私自将净水器转让。
+			</view>
+			<view class='context'>
+				第六条、用户在安装使用前请先确认机器的完整性，若使用过程中，发现机器有人为损坏情况，用户需在12小时内通知公司，由技术人员上门确认后负责维修，所产生的费用由用户承担。用户需对未及时通知而造成设备持续损害承担相应责任。如遗失，参考机器市场价值进行赔偿折合人民币3399元。
+			</view>
+			<view class='context'>
+				第七条、用户须知，不论因为何种原因，机器已充值的金额，在撤机后公司不予退还。
+			</view>
+			<view class='context'>
+				第八条、用户如需退机/移机，请拨打公司客服电话16605801201或者使用小程序申请退机/移机，技术人员将在72小时内上门服务。
+			</view>
+			<view class='context'>
+				第九条、本协议适用中华人民共和国法律。
+			</view>
+			<view class='context'>
+				第十条、因本协议引起的或与本协议有关的任何争议，各方应友好协商解决。协商不成的，任何一方均可将有关争议向所在地人民法院提起诉讼。对双方均具有同等法律效力。
+			</view>
+			<view class='context'>
+				第十一条、本协议中任一条款，因不可抗力完全、部分无效或不具执行力，或违反任何适用的法律，则该条款被视为删除，但本协议其余条款仍应有效并且具有法律效力。
+			</view>
+			<view class='context'>
+				第十二条、舟山益猫电子商务有限公司在法律允许范围内对本协议拥有最终解释权与修改权。
+			</view>
+			<view class='context'>
+				客服热线：16605801201
+			</view>
+			<view class='context'>
+				海益生净水科技祝您，身体健康，生活愉快。
+			</view>
+		</view>
+		<view class="cu-tabbar-height"></view>
+	</view>
+	<address class='address' bind:AddressChange="chooseAddress"></address>
 </view>
-<floatMenu posX='20' posY='200'>
+<floatMenu posX="20" posY="200">
 	<view slot="content">
-		<button bindtap='debugDelete'>取消我的订单</button>
+		<button bindtap="debugDelete">取消我的订单</button>
 	</view>
 </floatMenu>
