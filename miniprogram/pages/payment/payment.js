@@ -21,40 +21,59 @@ Page({
     const pos = e.currentTarget.dataset.pos
     const policy = this.data.policies[pos]
     const user = app.globalData.userDetail
-    const res = await app.wxcloud('orderPayTest', {
-      orderID: this.data.orderID,
-      amount: policy.amount,
-      days: policy.days,
-      message: policy.content,
-      referrerID: user.referrerID || null
-    })
 
-    const db = wx.cloud.database();
-    const today = new Date()
-    await db.collection('user').doc(app.globalData.userDetail._id).update({
-      data: {
-        isClient: true,
-        serviceStart: today,
-        serviceDays: policy.days,
-        filters: {
-          first: today,
-          second: today,
-          third: today
-        },
+    try {
+      const nonceStr = Math.random().toString(36).substr(2, 15)
+      const timeStamp = parseInt(Date.now() / 1000) + ''
+      const outTradeNo = "hys" + nonce_str + timeStamp.substr(0, 12)
+      const prepay = await wx.cloud.callFunction({
+        name: 'pay',
+        data: {
+          bodyMsg: policy.content,
+          totalFee: policy.amount * 100,
+          nonceStr,
+          outTradeNo
+        }
+      });
+
+      const payment = prepay.result.payment
+      const payres = await wx.requestPayment({
+        ...payment
+      });
+      console.log('pay success', payres)
+      wx.showToast({
+        title: '支付成功',
+        icon: 'none',
+        duration: 2000
+      })
+    } catch (e) {
+      console.error(e);
+      wx.showToast({
+        title: '支付错误',
+        icon: 'none',
+        duration: 2000
+      })
+      return;
+    }
+
+    try {
+      const res = await app.wxcloud('orderPayTest', {
+        orderID: this.data.orderID,
+        amount: policy.amount,
+        days: policy.days,
+        message: policy.content,
+        referrerID: user.referrerID || null,
         address: app.globalData.address
-      }
-    })
-    app.globalData.userDetail.isClient = true
-    app.globalEmit('userDetail')
+      })
 
-    wx.showToast({
-      title: policy.content,
-      icon: 'none',
-      duration: 2000,
-      success: () => {
-        setTimeout(wx.navigateBack, 2000)
-      }
-    })
+      app.globalData.userDetail.isClient = true
+      app.globalEmit('userDetail')
+    } catch (e) {
+      wx.showModal({
+        title: '发生错误',
+        content: '支付成功但入账失败,请联系管理员'
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
