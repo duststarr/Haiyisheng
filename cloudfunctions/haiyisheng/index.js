@@ -355,6 +355,8 @@ actions.orderPayTest = async (event) => {
   const referrerID = event.referrerID || null
   const days = event.days
   const address = event.address;
+  const outTradeNo = event.outTradeNo
+  const nonceStr = event.nonceStr
 
   const timePay = new Date()
   // 更新order记录
@@ -367,7 +369,9 @@ actions.orderPayTest = async (event) => {
         days,
         message,
         timePay,
-        openid: wxContext.OPENID
+        openid: wxContext.OPENID,
+        outTradeNo,
+        nonceStr
       }
     }
   })

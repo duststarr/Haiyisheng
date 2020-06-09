@@ -22,10 +22,12 @@ Page({
     const policy = this.data.policies[pos]
     const user = app.globalData.userDetail
 
+    const nonceStr = Math.random().toString(36).substr(2, 15)
+    const timeStamp = parseInt(Date.now() / 1000) + ''
+    const outTradeNo = "hys" + nonce_str + timeStamp.substr(0, 12)
+
     try {
-      const nonceStr = Math.random().toString(36).substr(2, 15)
-      const timeStamp = parseInt(Date.now() / 1000) + ''
-      const outTradeNo = "hys" + nonce_str + timeStamp.substr(0, 12)
+
       const prepay = await wx.cloud.callFunction({
         name: 'pay',
         data: {
@@ -63,7 +65,9 @@ Page({
         days: policy.days,
         message: policy.content,
         referrerID: user.referrerID || null,
-        address: app.globalData.address
+        address: app.globalData.address,
+        outTradeNo,
+        nonceStr
       })
 
       app.globalData.userDetail.isClient = true
