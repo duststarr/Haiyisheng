@@ -1,1 +1,4 @@
 /* miniprogram/pages/member/notice/notice.wxss */
+.context {
+    text-indent: 2em;
+}
