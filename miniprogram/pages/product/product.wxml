@@ -13,7 +13,7 @@
       <view class="action text-center text-pink">智能双水机</view>
     </view>
     <view class='image'>
-      <image src="/images/device.jpg" mode="aspectFill">
+      <image class='device' src="/images/device.jpg" mode="widthFix">
       
       </image>
       <view class="cu-tag bg-blue">双水机</view>
