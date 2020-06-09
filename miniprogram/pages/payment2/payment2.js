@@ -75,7 +75,6 @@ Page({
     param.outTradeNo = paydata.outTradeNo
     param.nonceStr = paydata.nonceStr
 
-    console.log('before cloud recharge', param)
     await app.wxcloud('recharge', param)
 
     app.globalData.userDetail.serviceDays += policy.days

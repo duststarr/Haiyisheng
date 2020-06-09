@@ -31,7 +31,6 @@ Page({
     }
   },
   onLoad: function (options) {
-    console.log('home onLoad', options)
     app.globalWatch('userDetail', this.userDetailUpdated)
   },
  

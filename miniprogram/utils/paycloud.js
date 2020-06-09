@@ -13,13 +13,11 @@ export default async function paycloud(content, amount) {
                 outTradeNo
             }
         });
-        console.log('prepay', prepay)
         if (prepay.result.returnCode == 'SUCCESS' && prepay.result.resultCode == 'SUCCESS') {
             const payment = prepay.result.payment
             const payres = await wx.requestPayment({
                 ...payment
             });
-            console.log('pay success', payres)
             wx.showToast({
                 title: '支付成功',
                 icon: 'none',

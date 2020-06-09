@@ -17,7 +17,6 @@ Component({
   },
   methods: {
     getUserInfo: function (e) {
-      console.log(e)
       app.globalData.userInfo = e.detail.userInfo
       app.globalEmit('userInfo')
       this.setData({

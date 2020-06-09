@@ -12,7 +12,6 @@ Page({
   fetchData() {
     const that = this
     app.wxcloud('workerGetList',{needCountOrders:true}).then(res => {
-      console.log(res.result)
       that.setData({
         workers: res.result
       })
@@ -76,7 +75,6 @@ Page({
    * 本页的专属分享，取代全局配置
    */
   onShareAppMessage: function () {
-    console.log('workerMgr share')
     return {
       title: '加入海益生',
       path: '/pages/home/home?action=recruit&openid=' + app.globalData.userDetail._openid,
