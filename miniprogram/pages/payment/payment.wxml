@@ -1,12 +1,14 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-    <view slot="backText">返回</view>
-    <view slot="content">充值</view>
+	<view slot="backText">返回</view>
+	<view slot="content">充值</view>
 </cu-custom>
 
 <view class='bg-blue text-center text-xxl text-bold padding margin-top'>
-    充值有礼，越多越省
+	充值有礼，越多越省
 </view>
 
 <view class='padding flex flex-direction'>
-    <button class='cu-btn bg-cyan lg margin-top' wx:for='{{policies}}' bindtap='pay' data-pos='{{index}}'>{{item.content}}</button>
+	<view class='bg-cyan lg margin-top padding-left btn' wx:for='{{policies}}' bindtap='pay' data-pos='{{index}}'>
+		<text>{{item.content}}</text>
+	</view>
 </view>

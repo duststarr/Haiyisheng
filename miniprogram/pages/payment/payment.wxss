@@ -1,1 +1,7 @@
 /* miniprogram/pages/payment/payment.wxss */
+.btn {
+    height: 100rpx;
+    align-items: center;
+    justify-content: left;
+    display: flex;
+}
