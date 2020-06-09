@@ -1,4 +1,5 @@
 import wxcloud from '/utils/wxcloud.js'
+import paycloud from '/utils/paycloud.js'
 import globalInit from '/utils/globalData.js'
 
 !function () {
@@ -40,6 +41,7 @@ App({
       })
       // global functions
       this.wxcloud = wxcloud;
+      this.paycloud = paycloud;
       // 鉴权
       this.authentication(e);
     }
