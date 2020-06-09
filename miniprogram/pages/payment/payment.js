@@ -8,11 +8,11 @@ Page({
    */
   data: {
     policies: [
-      { content: '充值一年365天，730元', days: 365, amount: 730 },
-      { content: '充值二年730天，1400元', days: 730, amount: 1400 },
-      { content: '充值三年1095天，2000元', days: 1095, amount: 2000 },
-      { content: '充值四年1460天，2600元', days: 1460, amount: 2600 },
-      { content: '充值五年1825天，3100元；到期后产权归客户', days: 1825, amount: 3100 },
+      { content: '充值一年365天，730元（2元/天）', days: 365, amount: 730 },
+      { content: '充值两年730天，1388元（1.9元/天）', days: 730, amount: 1388 },
+      { content: '充值三年1095天，1971元（1.8元/天）', days: 1095, amount: 1971 },
+      { content: '充值四年1460天，2482元（1.7元/天）', days: 1460, amount: 2482 },
+      { content: '充值五年1825天，2737元（1.5元/天），机器所有权、产权归您', days: 1825, amount: 2737 },
     ],
     orderID: null
   },

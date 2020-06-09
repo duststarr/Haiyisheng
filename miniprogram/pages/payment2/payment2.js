@@ -9,7 +9,7 @@ Page({
   data: {
     policies: [
       { content: '充值一年365天，730元', days: 365, amount: 730 },
-      { content: '充值二年730天，1400元', days: 730, amount: 1400 }
+      { content: '充值二年730天，1388元', days: 730, amount: 1388 }
     ],
     vouchersLeft: 0,
     show: false
