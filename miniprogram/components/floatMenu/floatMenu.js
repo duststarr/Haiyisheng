@@ -148,8 +148,7 @@ Component({
           "filters.first": date
         }
       })
-      app.globalData.userDetail.filters.first = util.formatTime(date)
-      app.globalEmit('userDetail')
+
     },
     DateChange2: async function (e) {
       const date = new Date(e.detail.value)
@@ -161,8 +160,7 @@ Component({
           "filters.second": date
         }
       })
-      app.globalData.userDetail.filters.second = util.formatTime(date)
-      app.globalEmit('userDetail')
+
     },
     DateChange3: async function (e) {
       const date = new Date(e.detail.value)
@@ -174,8 +172,7 @@ Component({
           "filters.third": date
         }
       })
-      app.globalData.userDetail.filters.third = util.formatTime(date)
-      app.globalEmit('userDetail')
+
     },
     testPay: function(e){
       wx.cloud.callFunction({

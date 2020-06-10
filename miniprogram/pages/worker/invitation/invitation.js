@@ -57,9 +57,6 @@ Page({
           timeBeWorker: new Date()
         },
         success: function (res) {
-          app.globalData.userDetail.isWorker = true;
-          app.globalEmit('userDetail')
-
           wx.showToast({
             title: '恭喜您已成功加入海益团队',
             icon: 'none',

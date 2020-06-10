@@ -51,8 +51,6 @@ Page({
                                         "filters.first": today
                                     }
                                 })
-
-                                app.globalData.userDetail.filters.first = util.formatTime(today)
                             }
                             if (filters.includes('2')) {
                                 await db_user.doc(openid).update({
@@ -60,7 +58,6 @@ Page({
                                         "filters.second": today
                                     }
                                 })
-                                app.globalData.userDetail.filters.second = util.formatTime(today)
                             }
                             if (filters.includes('3')) {
                                 await db_user.doc(openid).update({
@@ -68,9 +65,7 @@ Page({
                                         "filters.third": today
                                     }
                                 })
-                                app.globalData.userDetail.filters.third = util.formatTime(today)
                             }
-                            app.globalEmit('userDetail')
                         }
 
                         that.loadOrders()

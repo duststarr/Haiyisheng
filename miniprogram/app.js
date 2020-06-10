@@ -86,11 +86,25 @@ App({
     })
   },
   authentication: async function (e) {
+    var that = this
     try {
       const res = await this.wxcloud('authentication', { query: e.query });
       this.globalData.userDetail = res.result
       this.globalEmit('userDetail')
       console.log('userDetail', res.result)
+
+      const db = wx.cloud.database()
+      db.collection('user').doc(res.result._id)
+        .watch({
+          onChange: function (snapshot) {
+            console.log("snapshot", snapshot)
+            that.globalData.userDetail = snapshot.docs[0]
+            that.globalEmit('userDetail')
+          },
+          onError: function (err) {
+            console.error('watch user error', err)
+          }
+        })
     } catch (e) {
       console.error('cloud database add error:', e)
     }

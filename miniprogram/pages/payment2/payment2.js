@@ -77,12 +77,6 @@ Page({
 
     await app.wxcloud('recharge', param)
 
-    app.globalData.userDetail.serviceDays += policy.days
-    if (policy.vouchers) {
-      app.globalData.userDetail.voucherUsed += policy.vouchers
-    }
-    app.globalEmit('userDetail')
-
     wx.showToast({
       title: "服务天数增加：" + policy.days,
       icon: 'none',

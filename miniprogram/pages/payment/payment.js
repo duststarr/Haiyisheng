@@ -35,8 +35,6 @@ Page({
         nonceStr: paydata.nonceStr
       })
 
-      app.globalData.userDetail.isClient = true
-      app.globalEmit('userDetail')
       wx.navigateBack({
         complete: (res) => {},
       })
