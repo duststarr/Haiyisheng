@@ -30,46 +30,12 @@ import globalInit from '/utils/globalData.js'
 
 App({
   onLaunch: function (e) {
-    globalInit(this);
-
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-    } else {
-      wx.cloud.init({
-        traceUser: true,
-      })
-      // global functions
-      this.wxcloud = wxcloud;
-      this.paycloud = paycloud;
-      // 鉴权
-      this.authentication(e);
+      return
     }
-    // 展示本地存储能力
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-
-    // 登录
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //     console.log('onLaunch login', res)
-    //   }
-    // })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-              this.globalEmit('userInfo')
-            }
-          })
-        }
-      }
+    wx.cloud.init({
+      traceUser: true,
     })
     // 获取系统状态栏信息
     wx.getSystemInfo({
@@ -84,35 +50,36 @@ App({
         }
       }
     })
-  },
-  authentication: async function (e) {
-    var that = this
-    try {
-      const res = await this.wxcloud('authentication', { query: e.query });
-      this.globalData.userDetail = res.result
-      this.globalEmit('userDetail')
-      console.log('userDetail', res.result)
 
-      const db = wx.cloud.database()
-      db.collection('user').doc(res.result._id)
-        .watch({
-          onChange: function (snapshot) {
-            console.log("snapshot", snapshot)
-            that.globalData.userDetail = snapshot.docs[0]
-            that.globalEmit('userDetail')
-          },
-          onError: function (err) {
-            console.error('watch user error', err)
-          }
-        })
-    } catch (e) {
-      console.error('cloud database add error:', e)
-    }
+    // 初始化全局数据监听
+    globalInit(this);
+
+    // global functions
+    this.wxcloud = wxcloud;
+    this.paycloud = paycloud;
+    // 鉴权
+    var that = this
+    this.wxcloud('authentication', { query: e.query })
+      .then((res) => {
+        that.globalData.userDetail = res.result
+        that.globalEmit('userDetail')
+
+        const db = wx.cloud.database()
+        db.collection('user').doc(res.result._id)
+          .watch({
+            onChange: function (snapshot) {
+              that.globalData.userDetail = snapshot.docs[0]
+              that.globalEmit('userDetail')
+            },
+            onError: function (err) {
+              console.error('watch user error', err)
+            }
+          })
+      })
   },
 
   globalData: {
     userInfo: null, // 微信userinfo
-    openid: '',
     userDetail: null, // 项目本身的user表
 
     stateColors: {
