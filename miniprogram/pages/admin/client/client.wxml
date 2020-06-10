@@ -35,7 +35,7 @@
 	</view>
 	<view class='cu-form-group'>
 		<view class='title'>粉丝数</view>
-		<view class=''>{{tutil.daysPast(client.filters.third)}}</view>
+		<view class=''>{{client.fans}}</view>
 	</view>
 	<view class='cu-form-group'>
 		<view class='title'>代金券</view>
