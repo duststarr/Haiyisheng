@@ -36,9 +36,9 @@ Page({
         wx.showModal({
             title: '确认完成',
             content: '您申请的服务已完成?',
-            success: async function(res) {
+            success: async function (res) {
                 if (res.confirm) {
-                    app.wxcloud('orderConfirm', { orderID, type }).then( async res => {
+                    app.wxcloud('orderConfirm', { orderID, type }).then(async res => {
                         if ('换芯' == type) {
                             const filters = order.filters;
                             const today = new Date()
@@ -66,6 +66,13 @@ Page({
                                     }
                                 })
                             }
+                        } else if ('拆机' == type) {
+                            await db_user.doc(openid).update({
+                                data: {
+                                    isClient: false,
+                                    timeChaiji: today
+                                }
+                            })
                         }
 
                         that.loadOrders()
@@ -77,8 +84,8 @@ Page({
         })
     },
     /**
-     * 生命周期函数--监听页面加载
-     */
+    * 生命周期函数--监听页面加载
+    */
     onLoad: function (options) {
         const that = this
         app.globalWatch('userDetail', res => {
