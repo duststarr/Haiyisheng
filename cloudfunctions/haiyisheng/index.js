@@ -65,9 +65,16 @@ actions.authentication = async (event) => {
       isWorker: false,
       isClient: false
     }
+
     await db_user.add({
       data: detail
     })
+    // 生成二维码
+    try {
+      actions.generateQRcode()
+    } catch (e) {
+      console.error('new user qrcode error', e)
+    }
   }
   // 推荐人粉丝+1
   if (referrerID) {
@@ -454,28 +461,20 @@ actions.clientProfit = async (event) => {
  * 二维码
  */
 actions.generateQRcode = async (event) => {
-  const res = await db_user.where({
-    _openid: wxContext.OPENID
-  }).get();
-  const user = res.data[0]
-  if (user.qrcode) {
-    return user.qrcode
-  } else {
-    const query = 'pages/home/home?action=marketing&openid=' + wxContext.OPENID
-    const result = await cloud.openapi.wxacode.get({
-      path: query
-    })
-    const file = await cloud.uploadFile({
-      cloudPath: wxContext.OPENID + '.jpg',
-      fileContent: result.buffer,
-    })
-    await db_user.doc(user._id).update({
-      data: {
-        qrcode: file
-      }
-    })
-    return file
-  }
+  const query = 'pages/home/home?action=marketing&openid=' + wxContext.OPENID
+  const result = await cloud.openapi.wxacode.get({
+    path: query
+  })
+  const file = await cloud.uploadFile({
+    cloudPath: wxContext.OPENID + '.jpg',
+    fileContent: result.buffer,
+  })
+  await db_user.doc(wxContext.OPENID).update({
+    data: {
+      qrcode: file.fileID
+    }
+  })
+  return file.fileID
 }
 /**
  * 获取我的推广下线列表

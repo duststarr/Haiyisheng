@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qrcode: app.globalData.qrcode
+    qrcode: null
   },
   saveQRcode: function (e) {
     const that = this
@@ -77,11 +77,16 @@ Page({
    */
   onShow: async function () {
     const that = this
-    app.globalWatch('qrcode',qr =>{
+    let cb = (detail) => {
+      if (detail.qrcode) {
+        app.globalUnwatch('userDetail', cb)
+      }
       that.setData({
-        qrcode: qr
+        qrcode: detail.qrcode
       })
-    })
-  },
+    }
+    if (!that.data.qrcode)
+      app.globalWatch('userDetail', cb)
+  }
 
 })
