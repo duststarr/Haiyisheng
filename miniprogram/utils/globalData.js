@@ -16,8 +16,10 @@ export default function globalInit(app) {
      * @param {*} name 
      */
     app.globalEmit = function (name) {
+        console.log('globalEmit', name)
         if (app.globalData._watches && app.globalData._watches[name]) {
             app.globalData._watches[name].forEach(func => {
+                console.log('emit call', name, func)
                 func(app.globalData[name])
             })
         }
@@ -36,5 +38,20 @@ export default function globalInit(app) {
         app.globalData._watches[name].push(callback)
         if (callAtonce && app.globalData[name])
             callback(app.globalData[name])
+    }
+
+    /**
+     * 取消订阅
+     */
+    app.globalUnwatch = function (name, callback) {
+        if (!app.globalData._watches || !app.globalData._watches[name])
+            return;
+
+        const list = app.globalData._watches[name];
+        const pos = list.indexOf(callback)
+        console.log('globalUnwatch', name, pos)
+        if (-1 != pos) {
+            list.splice(pos, 1)
+        }
     }
 }
