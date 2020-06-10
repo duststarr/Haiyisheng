@@ -39,12 +39,12 @@ Page({
             success: async function (res) {
                 if (res.confirm) {
                     app.wxcloud('orderConfirm', { orderID, type }).then(async res => {
+                        const filters = order.filters;
+                        const today = new Date()
+                        const openid = order._openid
+                        const db = wx.cloud.database()
+                        const db_user = db.collection('user')
                         if ('换芯' == type) {
-                            const filters = order.filters;
-                            const today = new Date()
-                            const openid = order._openid
-                            const db = wx.cloud.database()
-                            const db_user = db.collection('user')
                             if (filters.includes('1')) {
                                 await db_user.doc(openid).update({
                                     data: {
@@ -72,6 +72,9 @@ Page({
                                     isClient: false,
                                     timeChaiji: today
                                 }
+                            })
+                            wx.redirectTo({
+                              url: '/pages/home/home',
                             })
                         }
 
