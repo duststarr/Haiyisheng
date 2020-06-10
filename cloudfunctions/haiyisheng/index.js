@@ -38,14 +38,13 @@ exports.main = async (event, context) => {
  */
 actions.authentication = async (event) => {
   const query = event.query
-  let result = null;
   let referrerID = null;
   // 数据库中是否有此用户
   const res = await db_user.where({
     _openid: wxContext.OPENID
   }).get();
   if (res.data.length > 0) {
-    result = res.data[0]
+    const result = res.data[0]
     // 如果有推广人，且当前用户没有推广人，更新之
     if ('marketing' == query.action && !result.referrerID) {
       referrerID = query.openid
@@ -62,7 +61,6 @@ actions.authentication = async (event) => {
       _openid: wxContext.OPENID,
       timeBeUser: new Date(),
       referrerID,
-      fans: 0,
       isAdmin: false,
       isWorker: false,
       isClient: false
@@ -70,9 +68,7 @@ actions.authentication = async (event) => {
     await db_user.add({
       data: detail
     })
-    result = detail
   }
-  console.log('referrerID', referrerID)
   // 推荐人粉丝+1
   if (referrerID) {
     db_user.doc(referrerID).update({
@@ -81,7 +77,7 @@ actions.authentication = async (event) => {
       }
     })
   }
-  return result
+  return wxContext.OPENID
 }
 /**=============
  * order

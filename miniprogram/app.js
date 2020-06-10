@@ -60,14 +60,12 @@ App({
     // 鉴权
     var that = this
     this.wxcloud('authentication', { query: e.query })
-      .then((res) => {
-        that.globalData.userDetail = res.result
-        that.globalEmit('userDetail')
-
+      .then((res) => { // res.result is openid
         const db = wx.cloud.database()
-        db.collection('user').doc(res.result._id)
+        db.collection('user').doc(res.result)
           .watch({
             onChange: function (snapshot) {
+              console.log('watch user', snapshot)
               that.globalData.userDetail = snapshot.docs[0]
               that.globalEmit('userDetail')
             },
