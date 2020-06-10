@@ -11,18 +11,11 @@ Component({
     numAftersaleWorking: 0,
     showInstall: true,
     showAftersale: true,
-    userInfo: {},
     orders: null,
     stateColors: app.globalData.stateColors
   },
   attached: function () {
-    const that = this
-    app.globalWatch('userInfo', res => {
-      that.setData({
-        userInfo: res,
-      })
-      this.getOrders();
-    })
+    this.getOrders();
   },
   methods: {
     getOrders() {
