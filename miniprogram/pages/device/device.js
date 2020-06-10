@@ -86,7 +86,6 @@ Component({
   data: {
     cardCur: 0,
     TabCur: 0,
-    ColorList: app.globalData.ColorList,
     ec: {
       onInit: initChart
     },

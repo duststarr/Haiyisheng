@@ -12,8 +12,6 @@ Component({
     showInstall: true,
     showAftersale: true,
     userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     orders: null,
     stateColors: app.globalData.stateColors
   },
@@ -22,26 +20,15 @@ Component({
     app.globalWatch('userInfo', res => {
       that.setData({
         userInfo: res,
-        hasUserInfo: true
       })
       this.getOrders();
     })
   },
   methods: {
-    getUserInfo: function (e) {
-      app.globalData.userInfo = e.detail.userInfo
-      app.globalEmit('userInfo')
-      this.setData({
-        userInfo: e.detail.userInfo,
-        hasUserInfo: true
-      })
-    },
-    getOrders(sub = null) {
+    getOrders() {
       const that = this
       const param = {}
       param.isWorker = true
-      if (sub)
-        param.sub = sub
       app.wxcloud('orderGetList', param).then(res => {
         that.setData({
           orders: res.result || null
@@ -57,12 +44,10 @@ Component({
       this.data.orders.forEach(order => {
         if ('新装' == order.type) {
           numInstall += 1
-          if (!order.timeWorkdone)
-            numInstallWorking += 1
+          numInstallWorking += order.timeWorkdone ? 0 : 1
         } else {
           numAftersale += 1
-          if (!order.timeWorkdone)
-            numAftersaleWorking += 1
+          numAftersaleWorking += order.timeWorkdone ? 0 : 1
         }
       })
       this.setData({
@@ -93,7 +78,6 @@ Component({
           [slotWorkdone]: new Date()
         })
         that.countOrders()
-
       })
     },
     onToggleInstall(e) {
