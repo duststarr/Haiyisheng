@@ -1,29 +1,29 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
-  <view slot="content">海益生净水</view>
+	<view slot="content">海益生净水</view>
 </cu-custom>
 
 <swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-  <swiper-item wx:for="{{swiperList}}" wx:key='id'>
-    <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-  </swiper-item>
+	<swiper-item wx:for="{{swiperList}}" wx:key='id' bindtap='onClickImg' data-pos="{{item.id}}">
+		<image src="{{item.url}}" mode="aspectFill" ></image>
+	</swiper-item>
 </swiper>
 <view class="cu-card case article">
-  <view class='cu-item shadow'>
-    <view class="title">
-      <view class="action text-center text-pink">智能双水机</view>
-    </view>
-    <view class='image'>
-      <image class='device' src="/images/device.jpg" mode="widthFix">
-      
-      </image>
-      <view class="cu-tag bg-blue">双水机</view>
-    </view>
-    <view class='text-content p padding-lr'>
-      采用中空纤维超滤膜和航天科技 RO 反渗透技术，过滤精度分别 为 0.01 微米/0.0001 微米。
-  独有的矿泉水+纯净水双出水设计， 彻底去除水中铁锈、泥沙、胶体、细菌、
-  病毒、重金属、放射性元素及农药残留等有害物质，出水水质晶莹清澈。
-    </view>
-    <button class="btn margin" type="primary" bindtap="showIntro" data-id='1'>开启净水生活</button>
-  </view>
+	<view class='cu-item shadow'>
+		<view class="title">
+			<view class="action text-center text-pink">智能双水机</view>
+		</view>
+		<view class='image'>
+			<image class='device' src="/images/device.jpg" mode="widthFix">
+
+			</image>
+			<view class="cu-tag bg-blue">双水机</view>
+		</view>
+		<view class='text-content p padding-lr'>
+			采用中空纤维超滤膜和航天科技 RO 反渗透技术，过滤精度分别 为 0.01 微米/0.0001 微米。
+			独有的矿泉水+纯净水双出水设计， 彻底去除水中铁锈、泥沙、胶体、细菌、
+			病毒、重金属、放射性元素及农药残留等有害物质，出水水质晶莹清澈。
+		</view>
+		<button class="btn margin" type="primary" bindtap="showIntro" data-id='1'>开启净水生活</button>
+	</view>
 </view>
 <view class="cu-tabbar-height"></view>
