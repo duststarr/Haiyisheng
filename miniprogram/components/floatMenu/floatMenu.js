@@ -174,38 +174,12 @@ Component({
       })
 
     },
-    testPay: function(e){
-      wx.cloud.callFunction({
-        name: 'pay',
-        data: {
-          bodyMsg:'测试支付0.01元',
-          totalFee: 1
-        },
-        success: res => {
-          const payment = res.result.payment
-          console.log("cloud payment",payment)
-          wx.requestPayment({
-            ...payment,
-            success (res) {
-              console.log('pay success', res)
-              wx.showToast({
-                title: 'pay success',
-                icon:'none'
-              })
-            },
-            fail (err) {
-              console.error('pay fail', err)
-              wx.showToast({
-                title: 'pay fail!!!',
-                icon:'none'
-              })
-            }
-          })
-        },
-        fail: console.error,
+    testPay: async function (e) {
+      const paydata = await app.paycloud('测试支付0.01元', 1);
+      wx.showToast({
+        title: '支付成功',
+        icon: 'none'
       })
     }
-  },
-
-
+  }
 })

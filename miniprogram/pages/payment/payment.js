@@ -21,9 +21,9 @@ Page({
     const policy = this.data.policies[pos]
     const user = app.globalData.userDetail
 
-    const paydata = await app.paycloud(policy.content, policy.amount);
-
     try {
+      const paydata = await app.paycloud(policy.content, policy.amount);
+
       const res = await app.wxcloud('orderPayTest', {
         orderID: this.data.orderID,
         amount: policy.amount,
@@ -35,14 +35,20 @@ Page({
         nonceStr: paydata.nonceStr
       })
 
-      wx.navigateBack({
-        complete: (res) => {},
+      wx.showToast({
+        title: "支付成功",
+        icon: 'none',
+        duration: 2000,
+        success: () => {
+          setTimeout(wx.navigateBack, 2000)
+        }
       })
     } catch (e) {
       console.error(e)
-      wx.showModal({
-        title: '发生错误',
-        content: '支付成功但入账失败,请联系管理员'
+      wx.showToast({
+        title: "支付发生错误",
+        icon: 'none',
+        duration: 2000
       })
     }
   },
@@ -53,6 +59,5 @@ Page({
     this.setData({
       orderID: options.orderID
     })
-  },
-
+  }
 })

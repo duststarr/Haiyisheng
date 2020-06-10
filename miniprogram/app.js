@@ -61,6 +61,7 @@ App({
     var that = this
     this.wxcloud('authentication', { query: e.query })
       .then((res) => { // res.result is openid
+        // 监视云端user.my的变动
         const db = wx.cloud.database()
         db.collection('user').doc(res.result)
           .watch({

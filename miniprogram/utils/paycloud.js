@@ -1,10 +1,10 @@
-export default async function paycloud(content, amount) {
-    const nonceStr = Math.random().toString(36).substr(2, 15)
-    const timeStamp = parseInt(Date.now() / 1000) + ''
-    const outTradeNo = "hys" + nonceStr + timeStamp.substr(0, 12)
-
-    try {
-        const prepay = await wx.cloud.callFunction({
+export default function paycloud(content, amount) {
+    return new Promise(function (resolve, reject) {
+        const nonceStr = Math.random().toString(36).substr(2, 15)
+        const timeStamp = parseInt(Date.now() / 1000) + ''
+        const outTradeNo = "hys" + nonceStr + timeStamp.substr(0, 12)
+        console.log('paycloud with:', content, amount)
+        wx.cloud.callFunction({
             name: 'pay',
             data: {
                 bodyMsg: content,
@@ -12,31 +12,30 @@ export default async function paycloud(content, amount) {
                 nonceStr,
                 outTradeNo
             }
-        });
-        if (prepay.result.returnCode == 'SUCCESS' && prepay.result.resultCode == 'SUCCESS') {
-            const payment = prepay.result.payment
-            const payres = await wx.requestPayment({
-                ...payment
-            });
-            wx.showToast({
-                title: '支付成功',
-                icon: 'none',
-                duration: 2000
-            })
-            return {
-                nonceStr,
-                outTradeNo
+        }).then(res => {
+            console.log('cloud pay return', res)
+            if (res.result.returnCode == 'SUCCESS'
+                && res.result.resultCode == 'SUCCESS') {
+                const payment = res.result.payment
+                wx.requestPayment({
+                    ...payment,
+                    success(res) {
+                        resolve({
+                            nonceStr,
+                            outTradeNo
+                        })
+                    },
+                    fail(res) {
+                        console.error('pay fail', res)
+                        reject({ msg: 'requestPayment error' })
+                    }
+                })
+            } else {
+                reject(res.result)
             }
-        } else {
-            return ('pay cloud error')
-        }
-    } catch (e) {
-        console.error(e);
-        wx.showToast({
-            title: '支付错误',
-            icon: 'none',
-            duration: 2000
+        }).catch(err => {
+            console.error('cloud call error', err)
+            reject({ msg: 'cloud func error' })
         })
-        return ('pay function error')
-    }
+    })
 }

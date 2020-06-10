@@ -71,19 +71,26 @@ Page({
     param.phone = user.address.telNumber
     param.vouchers = policy.vouchers
 
-    const paydata = await app.paycloud(policy.content, policy.amount);
-    param.outTradeNo = paydata.outTradeNo
-    param.nonceStr = paydata.nonceStr
-
-    await app.wxcloud('recharge', param)
-
-    wx.showToast({
-      title: "服务天数增加：" + policy.days,
-      icon: 'none',
-      duration: 2000,
-      success: () => {
-        setTimeout(wx.navigateBack, 2000)
-      }
-    })
+    try {
+      const paydata = await app.paycloud(policy.content, policy.amount);
+      param.outTradeNo = paydata.outTradeNo
+      param.nonceStr = paydata.nonceStr
+      await app.wxcloud('recharge', param)
+      wx.showToast({
+        title: "服务天数增加：" + policy.days,
+        icon: 'none',
+        duration: 2000,
+        success: () => {
+          setTimeout(wx.navigateBack, 2000)
+        }
+      })
+    } catch (e) {
+      console.error("支付发生错误", e)
+      wx.showToast({
+        title: "支付发生错误",
+        icon: 'none',
+        duration: 2000
+      })
+    }
   }
 })
