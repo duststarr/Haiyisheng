@@ -62,7 +62,11 @@ Page({
             icon: 'none',
             duration: 2000,
             success: () => {
-              setTimeout(wx.navigateBack, 2000)
+              setTimeout(()=>{
+                wx.redirectTo({
+                  url: '/pages/home/home',
+                })
+              }, 2000)
             }
           })
         }
