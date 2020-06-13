@@ -46,7 +46,8 @@ Component({
     isAdmin: false,
     date1: '',
     date2: '',
-    date3: ''
+    date3: '',
+    showDebug: false
   },
   attached: function () {
     const that = this
