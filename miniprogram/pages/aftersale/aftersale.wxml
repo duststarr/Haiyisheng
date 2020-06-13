@@ -24,7 +24,7 @@
 		</view>
 		<view class='solids-top align-right flex'>
 			<view class=''>
-				<button class='cu-btn' bindtap='onConfirm' data-pos='{{index}}'>服务已完成</button>
+				<button class='cu-btn' bindtap='onConfirm' data-pos='{{index}}'>确认服务已完成</button>
 			</view>
 			<view wx:if="{{item.worker}}" class='padding-sm text-right'>
 				<text class='text-blue'>客服:</text>
@@ -62,9 +62,9 @@
 				<label class="checkbox solid-bottom padding-sm">
 					<checkbox value="1" />滤芯1号</label>
 				<label class="checkbox solid-bottom padding-sm">
-					<checkbox value="2" />滤芯2号</label>
+					<checkbox value="2" />滤芯2、3号</label>
 				<label class="checkbox solid-bottom padding-sm">
-					<checkbox value="3" />滤芯3、4、5号</label>
+					<checkbox value="3" />滤芯4、5号</label>
 			</checkbox-group>
 		</view>
 		<view wx:if="{{worktype=='报修'}}">

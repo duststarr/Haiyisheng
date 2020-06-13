@@ -155,8 +155,8 @@ Page({
                 }
                 param.message = '申请更换滤芯'
                 param.message += f.includes('1') ? '1、' : ''
-                param.message += f.includes('2') ? '2、' : ''
-                param.message += f.includes('3') ? '3、4、5' : ''
+                param.message += f.includes('2') ? '2、3' : ''
+                param.message += f.includes('3') ? '4、5' : ''
                 param.message += '号滤芯'
                 param.filters = f
             }
