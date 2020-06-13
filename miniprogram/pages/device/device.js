@@ -149,11 +149,14 @@ Component({
       if (userData.filters) {
         const cores = userData.filters
         const filter1 = dateDiff(cores.first)
-        const lifespan1 = parseInt(100 - 100 * filter1 / 190)
+        let lifespan1 = parseInt(100 - 100 * filter1 / 190)
+        if (lifespan1 < 0) lifespan1 = 0
         const filter2 = dateDiff(cores.second)
-        const lifespan2 = parseInt(100 - 100 * filter2 / 375)
+        let lifespan2 = parseInt(100 - 100 * filter2 / 375)
+        if (lifespan2 < 0) lifespan2 = 0
         const filter3 = dateDiff(cores.third)
-        const lifespan3 = parseInt(100 - 100 * filter3 / 555)
+        let lifespan3 = parseInt(100 - 100 * filter3 / 555)
+        if (lifespan3 < 0) lifespan3 = 0
         if (component) {
           component.setData({
             'filters[0].lifespan': lifespan1,
