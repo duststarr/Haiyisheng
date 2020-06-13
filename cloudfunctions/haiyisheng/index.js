@@ -54,11 +54,17 @@ actions.authentication = async (event) => {
         }
       })
     }
-    // 欺骗水质
+    // 水质
     const r = Math.random()
-    if( r < 0.1){
-      let q1 = 40 + parseInt(Math.random()*20)
-      let q2 = 5 + parseInt(Math.random()*10)
+    if (r < 0.1) {                           // 启动时有10%概率变更水质
+      let q1 = result.quality1 || 50         // 矿物初始50
+      let q2 = result.quality2 || 10         // 纯净初始10
+      q1 += parseInt(Math.random() * 8 - 4)  // 矿物 -4 ~ +4 变动
+      if (q1 < 40) q1 = 40                   // 不小于40
+      if (q1 > 60) q1 = 60                   // 不大于60
+      q2 += parseInt(Math.random() * 6 - 3)  // 纯净 -3 ~ +3 变动
+      if (q2 < 5) q2 = 5                     // 不小于5
+      if (q2 > 15) q2 = 15                   // 不大于15
       await db_user.doc(result._id).update({
         data: {
           quality1: q1,
@@ -255,6 +261,9 @@ actions.orderWorkdone = async (event) => {
  */
 actions.orderConfirm = async (event) => {
   const orderID = event.orderID
+  const type = event.type
+  const filters = event.filters
+  const addr2 = event.addr2 || null
 
   const operator = event.operator || wxContext.OPENID
   const today = new Date()
@@ -266,6 +275,45 @@ actions.orderConfirm = async (event) => {
       timeConfirm: today
     }
   })
+
+  const openid = wxContext.OPENID
+  if ('换芯' == type) {
+      if (filters.includes('1')) {
+          await db_user.doc(openid).update({
+              data: {
+                  "filters.first": today
+              }
+          })
+      }
+      if (filters.includes('2')) {
+          await db_user.doc(openid).update({
+              data: {
+                  "filters.second": today
+              }
+          })
+      }
+      if (filters.includes('3')) {
+          await db_user.doc(openid).update({
+              data: {
+                  "filters.third": today
+              }
+          })
+      }
+  } else if ('拆机' == type) {
+      await db_user.doc(openid).update({
+          data: {
+              isClient: false,
+              timeChaiji: today
+          }
+      })
+  } else if ('移机' == type) {
+      await db_user.doc(openid).update({
+          data: {
+              address: addr2
+          }
+      })
+  }
+
 
   return true;
 }

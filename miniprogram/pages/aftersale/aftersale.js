@@ -33,52 +33,22 @@ Page({
         const orderID = order._id
         const type = order.type
         const that = this
+        const filters = order.filters;
+        const addr2 = order.addr2 || null;
+
         wx.showModal({
             title: '确认完成',
             content: '您申请的服务已完成?',
             success: async function (res) {
                 if (res.confirm) {
-                    app.wxcloud('orderConfirm', { orderID, type }).then(async res => {
-                        const filters = order.filters;
-                        const today = new Date()
-                        const openid = order._openid
-                        const db = wx.cloud.database()
-                        const db_user = db.collection('user')
-                        if ('换芯' == type) {
-                            if (filters.includes('1')) {
-                                await db_user.doc(openid).update({
-                                    data: {
-                                        "filters.first": today
-                                    }
-                                })
-                            }
-                            if (filters.includes('2')) {
-                                await db_user.doc(openid).update({
-                                    data: {
-                                        "filters.second": today
-                                    }
-                                })
-                            }
-                            if (filters.includes('3')) {
-                                await db_user.doc(openid).update({
-                                    data: {
-                                        "filters.third": today
-                                    }
-                                })
-                            }
-                        } else if ('拆机' == type) {
-                            await db_user.doc(openid).update({
-                                data: {
-                                    isClient: false,
-                                    timeChaiji: today
-                                }
-                            })
+                    app.wxcloud('orderConfirm', { orderID, type, filters ,addr2}).then(async res => {
+                        if ('拆机' == type) {
                             wx.redirectTo({
-                              url: '/pages/home/home',
+                                url: '/pages/home/home',
                             })
+                        } else {
+                            that.loadOrders()
                         }
-
-                        that.loadOrders()
                     })
                 } else if (res.cancel) {
                     console.log('用户点击取消')
