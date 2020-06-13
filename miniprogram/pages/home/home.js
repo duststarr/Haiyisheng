@@ -20,7 +20,8 @@ Page({
     this.setData({
       isAdmin: detail.isAdmin,
       isWorker: detail.isWorker,
-      isClient: detail.isClient
+      isClient: detail.isClient,
+      PageCur: detail.isClient ? 'device' : 'product'
     })
     // 是否有客服邀请
     const param = wx.getLaunchOptionsSync();
@@ -33,5 +34,5 @@ Page({
   onLoad: function (options) {
     app.globalWatch('userDetail', this.userDetailUpdated)
   },
- 
+
 })
