@@ -17,7 +17,7 @@ import globalInit from '/utils/globalData.js'
           console.log('global share with openid:' + app.globalData.userDetail._openid)
         }
         return {
-          title: '海益生净水器',
+          title: '海益生智能净水器',
           path: path,
           imageUrl: '/images/logo.jpg',
         };

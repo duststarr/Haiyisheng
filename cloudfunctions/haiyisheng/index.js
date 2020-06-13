@@ -54,6 +54,18 @@ actions.authentication = async (event) => {
         }
       })
     }
+    // 欺骗水质
+    const r = Math.random()
+    if( r < 0.1){
+      let q1 = 40 + parseInt(Math.random()*20)
+      let q2 = 5 + parseInt(Math.random()*10)
+      await db_user.doc(result._id).update({
+        data: {
+          quality1: q1,
+          quality2: q2
+        }
+      })
+    }
   } else { // 新人        
     referrerID = 'marketing' == query.action ? query.openid : null// 推荐人的openid
     const detail = {
@@ -421,7 +433,6 @@ actions.recharge = async (event) => {
   const outTradeNo = event.outTradeNo
   const nonceStr = event.nonceStr
   const vouchers = event.vouchers || 0
-
 
   const res = await db_payment.add({
     data: {
