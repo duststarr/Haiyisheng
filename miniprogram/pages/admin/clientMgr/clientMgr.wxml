@@ -6,9 +6,9 @@
     <view class="cu-item solid-bottom {{modalName=='move-box-'+ index?'move-cur':''}}" bindtap='onClient' wx:for='{{clients}}' wx:key="_id" data-pos="{{index}}">
         <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
         <view class="content">
-            <view class="text-grey">{{item.name}}</view>
+            <view class="text-grey">{{item.address.userName}}</view>
             <view class="text-gray text-sm">
-                {{item.phone}}
+                {{item.address.telNumber}}
             </view>
         </view>
         <view class="action">
