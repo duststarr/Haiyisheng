@@ -18,6 +18,15 @@ function initChart(canvas, width, height, dpr) {
   }
 
   const option = {
+    title: {
+      text: 'hello',
+      show: true,
+      textAlign: 'center',
+      textStyle: {
+        fontSize: 12,
+        color: '#f00'
+      }
+    },
     backgroundColor: "#ffffff",
     color: ["#37A2DA", "#32C5E9", "#67E0E3"],
     series: [{
@@ -89,6 +98,9 @@ Component({
     ec: {
       onInit: initChart
     },
+    quality1: 40,
+    quality2: 8,
+    leftdays: 0,
     filters: [
       {
         pos: '1',
@@ -131,20 +143,22 @@ Component({
     updateDatas(e) {
       const today = new Date()
       const userData = app.globalData.userDetail
+      const quality1 = userData.quality1 || 45
+      const quality2 = userData.quality2 || 9
 
       if (userData.filters) {
         const cores = userData.filters
         const filter1 = dateDiff(cores.first)
-        const lifespan1 = parseInt(100 - 100 * filter1 / 180)
+        const lifespan1 = parseInt(100 - 100 * filter1 / 190)
         const filter2 = dateDiff(cores.second)
-        const lifespan2 = parseInt(100 - 100 * filter2 / 330)
+        const lifespan2 = parseInt(100 - 100 * filter2 / 375)
         const filter3 = dateDiff(cores.third)
-        const lifespan3 = parseInt(100 - 100 * filter3 / 480)
-        if(component){
+        const lifespan3 = parseInt(100 - 100 * filter3 / 555)
+        if (component) {
           component.setData({
             'filters[0].lifespan': lifespan1,
             'filters[1].lifespan': lifespan2,
-            'filters[2].lifespan': lifespan3,
+            'filters[2].lifespan': lifespan2,
             'filters[3].lifespan': lifespan3,
             'filters[4].lifespan': lifespan3
           })
@@ -155,6 +169,7 @@ Component({
       if (chart) {
         const alldays = userData.serviceDays || 365
         const pastdays = dateDiff(userData.serviceStart || today)
+        const leftdays = alldays - pastdays
         chart.setOption({
           series: [{
             max: alldays,
@@ -162,6 +177,12 @@ Component({
               value: pastdays
             }]
           }]
+        })
+        console.log(leftdays)
+        component.setData({
+          leftdays: leftdays,
+          quality1,
+          quality2
         })
       }
     }

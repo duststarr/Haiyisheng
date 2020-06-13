@@ -1,8 +1,34 @@
 /* miniprogram/pages/device/device.wxss */
-ec-canvas{
+.toppart{
     height: 350rpx;
 }
+.canvas{
+    width: 100%;
+    height: 100%;
 
+}
+
+.ad{
+    height: 350rpx;
+    align-items: center;
+    width: 400rpx;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.kuangquanshui{
+    border-bottom: 2px solid;
+    margin-bottom: 10rpx;
+}
+.leftdays{
+    position: relative;
+    top: -40rpx;
+    z-index: 99999999;
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    text-align: center;
+}
 .prog{
     display: flex;
     flex-wrap: wrap;
