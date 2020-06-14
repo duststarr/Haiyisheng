@@ -2,7 +2,7 @@ import wxcloud from '/utils/wxcloud.js'
 import paycloud from '/utils/paycloud.js'
 import globalInit from '/utils/globalData.js'
 
-!function () {
+! function () {
   let PageTmp = Page;
 
   Page = function (pageConfig) {
@@ -59,12 +59,15 @@ App({
     this.paycloud = paycloud;
     // 鉴权
     var that = this
-    this.wxcloud('authentication', { query: e.query })
+    this.wxcloud('authentication', {
+        query: e.query
+      })
       .then((res) => { // res.result is openid
         // 监视云端user.my的变动
         const db = wx.cloud.database()
-        db.collection('user').doc(res.result)
-          .watch({
+        const dbmy = db.collection('user').doc(res.result)
+        if (dbmy.watch) {
+          dbmy.watch({
             onChange: function (snapshot) {
               console.log('watch user', snapshot)
               that.globalData.userDetail = snapshot.docs[0]
@@ -74,6 +77,11 @@ App({
               console.error('watch user error', err)
             }
           })
+        }else{
+          that.globalData.userDetail = {}
+          that.globalData.userDetail._openid = res.result
+          that.globalEmit('userDetail')
+        }
       })
   },
 

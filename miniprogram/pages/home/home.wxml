@@ -4,6 +4,9 @@
 <worker wx:if="{{PageCur=='worker'}}"></worker>
 <admin wx:if="{{PageCur=='admin'}}"></admin>
 
+<view class='text-red margin-top' wx:if="{{oldVersion && (isAdmin||isWorker)}}">
+您的微信版本过低，请升级。仅管理员或客服能看见此信息。
+</view>
 <view class="cu-bar tabbar bg-white shadow foot">
 	<view class="action" bindtap="NavChange" data-cur="product">
 		<view class='cuIcon-cu-image'>
