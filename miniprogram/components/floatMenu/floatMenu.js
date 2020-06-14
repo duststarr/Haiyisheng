@@ -47,7 +47,7 @@ Component({
     date1: '',
     date2: '',
     date3: '',
-    showDebug: true
+    showDebug: false
   },
   attached: function () {
     const that = this
