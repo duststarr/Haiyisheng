@@ -26,11 +26,11 @@
 		<view class=''>已工作 {{tutil.daysPast(client.filters.first)}} 天</view>
 	</view>
 	<view class='cu-form-group'>
-		<view class='title'>滤芯2天数</view>
+		<view class='title'>滤芯2、3天数</view>
 		<view class=''>已工作 {{tutil.daysPast(client.filters.second)}} 天</view>
 	</view>
 	<view class='cu-form-group'>
-		<view class='title'>滤芯3天数</view>
+		<view class='title'>滤芯4、5天数</view>
 		<view class=''>已工作 {{tutil.daysPast(client.filters.third)}} 天</view>
 	</view>
 	<view class='cu-form-group'>
@@ -49,6 +49,15 @@
 		<view wx:if="{{!profit}}">
 			<button bindtap='onCalcProfit'><text class='text-sm text-gray'>为节约云资源不自动</text>计算</button>
 		</view>
-		<view wx:else class=''>{{profitUsed}}已取 / 共{{profit}}元</view>
+		<view wx:else class=''>{{profitUsed}}已取/共{{profit}}元</view>
+	</view>
+	<view class='cu-form-group'>
+		<view class='title'>推广收益已提取</view>
+		<view wx:if="{{showEditProfit}}">
+			<input placeholder="已提取金额为{{profitUsed}}" bindconfirm='onEditComfirm'>
+			</input>
+		</view>		
+		<view wx:else class=''><button class='cu-btn bg-blue' bindtap='onEditProfitUsed'>{{profitUsed}}元（点击编辑）</button>
+		</view>
 	</view>
 </form>
