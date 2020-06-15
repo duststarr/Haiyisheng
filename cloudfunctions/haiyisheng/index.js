@@ -561,3 +561,17 @@ actions.getFirends = async (event) => {
   return result
 }
 
+/**
+ * 登记修改客户已提取的收益值
+ * @param {*} event 
+ */
+actions.setProfitUsed = async (event) => {
+  const openid = event.openid;
+  const used = event.profitUsed;
+  await db_user.doc(openid).update({
+    data:{
+      profitUsed: used
+    }
+  })
+  return true
+}

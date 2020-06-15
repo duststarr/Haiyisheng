@@ -10,9 +10,10 @@ Page({
     vouchers: null,
     voucherUsed: 0,
     profit: null,
-    profitUsed: 0
+    profitUsed: 0,
+    showEditProfit: false
   },
-  onCalcVouchers: function(e){
+  onCalcVouchers: function (e) {
     const that = this
     app.wxcloud('getFirends').then(res => {
       that.setData({
@@ -20,7 +21,7 @@ Page({
       })
     })
   },
-  onCalcProfit: function(e){
+  onCalcProfit: function (e) {
     //我的现金收益
     // @result 我的下线的续费充值情况
     app.wxcloud('clientProfit').then(res => {
@@ -35,11 +36,40 @@ Page({
       })
     })
   },
+  onEditProfitUsed: function (e) {
+    this.setData({
+      showEditProfit: true
+    })
+  },
+  onEditComfirm: function (e) {
+    console.log(e)
+    const v = parseInt(e.detail.value)
+    console.log(v)
+
+    if(!v){
+      wx.showToast({
+        title:"只能输入数字",
+        icon:'none'
+      })
+      return;
+    }
+    const that = this;
+    const param = {}
+    param.openid = app.globalData.curClient._openid
+    param.profitUsed = v;
+    app.wxcloud('setProfitUsed', param).then(res => {
+      that.setData({
+        showEditProfit: false,
+        profitUsed: v
+      })
+      app.globalData.curClient.profitUsed = v;
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
@@ -53,11 +83,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if(app.globalData.curClient){
+    if (app.globalData.curClient) {
       this.setData({
         client: app.globalData.curClient,
-        voucherUsed: app.globalData.voucherUsed || 0,
-        profitUsed: app.globalData.profitUsed || 0
+        voucherUsed: app.globalData.curClient.voucherUsed || 0,
+        profitUsed: app.globalData.curClient.profitUsed || 0
       })
     }
   },
