@@ -9,7 +9,7 @@
 		</view>
 	</view>
 	<view class="flex flex-sub flex-direction solid-right">
-		<view class="text-xxl text-blue">{{profit}}<text class='text-sm'>元(余{{profit}})</text></view>
+		<view class="text-xxl text-blue">{{profit}}<text class='text-sm'>元(余{{profitLeft}})</text></view>
 		<view>
 			<text class="cuIcon-refund"></text>
 			推广奖励

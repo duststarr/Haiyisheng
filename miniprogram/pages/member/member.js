@@ -24,11 +24,16 @@ Component({
         app.wxcloud('generateQRcode')
         return; // 等待下次变更
       }
-
+      const profitUsed = detail.profitUsed || 0
+      const profitLeft = that.data.profit - profitUsed
+      const voucherUsed = detail.voucherUsed || 0
+      const voucherLeft = that.data.vouchers - voucherUsed
       that.setData({
         fans: detail.fans || 0,
-        voucherUsed: detail.voucherUsed || 0,
-        profitUsed: detail.profitUsed || 0,
+        voucherUsed,
+        voucherLeft,
+        profitUsed,
+        profitLeft,
         qrcode: detail.qrcode
       })
       if (!detail.isClient) {
