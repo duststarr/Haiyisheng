@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
     "subMchId": Mch_id,
     "totalFee": totalFee,
     "nonceStr": nonceStr,
-    "envId": "hys",
+    "envId": "hys-k9bhf",
     "functionName": "pay_cb",
     "tradeType": "JSAPI",
     "spbillCreateIp": "127.0.0.1"
