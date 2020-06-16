@@ -1,1 +1,6 @@
 /* miniprogram/pages/admin/client/client.wxss */
+
+.highlight{
+    border: 2rpx solid gray;
+    border-radius: 10rpx;
+}

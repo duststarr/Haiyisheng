@@ -54,7 +54,7 @@
 	<view class='cu-form-group'>
 		<view class='title'>推广收益已提取</view>
 		<view wx:if="{{showEditProfit}}">
-			<input placeholder="已提取金额为{{profitUsed}}" bindconfirm='onEditComfirm'>
+			<input class='highlight' placeholder="已提取金额为{{profitUsed}}" bindconfirm='onEditComfirm'>
 			</input>
 		</view>		
 		<view wx:else class=''><button class='cu-btn bg-blue' bindtap='onEditProfitUsed'>{{profitUsed}}元（点击编辑）</button>
