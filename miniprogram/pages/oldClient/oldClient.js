@@ -99,7 +99,11 @@ Page({
                 icon: 'none',
                 duration: 2000,
                 success: () => {
-                  setTimeout(wx.navigateBack, 2000)
+                  setTimeout(() => {
+                    wx.redirectTo({
+                      url: '/pages/home/home',
+                    })
+                  }, 2000)
                 }
               })
             })
@@ -133,7 +137,9 @@ Page({
       success(res) {
         if (res.confirm) {
           app.wxcloud('rejectOldclient', that.data).then(res => {
-            wx.navigateBack();
+            wx.redirectTo({
+              url: '/pages/home/home',
+            })
           })
         }
       }
