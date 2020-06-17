@@ -24,6 +24,9 @@
 			病毒、重金属、放射性元素及农药残留等有害物质，出水水质晶莹清澈。
 		</view>
 		<button class="btn margin" type="primary" bindtap="showIntro" data-id='1'>开启净水生活</button>
+		<navigator url='/pages/oldClient/oldClient'>
+		<view class='text-blue text-right margin-right' bindtap='onOldClient'>我是老客户</view>
+		</navigator>
 	</view>
 </view>
 <view class="cu-tabbar-height"></view>

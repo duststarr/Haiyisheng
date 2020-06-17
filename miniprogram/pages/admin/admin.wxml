@@ -1,31 +1,46 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
-	<view slot="content">后台管理</view>
+				<view slot="content">后台管理</view>
 </cu-custom>
 <!-- 会员管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
-	<view class='action text-gray'>
-		<text class='cuIcon-titles text-orange '></text>
-		会员管理
-	</view>
+				<view class='action text-gray'>
+								<text class='cuIcon-titles text-orange '></text>
+								会员管理
+				</view>
 </view>
-<navigator url='/pages/admin/clientMgr/clientMgr'><button>进入会员管理页面</button></navigator>
-
+<navigator url='/pages/admin/clientMgr/clientMgr'>
+				<button>进入会员管理页面</button>
+</navigator>
 <!-- 客服管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
-	<view class='action'>
-		<text class='cuIcon-titles text-orange '></text>
-		客服管理
-	</view>
+				<view class='action'>
+								<text class='cuIcon-titles text-orange '></text>
+								客服管理
+				</view>
 </view>
-<navigator url='/pages/admin/workerMgr/workerMgr'><button>进入客服管理页面</button></navigator>
-
+<navigator url='/pages/admin/workerMgr/workerMgr'>
+				<button>进入客服管理页面</button>
+</navigator>
 <!-- 订单管理 -->
 <view class="cu-bar margin-top bg-white solid-bottom">
-	<view class='action'>
-		<text class='cuIcon-titles text-orange '></text>
-		订单管理
-	</view>
+				<view class='action'>
+								<text class='cuIcon-titles text-orange '></text>
+								订单管理
+				</view>
 </view>
-<navigator url='/pages/admin/orderMgr/orderMgr'><button>进入订单管理页面</button></navigator>
+<navigator url='/pages/admin/orderMgr/orderMgr'>
+				<button>进入订单管理页面</button>
+</navigator>
+<view wx:if="{{oldclients}}">
+				<view class="cu-bar margin-top bg-white solid-bottom">
+								<view class='action'>
+												<text class='cuIcon-titles text-orange '></text>
+												待核实老会员申请
+								</view>
+				</view>
+				<view class='margin-top' wx:for="{{oldclients}}" bindtap="onOldClient" data-pos="{{index}}">
+								<address address="{{item.address}}"></address>
+				</view>
+</view>
 <!-- 修正底部TABBAR -->
 <view class="cu-tabbar-height"></view>

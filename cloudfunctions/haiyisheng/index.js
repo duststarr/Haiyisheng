@@ -7,7 +7,7 @@ let wxContext
 let db_order
 let db_user
 let db_payment
-
+let db_oldclient
 const actions = {}
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
   db_order = db.collection('order')
   db_user = db.collection('user')
   db_payment = db.collection('payment')
-
+  db_oldclient = db.collection('oldclient')
   if (event.action && actions.hasOwnProperty(event.action)) {
     console.log("" + event.action, event)
     console.log("openid", wxContext.OPENID)
@@ -324,8 +324,8 @@ actions.orderConfirm = async (event) => {
  */
 actions.workerGetList = async (event) => {
   const res = await db_user.where({
-      isWorker: true
-    })
+    isWorker: true
+  })
     .field({
       name: true,
       phone: true,
@@ -577,9 +577,69 @@ actions.setProfitUsed = async (event) => {
   const openid = event.openid;
   const used = event.profitUsed;
   await db_user.doc(openid).update({
-    data:{
+    data: {
       profitUsed: used
     }
   })
   return true
+}
+
+/**
+ * 管理员获取老会员请求
+ */
+actions.getOldclientRequests = async (event) => {
+  const res = await db_oldclient.where({
+    done: false
+  }).get()
+  return res.data
+}
+/**
+ * 管理员接受老会员申请
+ */
+actions.acceptOldclient = async (event) => {
+  const openid = event._openid;
+  const address = event.address;
+  const serviceYears = event.serviceYears;
+  const date0 = event.date0;
+  const date1 = event.date1;
+  const date2 = event.date2;
+  const date3 = event.date3;
+
+  const serviceDays = (parseInt(serviceYears) + 1) * 365
+  const data = {
+    address,
+    serviceDays,
+    serviceStart: date0,
+    filters: {
+      first: date1,
+      second: date2,
+      third: date3
+    },
+    isClient: true,
+    isOldclient: true
+  }
+  console.log(data)
+  await db_user.doc(openid).update({
+    data
+  })
+  oldclientDo(event._id, 'accept')
+
+  return true
+}
+/**
+ * 管理员拒绝老会员申请
+ */
+actions.rejectOldclient = async (event) => {
+  oldclientDo(event._id, 'reject')
+  return true
+}
+async function oldclientDo(id, result) {
+  await db_oldclient.doc(id).update({
+    data: {
+      done: true,
+      result,
+      admin: wxContext.OPENID,
+      timeDone: new Date()
+    }
+  })
 }

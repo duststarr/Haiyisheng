@@ -27,7 +27,7 @@
 	},
 	"appid": "wx01c0d20dbed1f51f",
 	"projectname": "Haiyisheng",
-	"libVersion": "2.7.7",
+	"libVersion": "2.9.3",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

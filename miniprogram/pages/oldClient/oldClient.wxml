@@ -1,0 +1,56 @@
+<cu-custom bgcolor="bg-gradual-pink" isBack="{{true}}">
+    <view slot="backText">返回</view>
+    <view slot="content">老客户申请</view>
+</cu-custom>
+<view wx:if="{{type=='client'}}" class='margin text-lg padding'>您已经是会员了。</view>
+<view wx:else class='margin-top'>
+    <view class='text-lg text-red padding'>老客户信息补录</view>
+    <view class='text-lg margin-sm padding'>
+    <text wx:if="{{type=='admin'}}">请认真核对老客户信息</text>
+    <text wx:else>请录入您的联系方式，管理员会核对您的信息。</text>
+    </view>
+    <address class='address' address="{{address}}" bind:AddressChange="onChooseAddress"></address>
+    <form wx:if="{{address}}">
+        <view class='cu-form-group'>
+            <view class='title'>安装日期</view>
+            <picker mode="date" value="{{date0}}" data-pos='0' bindchange="onDateChange">
+                <view class="picker">{{date0}}</view>
+            </picker>
+        </view>
+        <view class='cu-form-group'>
+            <view class='title'>已充值服务期</view>
+            <picker bindchange="onYearsChange" value="{{serviceYears}}" range="{{years}}">
+                <view class="picker">{{years[serviceYears]}}</view>
+            </picker>
+        </view>
+        <view class='cu-form-group'>
+            <view class='title'>滤芯1更换日期</view>
+            <picker mode="date" value="{{date1}}" data-pos='1' bindchange="onDateChange">
+                <view class="picker">{{date1}}</view>
+            </picker>
+        </view>
+        <view class='cu-form-group'>
+            <view class='title'>滤芯2、3更换日期</view>
+            <view class=''>
+                <picker mode="date" value="{{date2}}" data-pos='2' bindchange="onDateChange">
+                    <view class="picker">{{date2}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class='cu-form-group'>
+            <view class='title'>滤芯4、5更换日期</view>
+            <view class=''>
+                <picker mode="date" value="{{date3}}" data-pos='3' bindchange="onDateChange">
+                    <view class="picker">{{date3}}</view>
+                </picker>
+            </view>
+        </view>
+    <view class='flex flex-direction margin-top'>
+        <button wx:if="{{type!='waiting'}}" class='cu-btn bg-green' bindtap='onSubmit'>确定提交</button>
+        <view wx:else class='text-lg margin padding'>您的信息已上传后台，管理员会在24小时内核对您的信息，请稍候。</view>
+        <button wx:if="{{type=='admin'}}" class='margin-top-lg cu-btn bg-red' bindtap='onReject'>
+            这不是老会员，删除！
+        </button>
+    </view>
+    </form>
+</view>

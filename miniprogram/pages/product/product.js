@@ -39,7 +39,7 @@ Component({
     ]
   },
   attached: function () {
-
+    
   },
   methods: {
     showIntro: function (e) {

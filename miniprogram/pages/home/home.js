@@ -14,6 +14,7 @@ Page({
     this.setData({
       PageCur: e.currentTarget.dataset.cur
     })
+    app.globalData.curPage = e.currentTarget.dataset.cur
   },
   /**
    * 

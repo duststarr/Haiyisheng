@@ -10,7 +10,8 @@
     "pages/worker/invitation/invitation",
     "pages/payment2/payment2",
     "pages/member/notice/notice",
-    "pages/admin/clientMgr/clientMgr"
+    "pages/admin/clientMgr/clientMgr",
+    "pages/oldClient/oldClient"
   ],
   "window": {
     "backgroundTextStyle": "light",
