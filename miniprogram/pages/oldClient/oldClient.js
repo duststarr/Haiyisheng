@@ -88,7 +88,7 @@ Page({
     const that = this
     wx.showModal({
       title: '提交',
-      context: '确认信息并提交？',
+      content: '确认信息并提交？',
       success(res) {
         if (res.confirm) {
           if ('admin' == that.data.type) {
@@ -129,7 +129,7 @@ Page({
     const that = this
     wx.showModal({
       title: '拒绝申请',
-      context: '确定不是老会员？',
+      content: '确定不是老会员？',
       success(res) {
         if (res.confirm) {
           app.wxcloud('rejectOldclient', that.data).then(res => {

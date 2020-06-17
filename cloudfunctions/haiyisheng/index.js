@@ -643,3 +643,18 @@ async function oldclientDo(id, result) {
     }
   })
 }
+
+/**
+ * 标记删除会员
+ * 因为涉及推广、充值记录等一系列数据关联，这只是标记删除，并不会实际删除
+ */
+actions.deleteClient = async (event) => {
+  const openid = event.openid
+
+  await db_user.doc(openid).update({
+    data:{
+      isClient : false
+    }
+  })
+  return true
+}

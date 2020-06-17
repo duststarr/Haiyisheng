@@ -60,4 +60,7 @@
 		<view wx:else class=''><button class='cu-btn bg-blue' bindtap='onEditProfitUsed'>{{profitUsed}}元（点击编辑）</button>
 		</view>
 	</view>
+	<view class='cu-form-group flex'>
+		<button class='cu-btn bg-red response margin-top' bindtap='onDeleteClient'>标记为非会员</button>
+	</view>
 </form>

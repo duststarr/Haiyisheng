@@ -13,6 +13,28 @@ Page({
     profitUsed: 0,
     showEditProfit: false
   },
+  onDeleteClient: async function(e){
+    wx.showModal({
+      title:'标记为非会员',
+      content:'因为涉及推广、粉丝、充值记录、他人收益等一系列数据关联，这只是标记删除。标记后，用户将失去会员身份，不再有“我的设备”',
+      success(res) {
+        if (res.confirm) {
+          const param = {}
+          param.openid = app.globalData.curClient._openid
+          app.wxcloud('deleteClient',param).then(res => {
+            wx.showToast({
+              title: '会员已标记为非会员',
+              icon: 'none',
+              duration: 2000,
+              success: () => {
+                setTimeout(wx.navigateBack, 2000)
+              }
+            })
+          })
+        }
+      }
+    })
+  },
   onCalcVouchers: function (e) {
     const that = this
     app.wxcloud('getFirends').then(res => {
