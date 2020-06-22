@@ -144,7 +144,7 @@ Component({
       const today = new Date()
       const userData = app.globalData.userDetail
       const quality1 = userData.quality1 || 45
-      const quality2 = userData.quality2 || 9
+      const quality2 = userData.quality2 || 8
 
       if (userData.filters) {
         const cores = userData.filters
