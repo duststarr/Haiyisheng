@@ -65,8 +65,13 @@ actions.authentication = async (event) => {
       if (q1 < 40) q1 = 40 // 不小于40
       if (q1 > 60) q1 = 60 // 不大于60
       q2 += parseInt(Math.random() * 6 - 3) // 纯净 -3 ~ +3 变动
+<<<<<<< HEAD
       if (q2 < 4) q2 = 4 // 不小于4
       if (q2 > 10) q2 = 10 // 不大于10
+=======
+      if (q2 < 4) q2 = 4 // 不小于5
+      if (q2 > 10) q2 = 10 // 不大于15
+>>>>>>> d6d94f82f2cc2dd68eb6b3bb1764141773c91d38
       await db_user.doc(result._id).update({
         data: {
           quality1: q1,
