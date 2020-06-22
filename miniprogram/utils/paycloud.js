@@ -8,7 +8,7 @@ export default function paycloud(content, amount) {
             name: 'pay',
             data: {
                 bodyMsg: content,
-                totalFee: 1,//amount * 100,
+                totalFee: amount * 100,
                 nonceStr,
                 outTradeNo
             }
